@@ -45,7 +45,7 @@ describe('Product model', function () {
       it('should be unique', function (done) {
           return Product.create({name: "surfbort"})
           .then(function(product){
-            //shouldnt get here
+            // shouldnt get heresad
             console.log(product);
             done();
           })
