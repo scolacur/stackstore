@@ -142,6 +142,52 @@ describe('User model', function () {
 
         });
 
+        describe('email validation', function () {
+
+            var createUser = function () {
+                return User.create({ email: 'obama@gmail.com', password: 'potus' });
+            };
+
+            var createBadEmailUser = function () {
+                return User.create({ email: 'obamagmail.com', password: 'potus' });
+            };
+
+            it('email is required', function (done) {
+
+                User.create({})
+                .then(null, function (error) {
+                    console.log(error);
+                    expect(error.errors.email).to.exist;
+                    expect(error.name).to.equal('ValidationError');
+                    done();
+                })
+            });
+
+            it('should be unique', function (done) {
+                createUser()
+                .then(function () {
+                    return createUser();
+                })
+                .then(null, function (error) {
+                    expect(error).to.be.ok;
+                    expect(error.code).to.equal(11000);
+                    expect(error.name).to.equal('MongoError');
+                    done();
+                })
+            });
+
+            it('should be an email', function (done) {
+                createBadEmailUser()
+                .then(null, function (error) {
+                    expect(error.errors.email).to.exist;
+                    expect(error.errors.email.name).to.equal('ValidatorError');
+                    expect(error.errors.email.kind).to.equal('user defined');
+                    done();
+                })
+            });
+
+        });
+
     });
 
 });
