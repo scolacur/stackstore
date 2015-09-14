@@ -18,9 +18,7 @@ describe('Product model', function () {
     });
 
     beforeEach("Create test user", function () {
-        var createUser = function () {
-            return Product.create({name: "surfbort"});
-        };
+      return Product.create({name: "surfbort"});
     });
 
     afterEach('Clear test database', function (done) {
@@ -33,19 +31,30 @@ describe('Product model', function () {
 
     describe('name', function () {
 
-        it('should exist', function () {
-            Product.findOne().then(function(result) {
-                return;
-            }).then(null, function(error){
-                expect(error.message).to.be("already a user with that name");    
-            });
-        });
+      it('one should equal 1', function(){
+        expect(1).to.equal(1);
+      });
 
-        it('should be unique', function () {
-            Product.create({name: "surfbort"}).then(function(result){
-               expect.error;
-            });
+      it('should exist', function (done) {
+        Product.find({}).then(function(results){
+          expect(results.length).to.equal(1);
+          done();
         });
+      });
+
+      it('should be unique', function (done) {
+          return Product.create({name: "surfbort"})
+          .then(function(product){
+            //shouldnt get here
+            console.log(product);
+            done();
+          })
+          .then(null, function(err){
+            console.log(err.code);
+            expect(err.code).to.equal(11000);
+            done();
+          });
+      });
 
     });
 
