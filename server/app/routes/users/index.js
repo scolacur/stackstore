@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 var User = require('mongoose').model('User');
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
 	User.find()
 	.then(function (users) {
 		users = users.map(function (user) {
@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
 	});
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', function (req, res) {
 	delete req.body.isAdmin;
 	User.create(req.body)
 	.then(function (user) {
@@ -23,7 +23,7 @@ router.post('/', function (req, res, next) {
 	});
 });
 
-router.put('/:userId', function (req, res, next) {
+router.put('/:userId', function (req, res) {
 	req.foundUser = Object.keys(req.body).reduce(function (oldUser, newProp) {
 		if (newProp === 'isAdmin') return oldUser; // fix with support for admins
 		oldUser[newProp] = req.body[newProp];
@@ -35,7 +35,7 @@ router.put('/:userId', function (req, res, next) {
 	});
 });
 
-router.get('/:userId', function (req, res, next) {
+router.get('/:userId', function (req, res) {
 	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
 });
 
@@ -47,4 +47,3 @@ router.param('userId', function (req, res, next, userId) {
 	})
 	.then(null, next);
 });
-
