@@ -22,6 +22,7 @@ var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
+var Product = Promise.promisifyAll(mongoose.model('Product'));
 
 var seedUsers = function () {
 
@@ -40,12 +41,45 @@ var seedUsers = function () {
 
 };
 
+var seedProducts = function () {
+
+        var products = [
+        {
+           name: "surfbort",
+           price: 20,
+           quantity: 10,
+           description: "a surfbort"
+        },
+        {
+           name: "sand shooter",
+           price: 5,
+           quantity: 100,
+           description: "shooting sand shooting sand shooting sand shooting sand"
+        }
+    ];
+
+    return Product.createAsync(products);
+};
+
+
 connectToDb.then(function () {
     User.findAsync({}).then(function (users) {
         if (users.length === 0) {
             return seedUsers();
         } else {
             console.log(chalk.magenta('Seems to already be user data, exiting!'));
+            process.kill(0);
+        }
+    }).then(function () {
+        console.log("seeding products: ", Product);
+        return Product.findAsync({});
+    }).then(function (products) {
+        console.log("seeding products2: ");
+        if (products.length === 0) {
+            console.log("seeding products3: ");
+            return seedProducts();
+        } else {
+            console.log(chalk.magenta('Seems to already be product data, exiting!'));
             process.kill(0);
         }
     }).then(function () {
