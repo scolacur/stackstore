@@ -6,6 +6,7 @@ var Product = mongoose.model('Product');
 //get all products
 
 router.param('productId', function(req,res,next,id){
+  console.log("IDIDIDI",id);
 	Product.findById(id).exec()
 	.then(function(foundProduct){
 		req.foundProduct = foundProduct;
@@ -20,11 +21,18 @@ router.param('productId', function(req,res,next,id){
 // router.use("/reviews", require("../reviews/"));
 
 router.get('/', function(req,res,next){
-  var category = req.query.categoryId;
-  Product.find({category: category}).exec()
+  var query = {};
+  if (req.query.categoryId) {
+    query.category = req.query.categoryId;
+  }
+  Product.find(query).exec()
   .then(function(products){
     res.json(products);
   }).then(null, next);
+});
+
+router.get("/:productId", function (req, res, next){
+  res.json(req.foundProduct);
 });
 
 //create a product

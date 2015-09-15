@@ -1,5 +1,5 @@
-<p>Here's the products</p>
 <section id="home">
-    <fullstack-logo></fullstack-logo>
-    <div ng-repeat="product in products">{{product}}</div>
+	<div ng-repeat="product in products">
+    	<a ui-sref="productDetail({id: product._id})">Product: {{product.name}}</a>
+    </div>	
 </section>
