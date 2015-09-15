@@ -1,0 +1,5 @@
+<div>
+  <h3> {{ user.email }} </h3>
+  <ul>
+    <li ng-repeat='order in orders' ui-sref="order({orderId: {{order._id}} })">{{ order._id }} </li>
+</div>
