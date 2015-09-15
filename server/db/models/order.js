@@ -14,22 +14,22 @@ var schema = new mongoose.Schema({
     items: {
         type: [{
             quantity: {
-                type: Number,
-                required: true
+                type: Number
             },
             subtotal: {
-                type: Number,
-                required: true
+                type: Number
             },
             product: {
-                type: ObjectId,
-                ref: 'Product'
+                // type: ObjectId,
+                // ref: 'Product'
+                type: String //string until product is working
             }
         }],
         required: true
     },
     date: {
         type: Date,
+        default: Date.now(),
         required: true
     },
     user: {
@@ -45,12 +45,28 @@ var schema = new mongoose.Schema({
 schema.plugin(deepPopulate);
 
 schema.path('user').validate(function (value) {
-    return !!this.session;
+    return !this.session;
 });
 
 schema.path('session').validate(function (value) {
-    return !!this.user;
+    return !this.user;
 });
+
+schema.pre('validate', function(next){
+    if(this.session || this.user) return next();
+    else {
+        throw Error('needs either session or user');
+    };
+})
+
+schema.path('items').validate(function(next){
+    var itemArray = ['quantity', 'subtotal', 'product'];
+    return this.items.every(function(item){
+        return itemArray.every(function(prop){
+            return item.hasOwnProperty(prop);
+        })
+    })
+})
 
 schema.statics.populateItems = function (_orders) {
     return new Promise(function (resolve, reject) {
@@ -73,7 +89,3 @@ schema.methods.populateItem = function () {
 
 
 mongoose.model('Order', schema);
-
-
-
-
