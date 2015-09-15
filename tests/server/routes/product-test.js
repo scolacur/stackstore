@@ -67,7 +67,11 @@ describe('Products Route', function () {
         .end(function (err, response) {
           if (err) return done(err);
           expect(response.body.name).to.equal('sand-sniffer');
-          done();
+          Product.find({name: "sand-sniffer"}).exec().then(function (result){
+            expect(result).to.have.length(1);
+            expect(result[0].name).to.equal("sand-sniffer");
+            done();
+          });
         });
     });
 

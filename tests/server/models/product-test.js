@@ -31,10 +31,6 @@ describe('Product model', function () {
 
     describe('name', function () {
 
-      it('one should equal 1', function(){
-        expect(1).to.equal(1);
-      });
-
       it('should exist', function (done) {
         Product.find({}).then(function(results){
           expect(results.length).to.equal(1);

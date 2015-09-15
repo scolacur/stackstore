@@ -14,16 +14,16 @@ describe('Session Service', function () {
         AUTH_EVENTS = $injector.get('AUTH_EVENTS');
     }));
 
-    xit('should be an object', function () {
+    it('should be an object', function () {
         expect(Session).to.be.an('object');
     });
 
-    xit('should by default have id and user as null', function () {
+    it('should by default have id and user as null', function () {
         expect(Session.user).to.be.equal(null);
         expect(Session.id).to.be.equal(null);
     });
 
-    xdescribe('create method', function () {
+    describe('create method', function () {
 
         it('should when called with id and user arguments' +
         'set the id and user to session', function () {
@@ -36,7 +36,7 @@ describe('Session Service', function () {
 
     });
 
-    xdescribe('destroy method', function () {
+    describe('destroy method', function () {
 
         it('should set user and id to null', function () {
 
@@ -52,7 +52,7 @@ describe('Session Service', function () {
 
     });
 
-    xdescribe('event listening', function () {
+    describe('event listening', function () {
 
         it('should call destroy when notAuthenticated event is fired', function () {
 

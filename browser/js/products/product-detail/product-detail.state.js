@@ -4,15 +4,14 @@ app.config(function ($stateProvider) {
         url: '/products/:id',
         templateUrl: '/js/products/product-detail/product-detail.html',
         controller: function ($scope, productFinder) {
-            console.log("productFinder", productFinder);
             $scope.product = productFinder;
-            console.log("product detail", $scope.product);
         },
         resolve: {
         	productFinder: function ($stateParams, ProductFactory) {
-                console.log("id", $stateParams.id);
         		return ProductFactory.getProduct($stateParams.id);
         	}
+
+            // // something along these lines to be activated once reviews are implemented
         	// reviewFinder: function ($stateParams, ProductFactory) {
         	// 	return ProductFactory.getReviews($stateParams.id);
         	// }

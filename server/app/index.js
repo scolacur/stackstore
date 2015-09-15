@@ -34,10 +34,6 @@ app.get('/*', function (req, res) {
     res.sendFile(app.get('indexHTMLPath'));
 });
 
-// app.use(function(err, req, res, next){
-//
-// });
-
 // Error catching endware.
 app.use(function (err, req, res, next) {
     console.error(err, typeof next);

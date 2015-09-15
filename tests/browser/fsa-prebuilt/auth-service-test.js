@@ -19,11 +19,11 @@ describe('AuthService', function () {
         Session.destroy();
     }));
 
-    xit('should be an object', function () {
+    it('should be an object', function () {
         expect(AuthService).to.be.an('object');
     });
 
-    xdescribe('isAuthenicated', function () {
+    describe('isAuthenicated', function () {
 
         it('should return true if a Session exists', function () {
             Session.create('testID', {email: 'cool@gmail.com'});
@@ -37,7 +37,7 @@ describe('AuthService', function () {
 
     });
 
-    xdescribe('getLoggedInUser', function () {
+    describe('getLoggedInUser', function () {
 
         it('should return the user from the Session if already authenticated', function (done) {
             var x = {};
@@ -152,7 +152,7 @@ describe('AuthService', function () {
 
     });
 
-    xdescribe('login', function () {
+    describe('login', function () {
 
         afterEach(function () {
             $httpBackend.verifyNoOutstandingExpectation();
@@ -239,7 +239,7 @@ describe('AuthService', function () {
 
     });
 
-    xdescribe('logout', function () {
+    describe('logout', function () {
 
         beforeEach(function () {
             $httpBackend.expectGET('/logout').respond(200);

@@ -5,7 +5,6 @@ app.config(function ($stateProvider) {
         controller: "ProductListCtrl",
         resolve: {
         	findProducts: function (ProductFactory) {
-        		console.log("resolving");
         		return ProductFactory.getProducts();
         	}
         }
