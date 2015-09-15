@@ -41,11 +41,14 @@ module.exports = function (app) {
 
             // req.logIn will establish our session.
             req.logIn(user, function (loginErr) {
-                if (loginErr) return next(loginErr);
-                // We respond with a response object that has user with _id and email.
-                res.status(200).send({
-                    user: _.omit(user.toJSON(), ['password', 'salt'])
-                });
+	            if (loginErr) return next(loginErr);
+				//adds user.cart to session cart
+				_.assign(req.session.cart, user.cart);
+				console.log("Session Cart: ",req.session.cart);
+	            // We respond with a response object that has user with _id and email.
+	            res.status(200).send({
+	                user: _.omit(user.toJSON(), ['password', 'salt'])
+	            });
             });
 
         };

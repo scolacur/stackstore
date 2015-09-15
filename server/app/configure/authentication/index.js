@@ -54,10 +54,15 @@ module.exports = function (app) {
     });
 
     // Simple /logout route.
-    app.get('/logout', function (req, res) {
-        req.logout();
-		req.session.cart = [];
-        res.status(200).end();
+    app.get('/logout', function (req, res, next) {
+		console.log("req.user: ",req.user);
+		if (!req.user) return res.status(204).end();
+		console.log('req.session.cart',req.session.cart);
+		req.user.saveCart(req.session.cart || []).then(function(cart){
+    		req.logout();
+			req.session.cart = []; //empty the cart
+        	res.status(200).end();
+		}).then(null, next);
     });
 
     // Each strategy enabled gets registered.

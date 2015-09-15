@@ -30,7 +30,8 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
-    }
+    },
+	cart: [Object]
 });
 
 schema.path('email').validate(function (value) {
@@ -67,5 +68,12 @@ schema.statics.encryptPassword = encryptPassword;
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
+
+schema.method('saveCart', function(cart){
+	_.assign(this.cart, cart);
+	return this.save();
+});
+
+
 
 mongoose.model('User', schema);

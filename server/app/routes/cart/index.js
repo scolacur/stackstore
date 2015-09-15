@@ -37,3 +37,9 @@ router.post('/', function (req, res) {
 router.put('/', function (req, res) {
 	// var itemToEdit = req.session.cart.indexOf(req.body);
 });
+
+//empty cart
+router.delete('/', function(req,res){
+	req.session.cart = [];
+	res.status(200).json(req.session.cart);
+});
