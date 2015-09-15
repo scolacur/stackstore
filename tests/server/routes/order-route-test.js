@@ -1,7 +1,7 @@
 // Instantiate all models
 var mongoose = require('mongoose');
 require('../../../server/db/models');
-var User = mongoose.model('User');
+var Order = mongoose.model('Order');
 
 var expect = require('chai').expect;
 
@@ -11,7 +11,7 @@ var clearDB = require('mocha-mongoose')(dbURI);
 var supertest = require('supertest');
 var app = require('../../../server/app');
 
-describe('Users Route', function () {
+describe('Orders Route', function () {
 
 	beforeEach('Establish DB connection', function (done) {
 		if (mongoose.connection.db) return done();
@@ -22,7 +22,7 @@ describe('Users Route', function () {
 		clearDB(done);
 	});
 
-	describe('GET /api/users', function () {
+	describe('GET /api/orders/', function () {
 
 		var agent;
 
@@ -30,16 +30,19 @@ describe('Users Route', function () {
 			agent = supertest.agent(app);
 		});
 
-		beforeEach('Make a user', function (done) {
-			User.create({email: "sean@sean.com", password: "mypass"})
-			.then(function (user) {
+		beforeEach('Make an order', function (done) {
+			Order.create({items:[{quantity: 314, product: 'surfboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			.then(function (order) {
 				done();
 			})
-			.then(null, done);
+			.then(null, function(err){
+				console.error(err)
+				done();
+			});
 		});
 
-		it('should get return users with 200 response', function (done) {
-			agent.get('/api/users/')
+		it('should get orders with 200 response', function (done) {
+			agent.get('/api/orders/')
 				.expect(200)
 				.end(function (err, response) {
 					if (err) return done(err);
@@ -49,19 +52,9 @@ describe('Users Route', function () {
 				});
 		});
 
-		it('should not give back passwords', function (done) {
-			agent.get('/api/users/')
-				.expect(200)
-				.end(function (err, response) {
-					if (err) return done(err);
-					expect(response.body.password).to.not.be.ok;
-					done();
-				});
-		});
-
 	});
 
-	describe('POST /api/users', function () {
+	describe('POST /api/orders', function () {
 
 		var agent;
 
@@ -70,25 +63,21 @@ describe('Users Route', function () {
 		});
 
 
-		it('should make a user', function (done) {
-			agent.post('/api/users/')
-				.send({email: "sean@sean.com", password: "mypass"})
-				.expect(201)
-				.end(function (err, response) {
-					if (err) return done(err);
-					expect(response.body.email).to.equal('sean@sean.com');
-					done();
-				});
-		});
+		it('should make an order', function (done) {
 
-		it('should not give back passwords', function (done) {
-			agent.post('/api/users/')
-				.send({email: "sean@sean.com", password: "mypass"})
+			agent.post('/api/orders/')
+				// .field('session.cart', "{items:[{quantity: 314, product: 'extremeboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' }")
+				.send({items:[{quantity: 314, product: 'extremeboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
 				.expect(201)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body.password).to.not.be.ok;
-					done();
+					expect(response.body.items[0].product).to.equal('extremeboard');
+					Order.find({}).exec()
+					.then(function(orders){
+						expect(orders).to.have.length(1);
+						expect(orders[0].items[0].product).to.equal('extremeboard');
+						done();
+					})
 				});
 		});
 
@@ -97,29 +86,28 @@ describe('Users Route', function () {
 	describe('GET /api/users/:userId', function () {
 
 		var agent,
-				userId;
+			orderId;
 
 		beforeEach('Create agent', function () {
 			agent = supertest.agent(app);
 		});
 
-		beforeEach('Make a user', function (done) {
-			User.create({email: "sean@sean.com", password: "mypass"})
-			.then(function (user) {
-				userId = user._id;
+		beforeEach('Make an order', function (done) {
+			Order.create({items:[{quantity: 314, product: 'surfboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			.then(function (order) {
+				orderId = order._id;
 				done();
 			})
 			.then(null, done);
 		});
 
 
-		it('should get the user without password', function (done) {
-			agent.get('/api/users/' + userId)
+		it('should get the order', function (done) {
+			agent.get('/api/orders/' + orderId)
 				.expect(200)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body.email).to.equal('sean@sean.com');
-
+					expect(response.body.items[0].product).to.equal('surfboard');
 					done()
 				});
 		});
@@ -129,47 +117,35 @@ describe('Users Route', function () {
 	describe('PUT /api/users/:userId', function () {
 
 		var agent,
-				userId;
+			orderId;
 
 		beforeEach('Create agent', function () {
 			agent = supertest.agent(app);
 		});
 
-		beforeEach('Make a user', function (done) {
-			User.create({email: "sean@sean.com", password: "mypass"})
-			.then(function (user) {
-				userId = user._id;
+		beforeEach('Make an order', function (done) {
+			Order.create({items:[{quantity: 314, product: 'surfboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			.then(function (order) {
+				orderId = order._id;
 				done();
 			})
 			.then(null, done);
 		});
 
 
-		it('should edit a user', function (done) {
-			agent.put('/api/users/' + userId)
-				.send({email: "poop@poop.com"})
+		it('should edit an order', function (done) {
+			agent.put('/api/orders/' + orderId)
+				.send({items:[{quantity: 314, product: 'extremeboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
 				.expect(201)
 				.end(function (err, response) {
 					if (err) return done(err);
-					User.findById(userId)
-					.then(function (user) {
-						expect(user.email).to.equal('poop@poop.com');
+					Order.findById(orderId)
+					.then(function (order) {
+						expect(order.items[0].product).to.equal('extremeboard');
 						done();
 					});
 				});
 		});
-
-		it('should not give back passwords', function (done) {
-			agent.put('/api/users/' + userId)
-				.send({email: "poop@poop.com"})
-				.expect(201)
-				.end(function (err, response) {
-					if (err) return done(err);
-					expect(response.body.password).to.not.be.ok;
-					done();
-				});
-		});
-
 	});
 
 });

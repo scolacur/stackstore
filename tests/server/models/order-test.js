@@ -57,16 +57,17 @@ describe('Order model', function () {
             })
         })
 
-        it('should err with items without quantity, subtotal, product', function (done) {
+        it('should err with items without quantity, product', function (done) {
             Order.create({
                 user: userId,
                 items: [{}]
             })
+            .then(function(order){
+                done();
+            })
             .then(null, function (error) {
-                // console.log(error);
-                expect(error.errors).to.include.keys('blah');
-                expect({foo: 'bar'}).to.include.keys('blah');
-
+                expect(error.errors['items.0.product']).to.exist;
+                expect(error.errors['items.0.quantity']).to.exist;
                 done();
             })
         })

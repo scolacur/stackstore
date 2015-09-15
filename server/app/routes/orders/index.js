@@ -6,43 +6,43 @@ var _ = require('lodash');
 var Order = require('mongoose').model('Order');
 
 router.get('/', function (req, res) {
-	User.find()
+    var query = {};
+    if (req.query.status) {
+        query.status = req.query.status;
+    }
+	Order.find(query)
 	.then(function (users) {
-		users = users.map(function (user) {
-			return _.omit(user.toJSON(), ['salt', 'password']);
-		});
 		res.json(users);
 	});
 });
 
 router.post('/', function (req, res) {
-	delete req.body.isAdmin;
-	User.create(req.body)
-	.then(function (user) {
-		res.status(201).json(_.omit(user.toJSON(), ['salt', 'password']));
+    // console.log(req.body);
+	Order.create(req.body) //replace with req.session.cart
+	.then(function (order) {
+		res.status(201).json(order);
 	});
 });
 
-router.put('/:userId', function (req, res) {
-	req.foundUser = Object.keys(req.body).reduce(function (oldUser, newProp) {
-		if (newProp === 'isAdmin') return oldUser; // fix with support for admins
-		oldUser[newProp] = req.body[newProp];
-		return oldUser;
-	}, req.foundUser);
-	req.foundUser.save()
-	.then(function (editedUser) {
-		res.status(201).json(_.omit(editedUser.toJSON(), ['salt', 'password']));
+router.put('/:orderId', function (req, res) {
+	req.foundOrder = Object.keys(req.body).reduce(function (oldOrder, newProp) {
+		oldOrder[newProp] = req.body[newProp];
+		return oldOrder;
+	}, req.foundOrder);
+	req.foundOrder.save()
+	.then(function (editedOrder) {
+		res.status(201).json(editedOrder);
 	});
 });
 
-router.get('/:userId', function (req, res) {
-	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
+router.get('/:orderId', function (req, res) {
+	res.json(req.foundOrder);
 });
 
-router.param('userId', function (req, res, next, userId) {
-	User.findById(userId)
-	.then(function (user) {
-		req.foundUser = user;
+router.param('orderId', function (req, res, next, orderId) {
+	Order.findById(orderId)
+	.then(function (order) {
+		req.foundOrder = order;
 		next();
 	})
 	.then(null, next);

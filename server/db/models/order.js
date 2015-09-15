@@ -9,20 +9,21 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var schema = new mongoose.Schema({
     status: {
         type: String,
-        enum: ['shipped', 'confirmed', 'pending']
+        enum: ['shipped', 'confirmed', 'pending', 'cancelled'],
+        required: true,
+        default: 'pending'
     },
     items: {
         type: [{
             quantity: {
-                type: Number
-            },
-            subtotal: {
-                type: Number
+                type: Number,
+                required: true
             },
             product: {
                 // type: ObjectId,
                 // ref: 'Product'
-                type: String //string until product is working
+                type: String, //string until product is working
+                required: true
             }
         }],
         required: true
@@ -44,13 +45,13 @@ var schema = new mongoose.Schema({
 
 schema.plugin(deepPopulate);
 
-schema.path('user').validate(function (value) {
-    return !this.session;
-});
-
-schema.path('session').validate(function (value) {
-    return !this.user;
-});
+// schema.path('user').validate(function (value) {
+//     return !this.session;
+// }, 'session stuff');
+//
+// schema.path('session').validate(function (value) {
+//     return !this.user;
+// });
 
 schema.pre('validate', function(next){
     if(this.session || this.user) return next();
@@ -59,14 +60,15 @@ schema.pre('validate', function(next){
     };
 })
 
-schema.path('items').validate(function(next){
-    var itemArray = ['quantity', 'subtotal', 'product'];
-    return this.items.every(function(item){
-        return itemArray.every(function(prop){
-            return item.hasOwnProperty(prop);
-        })
-    })
-})
+// schema.path('items').validate(function(next){
+//     var itemArray = ['quantity', 'product'];
+//     return this.items.every(function(item){
+//             return itemArray.every(function(prop){
+//                 if (Object.getOwnPropertyNames(item).indexOf(prop) !== -1) return true;
+//                 else return false;
+//             })
+//     })
+// }, 'invalid items in order')
 
 schema.statics.populateItems = function (_orders) {
     return new Promise(function (resolve, reject) {
