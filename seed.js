@@ -71,12 +71,9 @@ connectToDb.then(function () {
             process.kill(0);
         }
     }).then(function () {
-        console.log("seeding products: ", Product);
         return Product.findAsync({});
     }).then(function (products) {
-        console.log("seeding products2: ");
         if (products.length === 0) {
-            console.log("seeding products3: ");
             return seedProducts();
         } else {
             console.log(chalk.magenta('Seems to already be product data, exiting!'));
