@@ -2,13 +2,14 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 
+
 var schema = new mongoose.Schema({
     name: {type: String, unique: true},
     price: Number,
     description: String,
     inventory: Number,
     photoUrl: String,
-    //category: {type: mongoose.Schema.Types.ObjectId, ref: "Category"}
+    category: {type: mongoose.Schema.Types.ObjectId, ref: "Category"}
 });
 
 schema.pre('save', function (next) {

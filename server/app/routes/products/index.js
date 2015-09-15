@@ -17,14 +17,17 @@ router.param('productId', function(req,res,next,id){
 	.then(null, next);
 });
 
+// router.use("/reviews", require("../reviews/"));
+
 router.get('/', function(req,res,next){
-  Product.find().exec()
+  var category = req.query.categoryId;
+  Product.find({category: category}).exec()
   .then(function(products){
     res.json(products);
   }).then(null, next);
 });
 
-//create a book
+//create a product
 router.post('/', function(req,res,next){
   Product.create(req.body)
   .then(function(createdProduct){
@@ -32,9 +35,8 @@ router.post('/', function(req,res,next){
   }).then(null, next);
 });
 
-//update a chapter
+//update a product
 router.put('/:productId', function(req,res,next){
-
   for (var k in req.body){
     req.foundProduct[k] = req.body[k];
   }
@@ -43,6 +45,7 @@ router.put('/:productId', function(req,res,next){
     res.status(201).json(savedProduct);
   }).then(null, next);
 });
+
 
 
 module.exports = router;
