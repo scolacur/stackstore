@@ -1,13 +1,20 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var validator = require('email-validator');
 
 var schema = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        unique: true,
+        required: true
     },
     password: {
         type: String
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     },
     salt: {
         type: String
@@ -25,6 +32,10 @@ var schema = new mongoose.Schema({
         id: String
     }
 });
+
+schema.path('email').validate(function (value) {
+    return validator.validate(value);
+})
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
