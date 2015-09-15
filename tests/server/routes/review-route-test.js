@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Review = mongoose.model('Review');
+var User = mongoose.model('User');
 
 var expect = require('chai').expect;
 
@@ -22,41 +23,52 @@ describe('Reviews Route', function () {
     clearDB(done);
   });
 
-  xdescribe('GET /api/users/:userId/reviews', function () {
+  var testReview = {
+    title: "I like basketball", 
+    rating: 5,
+    description: "This product is the best thing in the world for me to play basketball with.",
+    product: "thisisafakeproductid123213"
+  };
+
+  describe('GET /api/reviews/:reviewId/', function () {
 
     var agent, 
         userId,
-        productId = "thisisafakeproductid123213";
+        productId = "thisisafakeproductid123213",
+        userId2;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
     });
 
-    beforeEach('Make a user', function (done) {
+    beforeEach('Make 2 users', function (done) {
       User.create({email: "sean@sean.com", password: "mypass"})
       .then(function (user) {
         userId = user._id;
+        return User.create({email: "sean2@sean2.com", password: "mypass"});
+      })      
+      .then(function (user) {
+        userId2 = user._id;
         done();
       })
       .then(null, done);
     });
 
     beforeEach('Write a review', function (done) {
-      Review.create({
-        title: "I like basketball", 
-        rating: 5,
-        description: "This product is the best thing in the world for me to play basketball with.",
-        user: userId,
-        product: productId
-      })
-      .then(function (user) {
+      testReview.user = userId;
+      console.log(testReview);
+      Review.create(testReview)
+      .then(function (review) {
         done();
       })
-      .then(null, done);
+      .then(null, function (err) {
+        console.log(err);
+        done();
+      });
     });
 
-    it('should get reviews for a specific user', function (done) {
-      agent.get('/api/users/' + userId + '/reviews')
+    it('should get all reviews', function (done) {
+      agent.get('/api/reviews/')
         .expect(200)
         .end(function (err, response) {
           if (err) return done(err);
@@ -66,43 +78,9 @@ describe('Reviews Route', function () {
         });
     });
 
-  });
-
-  xdescribe('GET /api/products/:productId/reviews', function () {
-
-    var agent, 
-        userId,
-        productId = "thisisafakeproductid123213";
-
-    beforeEach('Create agent', function () {
-      agent = supertest.agent(app);
-    });
-
-    beforeEach('Make a user', function (done) {
-      User.create({email: "sean@sean.com", password: "mypass"})
-      .then(function (user) {
-        userId = user._id;
-        done();
-      })
-      .then(null, done);
-    });
-
-    beforeEach('Write a review', function (done) {
-      Review.create({
-        title: "I like basketball", 
-        rating: 5,
-        description: "This product is the best thing in the world for me to play basketball with.",
-        user: userId,
-        product: productId
-      })
-      .then(function (user) {
-        done();
-      })
-      .then(null, done);
-    });
-
-    it('should get reviews for a specific user', function (done) {
-      agent.get('/api/products/' + productId + '/reviews')
+    it('should filter by user', function (done) {
+      agent.get('/api/reviews/')
+        .query({user: userId.toString()})
         .expect(200)
         .end(function (err, response) {
           if (err) return done(err);
@@ -112,77 +90,47 @@ describe('Reviews Route', function () {
         });
     });
 
-  });
-
-  xdescribe('POST /api/users', function () {
-
-    var agent;
-
-    beforeEach('Create agent', function () {
-      agent = supertest.agent(app);
-    });
-
-
-    it('should make a user', function (done) {
-      agent.post('/api/users/')
-        .send({email: "sean@sean.com", password: "mypass"})
-        .expect(201)
-        .end(function (err, response) {
-          if (err) return done(err);
-          expect(response.body.email).to.equal('sean@sean.com');
-          done();
-        });
-    });
-
-    it('should not give back passwords', function (done) {
-      agent.post('/api/users/')
-        .send({email: "sean@sean.com", password: "mypass"})
-        .expect(201)
-        .end(function (err, response) {
-          if (err) return done(err);
-          expect(response.body.password).to.not.be.ok;
-          done();
-        });
-    });
-
-  });
-
-  xdescribe('GET /api/users/:userId', function () {
-
-    var agent,
-        userId;
-
-    beforeEach('Create agent', function () {
-      agent = supertest.agent(app);
-    });
-
-    beforeEach('Make a user', function (done) {
-      User.create({email: "sean@sean.com", password: "mypass"})
-      .then(function (user) {
-        userId = user._id;
-        done();
-      })
-      .then(null, done);
-    });
-
-
-    it('should get the user without password', function (done) {
-      agent.get('/api/users/' + userId)
+    it('should filter by user 2', function (done) {
+      agent.get('/api/reviews/')
+        .query({user: userId2.toString()})
         .expect(200)
         .end(function (err, response) {
           if (err) return done(err);
-          expect(response.body.email).to.equal('sean@sean.com');
-          
-          done()
+          expect(response.body).to.be.an('array');
+          expect(response.body).to.be.length(0);
+          done();
+        });
+    });
+
+    it('should filter by product', function (done) {
+      agent.get('/api/reviews/')
+        .query({product: productId})
+        .expect(200)
+        .end(function (err, response) {
+          if (err) return done(err);
+          expect(response.body).to.be.an('array');
+          expect(response.body).to.be.length(1);
+          done();
+        });
+    });
+
+    it('should filter by product 2', function (done) {
+      agent.get('/api/reviews/')
+        .query({product: "nottherightid"})
+        .expect(200)
+        .end(function (err, response) {
+          if (err) return done(err);
+          expect(response.body).to.be.an('array');
+          expect(response.body).to.be.length(0);
+          done();
         });
     });
 
   });
 
-  xdescribe('PUT /api/users/:userId', function () {
+  describe('POST /api/reviews', function () {
 
-    var agent,
-        userId;
+    var agent, userId;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
@@ -193,33 +141,121 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      })
+      }) 
       .then(null, done);
     });
 
 
-    it('should edit a user', function (done) {
-      agent.put('/api/users/' + userId)
-        .send({email: "poop@poop.com"})
+    it('should make a review', function (done) {
+      testReview.user = userId;
+      agent.post('/api/reviews/')
+        .send(testReview)
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
-          User.findById(userId)
-          .then(function (user) {
-            expect(user.email).to.equal('poop@poop.com');
+          expect(response.body.title).to.equal("I like basketball");
+          Review.find().exec()
+          .then(function (reviews) {
+            expect(reviews).to.have.length(1);
+            expect(reviews[0].title).to.equal("I like basketball");
             done();
           });
         });
     });
 
-    it('should not give back passwords', function (done) {
-      agent.put('/api/users/' + userId)
-        .send({email: "poop@poop.com"})
+  });
+
+  describe('GET /api/reviews/:reviewId', function () {
+
+    var agent,
+        reviewId,
+        userId;
+
+    beforeEach('Create agent', function () {
+      agent = supertest.agent(app);
+    });
+
+    beforeEach('Make a user', function (done) {
+      User.create({email: "sean@sean.com", password: "mypass"})
+      .then(function (user) {
+        userId = user._id;
+        done();
+      }) 
+      .then(null, done);
+    });
+
+    beforeEach('Write a review', function (done) {
+      testReview.user = userId;
+      console.log(testReview);
+      Review.create(testReview)
+      .then(function (review) {
+        reviewId = review._id;
+        done();
+      })
+      .then(null, function (err) {
+        console.log(err);
+        done();
+      });
+    });
+
+
+    it('should get the review', function (done) {
+      agent.get('/api/reviews/' + reviewId)
+        .expect(200)
+        .end(function (err, response) {
+          if (err) return done(err);
+          expect(response.body.title).to.equal('I like basketball');
+          done();
+        });
+    });
+
+  });
+
+  describe('PUT /api/reviews/:reviewId', function () {
+
+    var agent,
+        reviewId,
+        userId;
+
+    beforeEach('Create agent', function () {
+      agent = supertest.agent(app);
+    });
+
+    beforeEach('Make a user', function (done) {
+      User.create({email: "sean@sean.com", password: "mypass"})
+      .then(function (user) {
+        userId = user._id;
+        done();
+      }) 
+      .then(null, done);
+    });
+
+    beforeEach('Write a review', function (done) {
+      testReview.user = userId;
+      console.log(testReview);
+      Review.create(testReview)
+      .then(function (review) {
+        reviewId = review._id;
+        done();
+      })
+      .then(null, function (err) {
+        console.log(err);
+        done();
+      });
+    });
+
+
+    it('should edit a review', function (done) {
+      agent.put('/api/reviews/' + reviewId)
+        .send({title: "I hate basketball"})
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
-          expect(response.body.password).to.not.be.ok;
-          done();
+          Review.findById(reviewId)
+          .then(function (review) {
+            expect(review.title).to.equal("I hate basketball");
+            done();
+          });
         });
     });
 
