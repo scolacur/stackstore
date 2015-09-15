@@ -130,7 +130,7 @@ connectToDb.then(function () {
         return Product.findAsync({});
     }).then(function (products) {
         if (products.length === 0) {
-            return seedProducts();
+            return seedProducts(categoryId);
         } else {
             console.log(chalk.magenta('Seems to already be product data, exiting!'));
             process.kill(0);

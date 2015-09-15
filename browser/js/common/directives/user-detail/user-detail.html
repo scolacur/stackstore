@@ -2,4 +2,5 @@
   <h3> {{ user.email }} </h3>
   <ul>
     <li ng-repeat='order in orders' ui-sref="order({orderId: {{order._id}} })">{{ order._id }} </li>
+    <li ng-repeat='review in reviews'>{{review.title}}</li>
 </div>
