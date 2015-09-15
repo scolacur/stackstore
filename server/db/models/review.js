@@ -18,8 +18,8 @@ var schema = new mongoose.Schema({
         required: true
     },
     product: {
-        type: String, //fix with product model
-        // ref: 'Product',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
         required: true
     }
 });
