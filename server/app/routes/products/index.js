@@ -6,7 +6,6 @@ var Product = mongoose.model('Product');
 //get all products
 
 router.param('productId', function(req,res,next,id){
-  console.log("IDIDIDI",id);
 	Product.findById(id).exec()
 	.then(function(foundProduct){
 		req.foundProduct = foundProduct;
