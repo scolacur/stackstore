@@ -1,6 +1,4 @@
 app.factory('ProductFactory', function ($http) {
-
-    console.log("in factory");
     
     function getProduct(id) {
         return $http.get("/api/products/" + id).then(function(result) {

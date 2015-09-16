@@ -29,9 +29,10 @@ router.get('/', function (req, res) {
 var dealWithSameItem = function (bodyItem, cart) {
 	var updated = false;
 	cart.forEach(function (item) {
-		if (item.product._id.toString() === bodyItem.product)
+		if (item.product._id.toString() === bodyItem.product._id){
 			updated = true;
 			item.quantity += bodyItem.quantity;
+		}
 	});
 	if (!updated) cart.push(bodyItem);
 };
@@ -39,9 +40,7 @@ var dealWithSameItem = function (bodyItem, cart) {
 //adding to cart
 router.post('/', function (req, res) {
 	if (!req.session.cart) req.session.cart = [];
-
 	dealWithSameItem(req.body, req.session.cart);
-
 	prepareCart(req.session.cart).then(function(cart){
 		res.status(201).json(cart);
 	});
@@ -58,7 +57,7 @@ router.put('/:productId', function (req, res) {
 	req.session.cart = req.session.cart.filter(function(item){
 		return item.quantity > 0;
 	});
-	
+
 	res.status(201).json(req.session.cart);
 });
 

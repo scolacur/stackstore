@@ -1,33 +1,37 @@
-app.factory('CartFactory', function($http, Session){
+app.factory('CartFactory', function($http, Session, $rootScope){
 
-	function syncSessionCart(res){
-		Session.cart = angular.copy(res.data, Session.cart);
+
+	var factoryObj = {};
+
+	function returnData (res){
+		factoryObj.cart = res.data;
+		$rootScope.$emit('updateCart', res.data);
 		return res.data;
-	}
-	function getCart(){
-		return $http.get('/api/cart')
-		.then(syncSessionCart);
-	}
-
-	function addItem(item){
-		return $http.post('/api/cart', item)
-		.then(syncSessionCart);
-	}
-
-	function editItem(productId, editedItem){
-		return $http.put('/api/cart/' + productId, editedItem)
-		.then(syncSessionCart);
-	}
-
-	function deleteCart(){
-		return $http.delete('/api/cart')
-		.then(syncSessionCart);
-	}
-
-	return {
-		getCart: getCart,
-		addItem: addItem,
-		editItem: editItem,
-		deleteCart: deleteCart
 	};
+	
+	factoryObj.getCart = function () {
+		return $http.get('/api/cart')
+		.then(returnData);
+	};
+
+	factoryObj.addToCart = function (product, quantity) {
+		return $http.post('/api/cart', {product, quantity})
+		.then(returnData);
+	};
+
+	factoryObj.editItem = function (editedItem){
+		var productId = editedItem.product._id.toString();
+		return $http.put('/api/cart/' + productId, editedItem)
+		.then(returnData);
+	};
+
+	factoryObj.deleteCart = function () {
+		return $http.delete('/api/cart')
+		.then(returnData);
+	};
+
+
+	factoryObj.getCart();
+
+	return factoryObj;
 });
