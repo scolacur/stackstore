@@ -56,7 +56,6 @@ describe('Reviews Route', function () {
 
     beforeEach('Write a review', function (done) {
       testReview.user = userId;
-      console.log(testReview);
       Review.create(testReview)
       .then(function (review) {
         done();
@@ -186,7 +185,6 @@ describe('Reviews Route', function () {
 
     beforeEach('Write a review', function (done) {
       testReview.user = userId;
-      console.log(testReview);
       Review.create(testReview)
       .then(function (review) {
         reviewId = review._id;
@@ -232,7 +230,6 @@ describe('Reviews Route', function () {
 
     beforeEach('Write a review', function (done) {
       testReview.user = userId;
-      console.log(testReview);
       Review.create(testReview)
       .then(function (review) {
         reviewId = review._id;
