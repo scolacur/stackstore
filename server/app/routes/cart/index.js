@@ -40,10 +40,7 @@ var dealWithSameItem = function (bodyItem, cart) {
 //adding to cart
 router.post('/', function (req, res) {
 	if (!req.session.cart) req.session.cart = [];
-	console.log('req.session.cart', req.session.cart);
 	dealWithSameItem(req.body, req.session.cart);
-	console.log('req.session.cart AFTER', req.session.cart);
-
 	prepareCart(req.session.cart).then(function(cart){
 		res.status(201).json(cart);
 	});

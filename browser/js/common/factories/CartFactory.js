@@ -6,7 +6,6 @@ app.factory('CartFactory', function($http, Session, $rootScope){
 	function returnData (res){
 		factoryObj.cart = res.data;
 		$rootScope.$emit('updateCart', res.data);
-		console.log("cart after addition: ",factoryObj.cart);
 		return res.data;
 	};
 	
@@ -16,7 +15,6 @@ app.factory('CartFactory', function($http, Session, $rootScope){
 	};
 
 	factoryObj.addToCart = function (product, quantity) {
-
 		return $http.post('/api/cart', {product, quantity})
 		.then(returnData);
 	};
