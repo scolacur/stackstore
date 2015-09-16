@@ -5,6 +5,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
         templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
         link: function (scope, element, attrs) {
 			scope.addToCart = function(item, quantity){
+        console.log('adding');
 				CartFactory.addToCart(item, quantity);
 				$state.go('cart');
 			};

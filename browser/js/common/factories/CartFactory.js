@@ -27,7 +27,8 @@ app.factory('CartFactory', function($http, Session, $rootScope){
 		.then(returnData);
 	}
 
-	function editItem(productId, editedItem){
+	function editItem(editedItem){
+		var productId = editedItem.product._id.toString();
 		return $http.put('/api/cart/' + productId, editedItem)
 		.then(returnData);
 	}
