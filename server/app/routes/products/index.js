@@ -31,7 +31,7 @@ router.get('/', function(req,res,next){
   }).then(null, next);
 });
 
-router.get("/:productId", function (req, res, next){
+router.get("/:productId", function (req, res){
   res.json(req.foundProduct);
 });
 
