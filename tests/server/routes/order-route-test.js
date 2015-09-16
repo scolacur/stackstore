@@ -86,9 +86,7 @@ describe('Orders Route', function () {
 					expect(response.body.items[0].product.toString()).to.equal(productId.toString());
 					Order.find({}).exec()
 					.then(function(orders){
-						console.log('success promise', orders);
 						expect(orders).to.have.length(1);
-						console.log('fuggin product', productId, orders[0].items[0].product);
 						expect(orders[0].items[0].product.toString()).to.equal(productId.toString());
 						done();
 					})
