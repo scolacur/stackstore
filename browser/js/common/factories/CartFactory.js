@@ -1,44 +1,39 @@
 app.factory('CartFactory', function($http, Session, $rootScope){
 
-	var cart = null;
 
-	var factoryObj = {
-		cart: cart,
-		getCart: getCart,
-		addToCart: addToCart,
-		editItem: editItem,
-		deleteCart: deleteCart
-	};
+	var factoryObj = {};
 
-	function returnData(res){
+	function returnData (res){
 		factoryObj.cart = res.data;
 		$rootScope.$emit('updateCart', res.data);
 		console.log("cart after addition: ",factoryObj.cart);
 		return res.data;
-	}
-	function getCart(){
+	};
+	
+	factoryObj.getCart = function () {
 		return $http.get('/api/cart')
 		.then(returnData);
-	}
+	};
 
-	function addToCart(product, quantity){
+	factoryObj.addToCart = function (product, quantity) {
 
 		return $http.post('/api/cart', {product, quantity})
 		.then(returnData);
-	}
+	};
 
-	function editItem(editedItem){
+	factoryObj.editItem = function (editedItem){
 		var productId = editedItem.product._id.toString();
 		return $http.put('/api/cart/' + productId, editedItem)
 		.then(returnData);
-	}
+	};
 
-	function deleteCart(){
+	factoryObj.deleteCart = function () {
 		return $http.delete('/api/cart')
 		.then(returnData);
-	}
+	};
 
-	getCart();
+
+	factoryObj.getCart();
 
 	return factoryObj;
 });

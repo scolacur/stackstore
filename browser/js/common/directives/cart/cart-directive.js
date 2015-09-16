@@ -2,7 +2,7 @@ app.directive('cart', function(Session, CartFactory, $timeout, $rootScope){
 	return {
 		restrict: 'E',
 		templateUrl: '/js/common/directives/cart/cart.html',
-		link: function(scope, elem, attrs) {
+		link: function(scope) {
 			$rootScope.$on('updateCart', function(e, cart){
 				scope.cart = cart;
 			});

@@ -3,7 +3,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
     return {
         restrict: 'EA',
         templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
-        link: function (scope, element, attrs) {
+        link: function (scope) {
 			scope.addToCart = function(item, quantity){
         console.log('adding');
 				CartFactory.addToCart(item, quantity);
