@@ -9,6 +9,10 @@ app.directive('cart', function(Session, CartFactory, $timeout, $rootScope){
 			scope.edit = function (index) {
 				scope.editIndex = index;
 			};
+			scope.delete = function (item) {
+				item.quantity = 0;
+				return CartFactory.editItem(item);
+			};
 			scope.saveQuantity = function (item) {
 				return CartFactory.editItem(item)
 				.then(function () {

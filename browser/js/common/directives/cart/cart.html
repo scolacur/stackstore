@@ -13,6 +13,11 @@
           class="btn btn-info"
           ng-click="edit($index)">
           Edit this item
+        </button><button
+          ng-show="editIndex !== $index"
+          class="btn btn-warning"
+          ng-click="delete(item)">
+          Delete Item
         </button>
         <div
           ng-show="editIndex === $index">
