@@ -1,2 +1,11 @@
 
-<p>Product Directive: {{product}}</p>
+<h2>Product</h2>
+<ul>
+	<li>{{product.name}}</li>
+	<li>${{product.price}}</li>
+	<li>{{product.description}}</li>
+</ul>
+<h3>Reviews</h3>
+<ul>
+	<a ng-repeat="review in reviews" ui-sref="reviewDetail({reviewId: review._id})"><li>{{review.title}}</li></a>
+</ul>

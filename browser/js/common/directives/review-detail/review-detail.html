@@ -1,5 +1,8 @@
 <div>
-  <h3> {{review.title }} </h3>
+<h2>{{review.title}}</h2>
+  <p>{{review.description}} </p>
   <ul>
-    <li ng-repeat='review in reviews'>{{review.description}} </li>
+    <a ui-sref="user({userId: '{{user._id}}' })"><li>{{user.email}} </li></a>
+    <a ui-sref="productDetail({id: '{{product._id}}' })"><li>{{product.name}}</li></a>
+  </ul>
 </div>

@@ -4,7 +4,8 @@ app.directive('reviewDetail', function(){
     templateUrl: '/js/common/directives/review-detail/review-detail.html',
     scope: {
       user: '=',
-      orders: '='
+      product: '=',
+      review: '='
     }
   }
 })
