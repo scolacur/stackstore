@@ -38,7 +38,8 @@ var schema = new mongoose.Schema({
         ref: 'User'
     },
     session: {
-        type: String
+        type: String,
+        required: true
     }
 
 });
@@ -53,12 +54,12 @@ schema.plugin(deepPopulate);
 //     return !this.user;
 // });
 
-schema.pre('validate', function(next){
-    if(this.session || this.user) return next();
-    else {
-        throw Error('needs either session or user');
-    };
-})
+// schema.pre('validate', function(next){
+//     if(this.session || this.user) return next();
+//     else {
+//         throw Error('needs either session or user');
+//     };
+// })
 
 // schema.path('items').validate(function(next){
 //     var itemArray = ['quantity', 'product'];
