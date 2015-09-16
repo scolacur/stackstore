@@ -1,33 +1,43 @@
-app.factory('CartFactory', function($http, Session){
+app.factory('CartFactory', function($http, Session, $rootScope){
 
-	function syncSessionCart(res){
-		Session.cart = angular.copy(res.data, Session.cart);
+	var cart = null;
+
+	var factoryObj = {
+		cart: cart,
+		getCart: getCart,
+		addToCart: addToCart,
+		editItem: editItem,
+		deleteCart: deleteCart
+	};
+
+	function returnData(res){
+		factoryObj.cart = res.data;
+		$rootScope.$emit('updateCart', res.data);
+		console.log("cart after addition: ",factoryObj.cart);
 		return res.data;
 	}
 	function getCart(){
 		return $http.get('/api/cart')
-		.then(syncSessionCart);
+		.then(returnData);
 	}
 
-	function addItem(item){
-		return $http.post('/api/cart', item)
-		.then(syncSessionCart);
+	function addToCart(product, quantity){
+
+		return $http.post('/api/cart', {product, quantity})
+		.then(returnData);
 	}
 
 	function editItem(productId, editedItem){
 		return $http.put('/api/cart/' + productId, editedItem)
-		.then(syncSessionCart);
+		.then(returnData);
 	}
 
 	function deleteCart(){
 		return $http.delete('/api/cart')
-		.then(syncSessionCart);
+		.then(returnData);
 	}
 
-	return {
-		getCart: getCart,
-		addItem: addItem,
-		editItem: editItem,
-		deleteCart: deleteCart
-	};
+	getCart();
+
+	return factoryObj;
 });

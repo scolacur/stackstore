@@ -1,9 +1,14 @@
-app.directive('cart', function(){
+app.directive('cart', function(Session, CartFactory, $timeout, $rootScope){
 	return {
 		restrict: 'E',
 		templateUrl: '/js/common/directives/cart/cart.html',
-		controller: function(Session, $scope) {
-			$scope.cart = Session.cart;
+		link: function(scope, elem, attrs) {
+			$rootScope.$on('updateCart', function(e, cart){
+				scope.cart = cart;
+			});
+			scope.deleteCart = function(){
+				return CartFactory.deleteCart();
+			};
 		}
 	};
 });

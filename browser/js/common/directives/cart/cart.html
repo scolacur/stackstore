@@ -1,5 +1,6 @@
 <div class="panel panel-default">
   <ul>
-    <li ng-repeat="item in cart">{{item.product.name}}</li>
+    <li ng-repeat="item in cart">{{item}}</li>
   </ul>
+  <button ng-click="deleteCart()">Delete Cart</button>
 </div>

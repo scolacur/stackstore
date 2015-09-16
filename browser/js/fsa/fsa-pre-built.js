@@ -52,7 +52,7 @@
 
         function onSuccessfulLogin(response) {
             var data = response.data;
-            Session.create(data.id, data.user, data.cart);
+            Session.create(data.id, data.user);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             return data.user;
         }
@@ -117,18 +117,15 @@
 
         this.id = null;
         this.user = null;
-		this.cart = null;
 
-        this.create = function (sessionId, user, cart) {
+        this.create = function (sessionId, user) {
             this.id = sessionId;
             this.user = user;
-			this.cart = cart;
         };
 
         this.destroy = function () {
             this.id = null;
             this.user = null;
-			this.cart = null;
         };
 
     });
