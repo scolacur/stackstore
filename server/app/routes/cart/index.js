@@ -49,13 +49,16 @@ router.post('/', function (req, res) {
 
 //editing an item in the cart
 router.put('/:productId', function (req, res) {
-	
+
 	var editedItemIndex = _.findIndex(req.session.cart, function (item) {
 		return item.product._id.toString() === req.params.productId;
 	});
 
 	_.assign(req.session.cart[editedItemIndex], req.body);
-
+	req.session.cart = req.session.cart.filter(function(item){
+		return item.quantity > 0;
+	});
+	
 	res.status(201).json(req.session.cart);
 });
 

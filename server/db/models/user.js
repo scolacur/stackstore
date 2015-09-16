@@ -72,14 +72,7 @@ schema.method('correctPassword', function (candidatePassword) {
 });
 
 schema.method('saveCart', function(cart){
-    cart = cart.map(function (item) {
-        if (!item.product._id) return item;
-        item.product = item.product._id;
-        return item;
-    });
-
 	this.cart = this.cart.concat(cart);
-
 	return this.save();
 });
 

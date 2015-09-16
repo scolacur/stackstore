@@ -87,7 +87,7 @@ describe('Cart Route', function () {
 							expect(response.body).to.be.length(1);
 							done();
 						});
-						
+
 					});
 			});
 
@@ -115,7 +115,7 @@ describe('Cart Route', function () {
 								done();
 							});
 						});
-						
+
 					});
 			});
 
@@ -150,7 +150,7 @@ describe('Cart Route', function () {
 						expect(response.body).to.be.length(1);
 						done();
 					});
-					
+
 				});
 			});
 
@@ -175,10 +175,10 @@ describe('Cart Route', function () {
 						expect(response.body[0].quantity).to.equal(206);
 						done();
 					});
-					
+
 				});
 			});
-		});  
+		});
 
 		describe('PUT /api/cart', function () {
 
@@ -217,11 +217,32 @@ describe('Cart Route', function () {
 						expect(response.body[0].quantity).to.equal(5);
 						done();
 					});
-					
+
 				});
 			});
 
-		}); 
+			it('should remove items when quantity is set to 0', function (done) {
+				agent.put('/api/cart/' + productId.toString())
+				.send({
+					quantity: 0
+				})
+				.expect(201)
+				.end(function (err, response) {
+					if (err) return done(err);
+					agent.get('/api/cart')
+					.expect(200)
+					.end(function (err, response) {
+						if (err) return done(err);
+						expect(response.body).to.be.an('array');
+						expect(response.body).to.be.length(0);
+						done();
+					});
+
+				});
+			});
+
+
+		});
 
 		describe('DELETE /api/cart', function () {
 
@@ -268,7 +289,7 @@ describe('Cart Route', function () {
 						expect(response.body).to.be.length(0);
 						done();
 					});
-					
+
 				});
 			});
 
