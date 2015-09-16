@@ -18,5 +18,12 @@ app.factory('User', function($http){
     })
   }
 
+  User.getReviews = function (id) {
+    return $http.get('/api/reviews?user=' + id)
+    .then(function(response){
+      return response.data;
+    });
+  };
+
   return User;
 })
