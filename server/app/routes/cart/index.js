@@ -48,8 +48,15 @@ router.post('/', function (req, res) {
 });
 
 //editing an item in the cart
-router.put('/', function (req, res) {
-	// var itemToEdit = req.session.cart.indexOf(req.body);
+router.put('/:productId', function (req, res) {
+	
+	var editedItemIndex = _.findIndex(req.session.cart, function (item) {
+		return item.product._id.toString() === req.params.productId;
+	});
+
+	_.assign(req.session.cart[editedItemIndex], req.body);
+
+	res.status(201).json(req.session.cart);
 });
 
 //empty cart
