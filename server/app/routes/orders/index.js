@@ -11,8 +11,8 @@ router.get('/', function (req, res) {
         query.status = req.query.status;
     }
 	Order.find(query)
-	.then(function (users) {
-		res.json(users);
+	.then(function (orders) {
+		res.json(orders);
 	});
 });
 
