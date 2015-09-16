@@ -8,7 +8,7 @@ app.factory('ProductFactory', function ($http) {
         });
     }
     function getReviews(id) {
-        return $http.get("/api/reviews/" + id).then(function(result) {
+        return $http.get("/api/reviews?product=" + id).then(function(result) {
             return result.data;
         });
     }
@@ -26,7 +26,6 @@ app.factory('ProductFactory', function ($http) {
         getProduct: getProduct,
         getReviews: getReviews,
         getProducts: getProducts
-
     };
 
 });

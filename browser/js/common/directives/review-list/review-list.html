@@ -1,0 +1,6 @@
+<div class="panel panel-default">
+    <h3> Review for this product </h3>
+  <ul>
+    <li ng-repeat="review in reviews"><a ui-sref="reviewDetail({reviewId: review._id })">{{review.title}}</a></li>
+  </ul>
+</div>

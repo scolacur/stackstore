@@ -7,11 +7,15 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 			scope.addToCart = function(item){
 				Cart.addToCart(item);
 			};
-			ProductFactory.getProduct($stateParams.id)
+			ProductFactory.getProduct($stateParams.productId)
 			.then(function(product){
 				scope.product = product;
 			});
- 		// 	scope.reviews = reviewFinder;
+            ProductFactory.getReviews($stateParams.productId)
+            .then(function(reviews){
+                scope.reviews = reviews;
+            });
+
         }
     };
 
