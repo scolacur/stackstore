@@ -16,11 +16,14 @@ router.get('/', function (req, res) {
 	});
 });
 
-router.post('/', function (req, res) {
-    // console.log(req.body);
+router.post('/', function (req, res, next) {
 	Order.create(req.body) //replace with req.session.cart
 	.then(function (order) {
 		res.status(201).json(order);
+	})
+	.then(null, function (error) {
+		console.log(error);
+		next(error);
 	});
 });
 

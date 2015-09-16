@@ -20,9 +20,8 @@ var schema = new mongoose.Schema({
                 required: true
             },
             product: {
-                // type: ObjectId,
-                // ref: 'Product'
-                type: String, //string until product is working
+                type: ObjectId,
+                ref: 'Product',
                 required: true
             }
         }],
@@ -57,18 +56,8 @@ schema.pre('validate', function(next){
     if(this.session || this.user) return next();
     else {
         throw Error('needs either session or user');
-    };
-})
-
-// schema.path('items').validate(function(next){
-//     var itemArray = ['quantity', 'product'];
-//     return this.items.every(function(item){
-//             return itemArray.every(function(prop){
-//                 if (Object.getOwnPropertyNames(item).indexOf(prop) !== -1) return true;
-//                 else return false;
-//             })
-//     })
-// }, 'invalid items in order')
+    }
+});
 
 schema.statics.populateItems = function (_orders) {
     return new Promise(function (resolve, reject) {
