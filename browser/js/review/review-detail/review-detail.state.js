@@ -9,7 +9,6 @@ app.config(function($stateProvider){
       }
     },
     controller: function ($scope, reviewFinder) {
-      console.log("review:", reviewFinder);
       $scope.review = reviewFinder;
       $scope.user = reviewFinder.user;
       $scope.product = reviewFinder.product;
