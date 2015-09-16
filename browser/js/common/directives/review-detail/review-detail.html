@@ -2,7 +2,9 @@
 <h2>{{review.title}}</h2>
   <p>{{review.description}} </p>
   <ul>
-    <a ui-sref="user({userId: '{{user._id}}' })"><li>{{user.email}} </li></a>
-    <a ui-sref="productDetail({id: '{{product._id}}' })"><li>{{product.name}}</li></a>
+    <a ui-sref="user({userId: user._id })"><li>{{user.email}} </li></a>
+    <p>{{user._id}}</p>
+    <p>{{product._id}}</p>
+    <a ui-sref="productDetail({id: product._id})"><li>{{product.name}}</li></a>
   </ul>
 </div>

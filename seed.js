@@ -123,7 +123,7 @@ connectToDb.then(function () {
         } else {
             console.log(chalk.magenta('Seems to already be category data, exiting!'));
             process.kill(0);
-        }    
+        }
     }).then(function(createdCategories) {
         categoryId = createdCategories[0]._id;
     }).then(function () {

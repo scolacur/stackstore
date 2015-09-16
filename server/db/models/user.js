@@ -2,6 +2,8 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var validator = require('email-validator');
+// var _ = require('lodash');
+
 
 var schema = new mongoose.Schema({
     email: {
@@ -30,7 +32,8 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
-    }
+    },
+	cart: [mongoose.Schema.Types.Mixed]
 });
 
 schema.path('email').validate(function (value) {
@@ -67,5 +70,12 @@ schema.statics.encryptPassword = encryptPassword;
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
+
+schema.method('saveCart', function(cart){
+	this.cart = this.cart.concat(cart);
+	return this.save();
+});
+
+
 
 mongoose.model('User', schema);

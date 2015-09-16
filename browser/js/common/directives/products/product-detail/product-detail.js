@@ -1,12 +1,22 @@
-app.directive("productDetail", function (ProductFactory) {
+app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams) {
 
     return {
         restrict: 'EA',
         templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
-    //     link: function (scope, productFinder) {
-    //     	scope.product = productFinder;
- 	//		scope.reviews = reviewFinder;
-    //     }
+        link: function (scope, element, attrs) {
+			scope.addToCart = function(item){
+				Cart.addToCart(item);
+			};
+			ProductFactory.getProduct($stateParams.id)
+			.then(function(product){
+				scope.product = product;
+			});
+            ProductFactory.getReviews($stateParams.id)
+            .then(function(reviews){
+                scope.reviews = reviews;
+            });
+
+        }
     };
 
 });
