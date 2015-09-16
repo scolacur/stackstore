@@ -49,6 +49,13 @@ describe('Order model', function () {
             expect(createOrder).to.throw(Error);
         })
 
+        it('should err with both session and user', function () {
+            function createOrder (){
+                Order.create({user: userId, session: "somefakesession1"});
+            }
+            expect(createOrder).to.throw(Error);
+        })
+
         it('should err without items', function (done) {
             Order.create({user: userId})
             .then(null, function (error) {
