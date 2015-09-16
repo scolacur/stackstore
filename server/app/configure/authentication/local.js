@@ -47,7 +47,8 @@ module.exports = function (app) {
 				req.session.cart = req.session.cart.concat(user.cart);
 				// We respond with a response object that has user with _id and email.
 				res.status(200).send({
-					user: _.omit(user.toJSON(), ['password', 'salt'])
+					user: _.omit(user.toJSON(), ['password', 'salt']),
+					cart: req.session.cart
 				});
 			});
 
@@ -56,5 +57,4 @@ module.exports = function (app) {
 		passport.authenticate('local', authCb)(req, res, next);
 
 	});
-
 };
