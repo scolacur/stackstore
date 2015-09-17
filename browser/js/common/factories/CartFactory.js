@@ -30,8 +30,5 @@ app.factory('CartFactory', function($http, $rootScope){
 		.then(returnData);
 	};
 
-
-	// factoryObj.getCart();
-
 	return factoryObj;
 });
