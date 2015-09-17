@@ -29,6 +29,13 @@ describe('Products Route', function () {
     });
   });
 
+  beforeEach("Create category", function (done) {
+    return Category.create({title: "Default"})
+    .then(function(category){
+        done();
+    });
+  });
+
   afterEach('Clear test database', function (done) {
     clearDB(done);
   });
@@ -73,16 +80,19 @@ describe('Products Route', function () {
 
     it('should make a product', function (done) {
       agent.post('/api/products/')
-        .send({name: 'sand-sniffer', category: categoryId})
+        .send({name: 'sand-sniffer'})
         .expect(201)
         .end(function (err, response) {
+            console.log('LOOK AT ME ', response.body);
           if (err) return done(err);
           expect(response.body.name).to.equal('sand-sniffer');
           Product.find({name: "sand-sniffer"}).exec().then(function (result){
+              console.log('result', result)
             expect(result).to.have.length(1);
             expect(result[0].name).to.equal("sand-sniffer");
             done();
-          });
+        }).then(null, done);
+
         });
     });
 
@@ -92,10 +102,10 @@ describe('Products Route', function () {
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
-          expect(response.body.category).to.equal(categoryId);
-          Product.find({name: "sand-sniffer"}).exec().then(function (result){
+          Product.find({name: "sand-sniffer"}).populate('category').exec()
+          .then(function (result){
             expect(result).to.have.length(1);
-            expect(result[0].category).to.equal(categoryId);
+            expect(result[0].category.title).to.equal("Default");
             done();
           });
         });

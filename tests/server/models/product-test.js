@@ -28,6 +28,13 @@ describe('Product model', function () {
       });
     });
 
+    beforeEach("Create test category", function (done) {
+      return Category.create({title: "Default"})
+      .then(function(category){
+          done();
+      });
+    });
+
     beforeEach("Create test product", function () {
       return Product.create({name: "surfbort", category: categoryId});
     });
