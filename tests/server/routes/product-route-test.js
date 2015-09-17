@@ -102,10 +102,10 @@ describe('Products Route', function () {
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
-          expect(response.body.category).to.equal(categoryId);
-          Product.find({name: "sand-sniffer"}).exec().then(function (result){
+          Product.find({name: "sand-sniffer"}).populate('category').exec()
+          .then(function (result){
             expect(result).to.have.length(1);
-            expect(result[0].category).to.equal(categoryId);
+            expect(result[0].category.title).to.equal("Default");
             done();
           });
         });
