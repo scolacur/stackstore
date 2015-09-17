@@ -1,6 +1,7 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
+var emailer = require('../../configure/email');
 // var _ = require('lodash');
 
 var Order = require('mongoose').model('Order');
@@ -22,10 +23,13 @@ router.post('/', function (req, res, next) {
 	req.body.session = req.session.id;
 	req.body.status = req.body.status || 'pending';
 	req.body.items = req.body.items || req.session.cart;
-
+	req.body.total = req.body.items.reduce(function (mem, item) {
+		return mem + item.product.price * item.quantity;
+	}, 0);
 	if (req.user) req.body.user = req.user._id;
 	Order.create(req.body)
 	.then(function (order) {
+		emailer.confirmEmail(order);
 		res.status(201).json(order);
 	})
 	.then(null, function (error) {
