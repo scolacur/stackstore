@@ -285,4 +285,90 @@ describe('AuthService', function () {
 
     });
 
+    describe('signup', function () {
+
+        afterEach(function () {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it('should make a request POST /signup with the given data', function (done) {
+
+            var extremeTest = {
+                email: 'extremeguy@boom.boom',
+                password: 'extreme'
+            };
+
+            $httpBackend.expectPOST('/signup', extremeTest).respond(201, {});
+
+            AuthService.signup(extremeTest).then(done);
+
+            $httpBackend.flush();
+
+        });
+
+        it('should forward invalid credentials error on unsuccessful response', function (done) {
+
+            $httpBackend.expectPOST('/signup').respond(401);
+
+            AuthService.signup({ password: 'nop' }).catch(function (err) {
+                expect(err.message).to.be.equal('Invalid signup credentials');
+                done();
+            });
+
+            $httpBackend.flush();
+
+        });
+
+        describe('on successful response', function () {
+
+            var user = {email: 'extreme@beans.com'};
+            var signup = {email: 'extreme@beans.com', password: 'tooExtreme'};
+
+            beforeEach(function () {
+                $httpBackend.whenPOST('/signup').respond({user: user});
+            });
+
+            it('should resolve to the responded user', function (done) {
+
+                AuthService.signup(signup).then(function (user) {
+                    expect(user).to.be.deep.equal(user);
+                    done();
+                });
+
+                $httpBackend.flush();
+
+            });
+
+            it('should set Session', function (done) {
+
+                Session.destroy();
+
+                AuthService.signup(signup).then(function (user) {
+                    expect(Session.user).to.be.deep.equal(user);
+                    done();
+                });
+
+                $httpBackend.flush();
+
+            });
+
+            it('should fire off AUTH_EVENTS.signupSuccess', function (done) {
+
+                var spy = sinon.spy();
+
+                $rootScope.$on(AUTH_EVENTS.signupSuccess, spy);
+
+                AuthService.signup(signup).then(function () {
+                    expect(spy.called).to.be.ok;
+                    done();
+                });
+
+                $httpBackend.flush();
+
+            });
+
+        });
+    })
+
 });
