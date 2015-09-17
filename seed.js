@@ -58,7 +58,14 @@ var seedProducts = function (category) {
            price: 5,
            quantity: 100,
            description: "shooting sand shooting sand shooting sand shooting sand"
+        },
+        {
+           name: "three products!",
+           price: 7,
+           quantity: 1,
+           description: "it doesn't matter what it is"
         }
+
     ];
     products.forEach(function(current) {
         current.category = category;
