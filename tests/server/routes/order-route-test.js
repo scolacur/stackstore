@@ -1,6 +1,7 @@
 // Instantiate all models
 var mongoose = require('mongoose');
 require('../../../server/db/models');
+
 var Order = mongoose.model('Order');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
