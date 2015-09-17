@@ -24,7 +24,7 @@ describe('Reviews Route', function () {
   });
 
   var testReview = {
-    title: "I like basketball", 
+    title: "I like basketball",
     rating: 5,
     description: "This product is the best thing in the world for me to play basketball with.",
     product: "thisisafakeproductid123213"
@@ -32,7 +32,7 @@ describe('Reviews Route', function () {
 
   describe('GET /api/reviews/:reviewId/', function () {
 
-    var agent, 
+    var agent,
         userId,
         productId = "thisisafakeproductid123213",
         userId2;
@@ -46,7 +46,7 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         return User.create({email: "sean2@sean2.com", password: "mypass"});
-      })      
+      })
       .then(function (user) {
         userId2 = user._id;
         done();
@@ -140,7 +140,7 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      }) 
+      })
       .then(null, done);
     });
 
@@ -179,7 +179,7 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      }) 
+      })
       .then(null, done);
     });
 
@@ -224,7 +224,7 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      }) 
+      })
       .then(null, done);
     });
 

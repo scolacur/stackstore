@@ -19,7 +19,7 @@ describe('Cart Route', function () {
 		mongoose.connect(dbURI, done);
 	});
 
-	var productId;
+	var product, productId;
 
 	beforeEach('Make a product', function (done) {
 		Product.create({
@@ -27,8 +27,9 @@ describe('Cart Route', function () {
 			inventory: 5,
 			description: 'my favorite bort'
 		})
-		.then(function (product) {
-			productId = product._id;
+		.then(function (foundProduct) {
+			product = foundProduct;
+			productId = product._id
 			done();
 		})
 		.then(null, done);
@@ -165,7 +166,7 @@ describe('Cart Route', function () {
 					agent.post('/api/cart')
 					.send({
 						quantity: 201,
-						product: productId.toString()
+						product: product
 					})
 					.end(function (err, response) {
 						if (err) return done(err);

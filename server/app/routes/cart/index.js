@@ -48,7 +48,6 @@ router.post('/', function (req, res) {
 
 //editing an item in the cart
 router.put('/:productId', function (req, res) {
-
 	var editedItemIndex = _.findIndex(req.session.cart, function (item) {
 		return item.product._id.toString() === req.params.productId;
 	});

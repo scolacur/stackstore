@@ -119,7 +119,7 @@ describe('Users Route', function () {
 				.end(function (err, response) {
 					if (err) return done(err);
 					expect(response.body.email).to.equal('sean@sean.com');
-					
+
 					done()
 				});
 		});
