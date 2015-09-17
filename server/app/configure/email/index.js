@@ -50,14 +50,6 @@ var sendEmail = function sendEmail(order, subject, message_html) {
   });
 };
 
-// function renderTemp(templateFilename, order) {
-//   console.log(templateFilename);
-//   return fs.readFileAsync(templateFilename)
-//   .then(function (contents) {
-//     return ejs.render(contents, order);
-//   });
-// }
-
 function renderTemp(templateFilename, order) {
   templateFilename = __dirname + templateFilename;
   fs.readFile(templateFilename, function (err, contents) {
@@ -65,21 +57,14 @@ function renderTemp(templateFilename, order) {
     if (err) console.log("readfile error:", err);
     console.log("ORDER", order);
     var renderedTemp = swig.render(contents, {locals: {order: order}});
-    //console.log("REDNERED:", renderedTemp);
+    console.log("REDNERED:", renderedTemp);
+    var subject = order.status === "confirmed" ? extreme.confirmSubj : extreme.updateSubj;
     //sendEmail(order, extreme.updateSubj, renderedTemp);
   });
-  // .then(function (contents) {
-  //   return ejs.render(contents, order);
-  // });
 }
-
-
 
 var confirmEmail = function (order) {
   renderTemp('/confirmTemp.html', order)
-  // .then(function (renderedHtml) {
-  //   sendEmail(order, extreme.confirmSubj, renderedHtml);
-  // });
 };
 
 var updateEmail = function (order) {
@@ -89,9 +74,6 @@ var updateEmail = function (order) {
     sendEmail(order, extreme.updateSubj, renderedHtml);
   });
 };
-
-
-
 
 module.exports = {
   updateEmail: updateEmail,
