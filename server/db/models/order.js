@@ -52,7 +52,8 @@ var schema = new mongoose.Schema({
     email: {
         type: String
     },
-    name: String
+    name: String,
+    total: Number
 
 });
 
