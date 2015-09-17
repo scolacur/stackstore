@@ -86,6 +86,21 @@ describe('Products Route', function () {
         });
     });
 
+    it('should apply default category', function (done) {
+      agent.post('/api/products/')
+        .send({name: 'sand-sniffer'})
+        .expect(201)
+        .end(function (err, response) {
+          if (err) return done(err);
+          expect(response.body.category).to.equal(categoryId);
+          Product.find({name: "sand-sniffer"}).exec().then(function (result){
+            expect(result).to.have.length(1);
+            expect(result[0].category).to.equal(categoryId);
+            done();
+          });
+        });
+    });
+
   });
 
   describe('GET /api/products/:productId', function () {
