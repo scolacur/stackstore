@@ -3,10 +3,11 @@ var router = require('express').Router();
 var mongoose = require('mongoose');
 
 var Product = mongoose.model('Product');
-//get all products
+var Category = mongoose.model('Category');
+
 
 router.param('productId', function(req,res,next,id){
-	Product.findById(id).exec()
+	Product.findById(id).populate("category").exec()
 	.then(function(foundProduct){
 		req.foundProduct = foundProduct;
 		next();
@@ -36,6 +37,12 @@ router.get("/:productId", function (req, res){
 
 //create a product
 router.post('/', function(req,res,next){
+  if (!req.body.category) {
+	  Category.findOne({title: 'Default'}).exec()
+	  .then(function(category){
+		  req.body.category = category._id;
+	  })
+  }
   Product.create(req.body)
   .then(function(createdProduct){
     res.status(201).json(createdProduct);

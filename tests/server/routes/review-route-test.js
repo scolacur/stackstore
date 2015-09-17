@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
+var Product = mongoose.model('Product');
+
 
 var expect = require('chai').expect;
 
@@ -24,17 +26,19 @@ describe('Reviews Route', function () {
   });
 
   var testReview = {
-    title: "I like basketball", 
+    title: "I like basketball",
     rating: 5,
     description: "This product is the best thing in the world for me to play basketball with.",
+    user: "insertUserIdHere",
     product: "thisisafakeproductid123213"
   };
 
-  describe('GET /api/reviews/:reviewId/', function () {
+  describe('GET /api/reviews/', function () {
 
-    var agent, 
+    var agent,
         userId,
-        productId = "thisisafakeproductid123213",
+        productId,
+        productId2,
         userId2;
 
     beforeEach('Create agent', function () {
@@ -46,22 +50,35 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         return User.create({email: "sean2@sean2.com", password: "mypass"});
-      })      
+      })
       .then(function (user) {
-        userId2 = user._id;
-        done();
+          userId2 = user._id;
+          done();
       })
       .then(null, done);
     });
 
+    beforeEach('Create 2 product for the review', function(done){
+        Product.create({name: 'extreme toupee'})
+        .then(function(product){
+            productId = product._id;
+            return Product.create({name: 'luxury north korean car'});
+        })
+        .then(function(product){
+            productId2 = product._id;
+            done();
+        })
+        .then(null, done);
+    })
+
     beforeEach('Write a review', function (done) {
       testReview.user = userId;
+      testReview.product = productId;
       Review.create(testReview)
       .then(function (review) {
         done();
       })
       .then(null, function (err) {
-        console.log(err);
         done();
       });
     });
@@ -103,7 +120,7 @@ describe('Reviews Route', function () {
 
     it('should filter by product', function (done) {
       agent.get('/api/reviews/')
-        .query({product: productId})
+        .query({product: productId.toString()})
         .expect(200)
         .end(function (err, response) {
           if (err) return done(err);
@@ -115,10 +132,10 @@ describe('Reviews Route', function () {
 
     it('should filter by product 2', function (done) {
       agent.get('/api/reviews/')
-        .query({product: "nottherightid"})
+        .query({product: productId2.toString()})
         .expect(200)
         .end(function (err, response) {
-          if (err) return done(err);
+        //   if (err) return done(err);
           expect(response.body).to.be.an('array');
           expect(response.body).to.be.length(0);
           done();
@@ -140,7 +157,7 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      }) 
+      })
       .then(null, done);
     });
 
@@ -179,7 +196,7 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      }) 
+      })
       .then(null, done);
     });
 
@@ -191,7 +208,6 @@ describe('Reviews Route', function () {
         done();
       })
       .then(null, function (err) {
-        console.log(err);
         done();
       });
     });
@@ -213,6 +229,7 @@ describe('Reviews Route', function () {
 
     var agent,
         reviewId,
+        productId,
         userId;
 
     beforeEach('Create agent', function () {
@@ -224,19 +241,28 @@ describe('Reviews Route', function () {
       .then(function (user) {
         userId = user._id;
         done();
-      }) 
+      })
       .then(null, done);
+    });
+
+    beforeEach('Create a product for the review', function(done){
+        Product.create({name: 'extreme toupee'})
+        .then(function(product){
+            productId = product._id;
+            done();
+        })
+        .then(null, done);
     });
 
     beforeEach('Write a review', function (done) {
       testReview.user = userId;
+      testReview.product = productId;
       Review.create(testReview)
       .then(function (review) {
         reviewId = review._id;
         done();
       })
       .then(null, function (err) {
-        console.log(err);
         done();
       });
     });
