@@ -2,7 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var validator = require('email-validator');
-// var _ = require('lodash');
+var _ = require('lodash');
 
 
 var schema = new mongoose.Schema({
@@ -78,20 +78,11 @@ schema.method('saveCart', function(cart){
 
 //this method removes any possible duplicates from the combined cart
 schema.method('consolidateCart', function(cart){
-	var sessionCartIds = cart.map(function(item){
-		return item.product._id.toString();
-	});
-	for (var i = 0; i<this.cart.length; i++){
-		var duplicateIndex = sessionCartIds.indexOf(this.cart[i].product._id.toString());
-			//if we find a duplicate,
-			if (duplicateIndex > -1) {
-				cart[duplicateIndex].quantity += this.cart[i].quantity;
-			}
-			else { //combine the carts normally
-				cart.push(this.cart[i]);
-			}
-	}
-	return cart;
+    var bigCart = cart.concat(this.cart);
+    var consolidated = _.uniq(bigCart, function (item, index, array) {
+        return item.product._id.toString();
+    });
+	return consolidated;
 });
 
 
