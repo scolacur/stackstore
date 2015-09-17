@@ -42,7 +42,7 @@ router.post('/', function(req,res,next){
 		.exec()
 		.then(function(category){
 			req.body.category = category._id;
-		})
+		});
 	}
 	Product.create(req.body)
 	.then(function(createdProduct){

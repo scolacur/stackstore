@@ -21,7 +21,8 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res, next) {
 	req.body.session = req.session.id;
 	req.body.status = req.body.status || 'pending';
-	req.body.items = req.session.cart;
+	req.body.items = req.body.items || req.session.cart;
+
 	if (req.user) req.body.user = req.user._id;
 	Order.create(req.body)
 	.then(function (order) {
