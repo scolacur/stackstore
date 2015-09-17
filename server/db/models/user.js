@@ -72,8 +72,31 @@ schema.method('correctPassword', function (candidatePassword) {
 });
 
 schema.method('saveCart', function(cart){
-	this.cart = this.cart.concat(cart);
+	console.log("CART TO BE SAVED",cart);
+	console.log("USER CART",this.cart);
+
+	this.cart = cart;
 	return this.save();
+});
+
+//this method removes any possible duplicates from the combined cart
+schema.method('consolidateCart', function(cart){
+	console.log('user cart', this.cart);
+	console.log('session cart', cart);
+	var sessionCartIds = cart.map(function(item){
+		return item.product._id.toString();
+	});
+	for (var i = 0; i<this.cart.length; i++){
+		var duplicateIndex = sessionCartIds.indexOf(this.cart[i].product._id.toString());
+			//if we find a duplicate,
+			if (duplicateIndex > -1) {
+				cart[duplicateIndex].quantity += this.cart[i].quantity;
+			}
+			else { //combine the carts normally
+				cart.push(this.cart[i]);
+			}
+	}
+	return cart;
 });
 
 

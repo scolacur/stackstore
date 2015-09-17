@@ -1,11 +1,11 @@
-app.factory('CartFactory', function($http, Session, $rootScope){
+app.factory('CartFactory', function($http, $rootScope){
 
 
 	var factoryObj = {};
 
 	function returnData (res){
 		factoryObj.cart = res.data;
-		$rootScope.$emit('updateCart', res.data);
+		$rootScope.$broadcast('updateCart', res.data);
 		return res.data;
 	};
 	
@@ -31,7 +31,7 @@ app.factory('CartFactory', function($http, Session, $rootScope){
 	};
 
 
-	factoryObj.getCart();
+	// factoryObj.getCart();
 
 	return factoryObj;
 });
