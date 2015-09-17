@@ -1,13 +1,13 @@
-app.directive('checkout', function (Order) {
+app.directive('checkout', function (Order, $state) {
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/checkout/checkout.html',
     link: function (scope) {
       scope.submitOrder = function (order) {
         Order.postOrder(order)
-        .then(function (order) {
+        .then(function (postedOrder) {
           console.log('successful order!');
-          $state.go('order', {order: order._id});
+          $state.go('order', {order: postedOrder._id});
         });
       }
     }
