@@ -38,7 +38,8 @@ router.get("/:productId", function (req, res){
 //create a product
 router.post('/', function(req,res,next){
   if (!req.body.category) {
-	  Category.findOne({title: 'Default'}).exec()
+	  Category.findOne({title: 'Default'})
+	  .exec()
 	  .then(function(category){
 		  req.body.category = category._id;
 	  })
@@ -46,7 +47,8 @@ router.post('/', function(req,res,next){
   Product.create(req.body)
   .then(function(createdProduct){
     res.status(201).json(createdProduct);
-  }).then(null, next);
+  })
+  .then(null, next);
 });
 
 //update a product

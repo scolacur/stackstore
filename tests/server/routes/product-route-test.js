@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
 
 var expect = require('chai').expect;
 
@@ -13,9 +14,19 @@ var app = require('../../../server/app');
 
 describe('Products Route', function () {
 
+    var categoryId;
+
   beforeEach('Establish DB connection', function (done) {
     if (mongoose.connection.db) return done();
     mongoose.connect(dbURI, done);
+  });
+
+  beforeEach("Create category", function (done) {
+    return Category.create({title: "NSFW"})
+    .then(function(category){
+        categoryId = category._id;
+        done();
+    });
   });
 
   afterEach('Clear test database', function (done) {
@@ -31,7 +42,7 @@ describe('Products Route', function () {
     });
 
     beforeEach('Make a product', function (done) {
-      Product.create({name: "surfbort"})
+      Product.create({name: "extreme anal beads", category: categoryId})
       .then(function (product) {
         done();
       })
@@ -62,7 +73,7 @@ describe('Products Route', function () {
 
     it('should make a product', function (done) {
       agent.post('/api/products/')
-        .send({name: 'sand-sniffer'})
+        .send({name: 'sand-sniffer', category: categoryId})
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
@@ -87,7 +98,7 @@ describe('Products Route', function () {
     });
 
     beforeEach('Make a product', function (done) {
-      Product.create({name: 'sand-snarker'})
+      Product.create({name: 'sand-snarker', category: categoryId})
       .then(function (product) {
         productId = product._id;
         done();
@@ -107,7 +118,7 @@ describe('Products Route', function () {
     });
 
     beforeEach('Make a product', function (done) {
-      Product.create({name: 'turdboard'})
+      Product.create({name: 'turdboard', category: categoryId})
       .then(function (product) {
         productId = product._id;
         done();

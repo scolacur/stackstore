@@ -11,6 +11,7 @@ require('../../../server/db/models');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
 
 
 describe('Review model', function () {
@@ -33,9 +34,10 @@ describe('Review model', function () {
         describe('Validation', function () {
 
             var userId,
-                productId;
+                productId,
+                categoryId;
 
-            beforeEach('make a user', function (done) {
+            beforeEach('make an user', function (done) {
                 User.create({email: "sean@sean.com", password: "mypass"})
                 .then(function (user) {
                     userId = user._id;
@@ -44,8 +46,17 @@ describe('Review model', function () {
                 .then(null, done);
             });
 
+            beforeEach('make a category', function (done) {
+                Category.create({title: "NSFW"})
+                .then(function (category) {
+                    categoryId = category._id;
+                    done();
+                })
+                .then(null, done);
+            })
+
             beforeEach('make a product', function (done) {
-                Product.create({name: "extreme jockstrap"})
+                Product.create({name: "extreme jockstrap", category: categoryId})
                 .then(function (product) {
                     productId = product._id;
                     done();

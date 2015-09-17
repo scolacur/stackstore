@@ -4,6 +4,7 @@ require('../../../server/db/models');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
 
 
 var expect = require('chai').expect;
@@ -39,7 +40,8 @@ describe('Reviews Route', function () {
         userId,
         productId,
         productId2,
-        userId2;
+        userId2,
+        categoryId;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
@@ -58,18 +60,27 @@ describe('Reviews Route', function () {
       .then(null, done);
     });
 
-    beforeEach('Create 2 product for the review', function(done){
-        Product.create({name: 'extreme toupee'})
+    beforeEach('Create a category for the review', function(done){
+        Category.create({title: 'Misc'})
+        .then(function(category){
+            categoryId = category._id;
+            done();
+        })
+        .then(null, done);
+    });
+
+    beforeEach('Create 2 products for the review', function(done){
+        Product.create({name: 'extreme toupee', category: categoryId})
         .then(function(product){
             productId = product._id;
-            return Product.create({name: 'luxury north korean car'});
+            return Product.create({name: 'luxury north korean car blessed by glorious leader', category: categoryId});
         })
         .then(function(product){
             productId2 = product._id;
             done();
         })
         .then(null, done);
-    })
+    });
 
     beforeEach('Write a review', function (done) {
       testReview.user = userId;
@@ -230,7 +241,8 @@ describe('Reviews Route', function () {
     var agent,
         reviewId,
         productId,
-        userId;
+        userId,
+        categoryId;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
@@ -245,8 +257,17 @@ describe('Reviews Route', function () {
       .then(null, done);
     });
 
+    beforeEach('Create a category for the review', function(done){
+        Category.create({title: 'Default'})
+        .then(function(category){
+            categoryId = category._id;
+            done();
+        })
+        .then(null, done);
+    });
+
     beforeEach('Create a product for the review', function(done){
-        Product.create({name: 'extreme toupee'})
+        Product.create({name: 'extreme toupee', category: categoryId})
         .then(function(product){
             productId = product._id;
             done();
