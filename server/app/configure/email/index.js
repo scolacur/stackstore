@@ -3,7 +3,7 @@ var path = require('path')
 var keys = require('../../../env/development');
 
 var mandrill = require('mandrill-api/mandrill');
-var ejs = require('ejs');
+var swig = require('swig');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require('fs'));
 
@@ -14,7 +14,7 @@ var mandrillClient = new mandrill.Mandrill(keys.MANDRILL.api);
 var extreme = {
   tag: "Exxxtreme",
   from: "Exxxtreme",
-  email: "exxtreme@yahoo.com",
+  email: "gluedonhorns@gmail.com",
   confirmSubj: "Your order has been confirmed",
   updateSubj: "Your order status has been updated"
 };
@@ -38,7 +38,7 @@ var sendEmail = function sendEmail(order, subject, message_html) {
           extreme.tag
       ]    
   };
-  console.log(message);
+  //console.log(message);
   var async = false;
   var ip_pool = "Main Pool";
   mandrillClient.messages.send({"message": message, "async": async, "ip_pool": ip_pool}, function(result) {
@@ -59,10 +59,14 @@ var sendEmail = function sendEmail(order, subject, message_html) {
 // }
 
 function renderTemp(templateFilename, order) {
-  console.log(templateFilename);
+  templateFilename = __dirname + templateFilename;
   fs.readFile(templateFilename, function (err, contents) {
-    if (err) console.log(err);
-    sendEmail(order, extreme.updateSubj, "hi there doooddds");
+    contents = contents.toString();
+    if (err) console.log("readfile error:", err);
+    console.log("ORDER", order);
+    var renderedTemp = swig.render(contents, {locals: {order: order}});
+    //console.log("REDNERED:", renderedTemp);
+    //sendEmail(order, extreme.updateSubj, renderedTemp);
   });
   // .then(function (contents) {
   //   return ejs.render(contents, order);
@@ -72,14 +76,14 @@ function renderTemp(templateFilename, order) {
 
 
 var confirmEmail = function (order) {
-  renderTemp('./confirmTemp.ejs', order)
+  renderTemp('/confirmTemp.html', order)
   // .then(function (renderedHtml) {
   //   sendEmail(order, extreme.confirmSubj, renderedHtml);
   // });
 };
 
 var updateEmail = function (order) {
-  renderTemp('updateTemp.ejs', order)
+  renderTemp('updateTemp.html', order)
   .then(function (renderedHtml) {
     console.log('sending email...')
     sendEmail(order, extreme.updateSubj, renderedHtml);
