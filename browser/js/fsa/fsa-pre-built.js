@@ -18,6 +18,8 @@
     app.constant('AUTH_EVENTS', {
         loginSuccess: 'auth-login-success',
         loginFailed: 'auth-login-failed',
+        signupSuccess: 'auth-signup-success',
+        signupFailed: 'auth-signup-failed',
         logoutSuccess: 'auth-logout-success',
         sessionTimeout: 'auth-session-timeout',
         notAuthenticated: 'auth-not-authenticated',
@@ -57,6 +59,14 @@
             return data.user;
         }
 
+        //add successful signup
+        function onSuccessfulSignup(response) {
+            var data = response.data;
+            Session.create(data.id, data.user);
+            $rootScope.$broadcast(AUTH_EVENTS.signupSuccess);
+            return data.user;
+        }
+
         // Uses the session factory to see if an
         // authenticated user is currently registered.
         this.isAuthenticated = function () {
@@ -90,6 +100,7 @@
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
+                    // console.log('CREDS: ', credentials);
                     return $q.reject({ message: 'Invalid login credentials.' });
                 });
         };
@@ -100,6 +111,16 @@
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             });
         };
+
+        this.signup = function (credentials) {
+            // console.log('CREDENTIALS', credentials);
+            return $http.post('/signup', credentials)
+                .then(onSuccessfulSignup)
+                .catch(function () {
+                    return $q.reject({ message: 'Invalid signup credentials'})
+                });
+        };
+
 
     });
 
