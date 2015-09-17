@@ -14,7 +14,7 @@ var mandrillClient = new mandrill.Mandrill(keys.MANDRILL.api);
 var extreme = {
   tag: "Exxxtreme",
   from: "Exxxtreme",
-  email: "gluedonhorns@gmail.com",
+  email: "exxxxxxxtreme@gmail.com",
   confirmSubj: "Your order has been confirmed",
   updateSubj: "Your order status has been updated"
 };
@@ -55,28 +55,28 @@ function renderTemp(templateFilename, order) {
   fs.readFile(templateFilename, function (err, contents) {
     contents = contents.toString();
     if (err) console.log("readfile error:", err);
-    console.log("ORDER", order);
     var renderedTemp = swig.render(contents, {locals: {order: order}});
-    console.log("REDNERED:", renderedTemp);
     var subject = order.status === "confirmed" ? extreme.confirmSubj : extreme.updateSubj;
-    //sendEmail(order, extreme.updateSubj, renderedTemp);
+    console.log("STATUS, SUBJECT: ", order.status, subject);
+    sendEmail(order, subject, renderedTemp);
   });
 }
 
 var confirmEmail = function (order) {
-  renderTemp('/confirmTemp.html', order)
+  var templateFile = order.status === "confirmed" ? "/confirmTemp.html" : "/updateTemp.html";
+  console.log("templateFile: ", templateFile);
+  renderTemp(templateFile, order);
 };
 
-var updateEmail = function (order) {
-  renderTemp('updateTemp.html', order)
-  .then(function (renderedHtml) {
-    console.log('sending email...')
-    sendEmail(order, extreme.updateSubj, renderedHtml);
-  });
-};
+// var updateEmail = function (order) {
+//   renderTemp('updateTemp.html', order)
+//   .then(function (renderedHtml) {
+//     console.log('sending email...')
+//     sendEmail(order, extreme.updateSubj, renderedHtml);
+//   });
+// };
 
 module.exports = {
-  updateEmail: updateEmail,
   confirmEmail: confirmEmail
 };
 
