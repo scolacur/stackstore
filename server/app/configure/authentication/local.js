@@ -65,25 +65,24 @@ module.exports = function(app) {
         });
 
         app.post('/signup', function(req, res, next) {
-			User.create(req.body)
-			.then(function (user){
-				// req.logIn will establish our session.
-                req.logIn(user, function(loginErr) {
-                    if (loginErr) return next(loginErr);
-                    //adds user.cart to session cart
-                    if (!req.session.cart) req.session.cart = [];
-
-                    req.session.cart = user.consolidateCart(req.session.cart);
-                    // We respond with a response object that has user with _id and email.
-                    res.status(201).send({
-                        user: _.omit(user.toJSON(), ['password', 'salt']),
-                        cart: req.session.cart
-                    });
-                });
-				// res.status(201).json(user);
-			})
-			.then(null, function(err){
-				res.status(401).send(err);
-			})
+		User.create(req.body)
+		.then(function (user){
+			// req.logIn will establish our session.
+                        req.logIn(user, function(loginErr) {
+                                if (loginErr) return next(loginErr);
+                                //adds user.cart to session cart
+                                if (!req.session.cart) req.session.cart = [];
+        
+                                req.session.cart = user.consolidateCart(req.session.cart);
+                                // We respond with a response object that has user with _id and email.
+                                res.status(201).send({
+                                        user: _.omit(user.toJSON(), ['password', 'salt']),
+                                        cart: req.session.cart
+                                });
+                        });
+		})
+		.then(null, function(err){
+		        res.status(401).send(err);
+		})
     	});
 }
