@@ -1,11 +1,16 @@
-app.directive('cart', function(Session, CartFactory, $timeout, $rootScope){
+app.directive('cart', function(Session, CartFactory){
 	return {
 		restrict: 'E',
 		templateUrl: '/js/common/directives/cart/cart.html',
 		link: function(scope) {
-			$rootScope.$on('updateCart', function(e, cart){
-				scope.cart = cart;
-			});
+
+
+			scope.$on('updateCart', function(e, cart){
+        scope.cart = cart;
+      });
+
+			CartFactory.getCart();
+
 			scope.edit = function (index) {
 				scope.editIndex = index;
 			};

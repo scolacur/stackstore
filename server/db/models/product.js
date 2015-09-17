@@ -8,7 +8,11 @@ var schema = new mongoose.Schema({
     description: String,
     inventory: Number,
     photoUrl: String,
-    category: {type: mongoose.Schema.Types.ObjectId, ref: "Category"}
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+        required: true
+    }
 });
 
 schema.pre('save', function (next) {

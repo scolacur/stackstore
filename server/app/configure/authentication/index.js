@@ -56,6 +56,7 @@ module.exports = function (app) {
     // Simple /logout route.
     app.get('/logout', function (req, res, next) {
 		if (!req.user) return res.status(204).end();
+		console.log("session cart, before logout: ",req.session.cart);
 		req.user.saveCart(req.session.cart || []).then(function(){
     		req.logout();
 			req.session.cart = []; //empty the cart

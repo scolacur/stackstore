@@ -6,8 +6,10 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
         link: function (scope) {
           scope.quantity = 1;
     			scope.addToCart = function(item, quantity){
-    				CartFactory.addToCart(item, quantity);
-    				$state.go('cart');
+    				CartFactory.addToCart(item, quantity)
+            .then(function () {
+              $state.go('cart');
+            });
     			};
     			ProductFactory.getProduct($stateParams.productId)
     			.then(function(product){

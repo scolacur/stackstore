@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
+var Category = mongoose.model('Category');
 
 var expect = require('chai').expect;
 
@@ -19,16 +20,26 @@ describe('Cart Route', function () {
 		mongoose.connect(dbURI, done);
 	});
 
-	var productId;
+	var product, productId, categoryId;
+
+	beforeEach("Create test category", function (done) {
+    return Category.create({title: "Books"})
+    .then(function(category){
+        categoryId = category._id;
+        done();
+    });
+  });
 
 	beforeEach('Make a product', function (done) {
 		Product.create({
 			name: "surfbort",
 			inventory: 5,
-			description: 'my favorite bort'
+			description: 'my favorite bort',
+			category: categoryId
 		})
-		.then(function (product) {
-			productId = product._id;
+		.then(function (foundProduct) {
+			product = foundProduct;
+			productId = product._id
 			done();
 		})
 		.then(null, done);
@@ -165,10 +176,11 @@ describe('Cart Route', function () {
 					agent.post('/api/cart')
 					.send({
 						quantity: 201,
-						product: productId.toString()
+						product: product
 					})
 					.end(function (err, response) {
 						if (err) return done(err);
+						console.log(response.body);
 						expect(response.body).to.be.an('array');
 						expect(response.body).to.be.length(1);
 						expect(response.body[0].product._id.toString()).to.equal(productId.toString());

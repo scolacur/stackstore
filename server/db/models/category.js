@@ -3,7 +3,12 @@ var mongoose = require('mongoose');
 
 
 var schema = new mongoose.Schema({
-    title: {type: String, required: true}
+    title: {
+        type: String,
+        enum: ["Extreme Watersports", "Misc", "Weapons", "Books", "Default", "NSFW"],
+        default: "Default",
+        required: true
+    }
 });
 
 schema.pre('save', function (next) {
