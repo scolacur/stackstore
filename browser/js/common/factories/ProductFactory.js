@@ -19,11 +19,17 @@ app.factory('ProductFactory', function ($http) {
             return result.data;
         });
     }
+    function getCategories() {
+        return $http.get("/api/categories").then(function(results) {
+            return results.data;
+        });
+    }
     
     return {
         getProduct: getProduct,
         getReviews: getReviews,
-        getProducts: getProducts
+        getProducts: getProducts,
+        getCategories: getCategories
     };
 
 });
