@@ -23,7 +23,6 @@ module.exports = function (app) {
                 if (user) {
                     return user;
                 } else {
-					console.log(profile);
                     return UserModel.create({
                         google: {
                             id: profile.id,
@@ -51,11 +50,13 @@ module.exports = function (app) {
     }));
 
     app.get('/auth/google/callback',
-        passport.authenticate('google', {successRedirect: '/',
-		failureRedirect: '/login' }),
+        passport.authenticate('google', {failureRedirect: '/login' }),
         function (req, res) {
-			console.log('got to callback!');
-            res.redirect('/');
+			if (!req.session.cart) req.session.cart = [];
+			UserModel.findById(req.session.passport.user)
+			.then(function(foundUser){
+				req.session.cart = foundUser.consolidateCart(req.session.cart);
+            	res.redirect('/');
+			});
         });
-
 };
