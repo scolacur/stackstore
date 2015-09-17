@@ -1,3 +1,4 @@
+
 app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state) {
 
     return {
@@ -10,8 +11,8 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
             .then(function () {
               $state.go('cart');
             });
-    			};
-          
+    		};
+
           //check to see if on home
           scope.home = $state.is('home');
 
@@ -21,7 +22,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
               scope.product = product;
             });
           }
-    			
+
 
         },
         scope: {
