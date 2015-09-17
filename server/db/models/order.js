@@ -13,7 +13,7 @@ var schema = new mongoose.Schema({
         type: String,
         enum: ['shipped', 'confirmed', 'pending', 'cancelled'],
         required: true,
-        default: 'pending'
+        default: 'confirmed'
     },
     items: {
         type: [{
@@ -52,7 +52,8 @@ var schema = new mongoose.Schema({
     email: {
         type: String
     },
-    name: String
+    name: String,
+    total: Number
 
 });
 
