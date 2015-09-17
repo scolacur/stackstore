@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var Category = mongoose.model('Category');
 
 
 var schema = new mongoose.Schema({
@@ -7,7 +8,7 @@ var schema = new mongoose.Schema({
     price: Number,
     description: String,
     inventory: Number,
-    photoUrl: String,
+    photoUrl: {type: String, default: "http://budapestretro.weebly.com/uploads/2/1/6/9/21695204/8297955_orig.jpg?182"},
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
@@ -21,6 +22,19 @@ schema.pre('save', function (next) {
     next();
 
 });
+
+schema.statics.createWithDefault = function (reqBody) {
+    var self = this;
+    return Category.findOne({title: reqBody.category})
+    .then(function (cat) {
+        if (!cat) return Category.findOne({title: 'Default'})
+        else return cat;
+    })
+    .then(function (cat) {
+        reqBody.category = cat._id;
+        return self.create(reqBody)
+    });
+}
 
 
 mongoose.model('Product', schema);
