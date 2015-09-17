@@ -82,6 +82,8 @@ module.exports = function(app) {
                 });
 				// res.status(201).json(user);
 			})
-			.then(null, next)
+			.then(null, function(err){
+				res.status(401).send(err);
+			})
     	});
 }

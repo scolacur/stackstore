@@ -116,9 +116,9 @@
             // console.log('CREDENTIALS', credentials);
             return $http.post('/signup', credentials)
                 .then(onSuccessfulSignup)
-                .catch(function () {
-                    return $q.reject({ message: 'Invalid signup credentials'})
-                });
+                // .catch(function () {
+                //     return $q.reject({ message: 'Invalid signup credentials'})
+                // });
         };
 
 
