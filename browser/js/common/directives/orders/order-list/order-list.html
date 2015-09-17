@@ -1,0 +1,6 @@
+<h2>Orders</h2>
+<ul>
+    <li ng-repeat="order in orders" >
+    <a ui-sref="orderDetail({orderId: '{{order._id}}' })">{{order._id}}</a>
+    </li>
+</ul>
