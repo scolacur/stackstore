@@ -11,6 +11,7 @@ require('../../../server/db/models');
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category')
 
 
 describe('Order model', function () {
@@ -19,12 +20,13 @@ describe('Order model', function () {
         return User.create({ email: 'obama@gmail.com', password: 'potus' });
     };
 
-    var createProduct = function () {
-        return Product.create({name: '99 red balloons'});
+    var createCategory = function () {
+        return Category.create({title: 'Misc'});
     };
 
     var userId,
-        productId;
+        productId,
+        categoryId;
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -33,19 +35,28 @@ describe('Order model', function () {
 
     beforeEach('create a new user', function(done){
         createUser({}).then(function(newUser){
-            userId = newUser._id;
+            userId = newUser._id;;
+            done();
+        })
+        .then(null, done);
+    });
+
+    beforeEach('create a new category', function(done){
+        createCategory().then(function(newCat){
+            categoryId = newCat._id;
             done();
         })
         .then(null, done);
     })
 
     beforeEach('create a new product', function(done){
-        createProduct().then(function(newProduct){
+        Product.create({name: '99 red balloons', category: categoryId})
+        .then(function(newProduct){
             productId = newProduct._id;
             done();
         })
         .then(null, done);
-    })
+    });
 
     afterEach('Clear test database', function (done) {
         clearDB(done);

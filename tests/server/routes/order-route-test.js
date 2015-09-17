@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Order = mongoose.model('Order');
 var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
 
 var expect = require('chai').expect;
 
@@ -19,11 +20,21 @@ describe('Orders Route', function () {
 		mongoose.connect(dbURI, done);
 	});
 
-	var productId;
+	var productId,
+		categoryId;
 
-	beforeEach('Create extremeboard', function (done) {
-		Product.create({
-			name: 'surfboard'
+	beforeEach('Create category and extremeboard', function (done) {
+		Category.create({
+			title: 'Extreme Watersports'
+		})
+		.then(function (category) {
+			categoryId = category._id;
+		})
+		.then(function (){
+			return Product.create({
+				name: 'surfboard',
+				category: categoryId
+			})
 		})
 		.then(function (product) {
 			productId = product._id;

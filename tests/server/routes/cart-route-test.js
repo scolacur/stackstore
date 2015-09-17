@@ -180,6 +180,7 @@ describe('Cart Route', function () {
 					})
 					.end(function (err, response) {
 						if (err) return done(err);
+						console.log(response.body);
 						expect(response.body).to.be.an('array');
 						expect(response.body).to.be.length(1);
 						expect(response.body[0].product._id.toString()).to.equal(productId.toString());
