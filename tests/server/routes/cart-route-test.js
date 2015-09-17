@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
+var Category = mongoose.model('Category');
 
 var expect = require('chai').expect;
 
@@ -19,13 +20,22 @@ describe('Cart Route', function () {
 		mongoose.connect(dbURI, done);
 	});
 
-	var product, productId;
+	var product, productId, categoryId;
+
+	beforeEach("Create test category", function (done) {
+    return Category.create({title: "Books"})
+    .then(function(category){
+        categoryId = category._id;
+        done();
+    });
+  });
 
 	beforeEach('Make a product', function (done) {
 		Product.create({
 			name: "surfbort",
 			inventory: 5,
-			description: 'my favorite bort'
+			description: 'my favorite bort',
+			category: categoryId
 		})
 		.then(function (foundProduct) {
 			product = foundProduct;
