@@ -11,15 +11,21 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
               $state.go('cart');
             });
     			};
-    			ProductFactory.getProduct($stateParams.productId)
-    			.then(function(product){
-    				scope.product = product;
-    			});
-          ProductFactory.getReviews($stateParams.productId)
-          .then(function(reviews){
-              scope.reviews = reviews;
-          });
+          
+          //check to see if on home
+          scope.home = $state.is('home');
 
+          if (!scope.product) {
+            ProductFactory.getProduct($stateParams.productId)
+            .then(function(product){
+              scope.product = product;
+            });
+          }
+    			
+
+        },
+        scope: {
+          product: '='
         }
     };
 
