@@ -72,17 +72,12 @@ schema.method('correctPassword', function (candidatePassword) {
 });
 
 schema.method('saveCart', function(cart){
-	console.log("CART TO BE SAVED",cart);
-	console.log("USER CART",this.cart);
-
 	this.cart = cart;
 	return this.save();
 });
 
 //this method removes any possible duplicates from the combined cart
 schema.method('consolidateCart', function(cart){
-	console.log('user cart', this.cart);
-	console.log('session cart', cart);
 	var sessionCartIds = cart.map(function(item){
 		return item.product._id.toString();
 	});

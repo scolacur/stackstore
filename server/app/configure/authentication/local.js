@@ -45,9 +45,7 @@ module.exports = function (app) {
 				//adds user.cart to session cart
 				if (!req.session.cart) req.session.cart = [];
 
-				// req.session.cart = req.session.cart.concat(user.cart);
 				req.session.cart = user.consolidateCart(req.session.cart);
-				console.log("Concatted cart: ",req.session.cart);
 				// We respond with a response object that has user with _id and email.
 				res.status(200).send({
 					user: _.omit(user.toJSON(), ['password', 'salt']),
