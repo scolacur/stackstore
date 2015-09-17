@@ -25,6 +25,7 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Category = Promise.promisifyAll(mongoose.model('Category'));
 var Review = Promise.promisifyAll(mongoose.model('Review'));
+var Order = Promise.promisifyAll(mongoose.model('Order'));
 
 var seedUsers = function () {
 
@@ -91,15 +92,42 @@ var seedCategories = function () {
 
         var categories = [
         {
-           title: "surf things"
+           title: "Misc"
         },
         {
-           title: "sand things"
+           title: "Weapons"
         }
     ];
     return Category.createAsync(categories);
 };
 
+
+var seedOrders = function (userId, productId) {
+
+        var orders = [
+        {
+            session: "fake session",
+            date: new Date(),
+            status: "pending",
+            items: {
+                quantity: 200,
+                product: productId
+            },
+            user: userId
+        },
+        {
+            session: "fake session",
+            date: new Date(),
+            status: "pending",
+            items: {
+                quantity: 1,
+                product: productId
+            },
+            user: userId
+        }
+    ];
+    return Order.createAsync(orders);
+};
 
 var productId,
     userId,
@@ -142,6 +170,15 @@ connectToDb.then(function () {
     }).then(function (reviews) {
         if (reviews.length === 0) {
             return seedReviews(userId, productId);
+        } else {
+            console.log(chalk.magenta('Seems to already be review data, exiting!'));
+            process.kill(0);
+        }
+    }).then(function(){
+        return Order.findAsync({});
+    }).then(function (orders) {
+        if (orders.length === 0) {
+            return seedOrders(userId, productId);
         } else {
             console.log(chalk.magenta('Seems to already be review data, exiting!'));
             process.kill(0);

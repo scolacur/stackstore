@@ -25,5 +25,12 @@ app.factory('User', function($http){
     });
   };
 
+  User.getOrders = function (id) {
+    return $http.get('/api/orders?user=' + id)
+    .then(function(response){
+      return response.data;
+    });
+  };
+
   return User;
-})
+});

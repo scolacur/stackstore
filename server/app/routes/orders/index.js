@@ -50,7 +50,9 @@ router.get('/:orderId', function (req, res) {
 router.param('orderId', function (req, res, next, orderId) {
 	Order.findById(orderId)
 	.then(function (order) {
-		req.foundOrder = order;
+		return order.populateItem();
+	}).then(function (populatedOrder) {
+		req.foundOrder = populatedOrder;
 		next();
 	})
 	.then(null, next);

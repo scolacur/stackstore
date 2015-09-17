@@ -71,8 +71,9 @@ schema.statics.populateItems = function (_orders) {
 };
 
 schema.methods.populateItem = function () {
+    var self = this;
     return new Promise(function (resolve, reject) {
-        this.deepPopulate('items.product', function (err, post) {
+        self.deepPopulate('items.product', function (err, post) {
             if (err) return reject(err);
             return resolve(post);
         });

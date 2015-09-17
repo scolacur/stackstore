@@ -6,21 +6,21 @@ app.factory('Order', function($http){
   };
 
   Order.postOrder = function (order) {
-    $http.post('/api/orders', order)
+    return $http.post('/api/orders', order)
     .then(function (response) {
       return response.data;
     });
   };
 
   Order.getOrders = function (userId) {
-    $http.get('/api/orders?user=' + userId)
+    return $http.get('/api/orders?user=' + userId)
     .then(function (response) {
       return response.data;
     });
   };
 
-  Order.getOrders = function (userId) {
-    $http.get('/api/orders?user=' + userId)
+  Order.getOrder = function (orderId) {
+    return $http.get('/api/orders/' + orderId)
     .then(function (response) {
       return response.data;
     });
