@@ -19,8 +19,8 @@ app.factory('Order', function($http){
     });
   };
 
-  Order.getOrders = function (userId) {
-    return $http.get('/api/orders?user=' + userId)
+  Order.getOrder = function (orderId) {
+    return $http.get('/api/orders/' + orderId)
     .then(function (response) {
       return response.data;
     });

@@ -6,12 +6,15 @@ app.directive('userDetail', function(User, $stateParams){
         User.getById($stateParams.userId)
         .then(function(user){
             scope.user = user;
-        })
-        scope.orders = [{_id: 'lithuanian chocolate'}, {_id: 'extreme hat'}];
+        });
+        User.getOrders($stateParams.userId)
+        .then(function (orders) {
+            scope.orders = orders;
+        });
         User.getReviews($stateParams.userId)
         .then(function(reviews){
             scope.reviews = reviews;
         });
     }
-  }
-})
+  };
+});
