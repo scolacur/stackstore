@@ -2,7 +2,7 @@ app.directive('userDetail', function(User, $stateParams){
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/user-detail/user-detail.html',
-    link: function (scope, element, attrs){
+    link: function (scope){
         User.getById($stateParams.userId)
         .then(function(user){
             scope.user = user;
