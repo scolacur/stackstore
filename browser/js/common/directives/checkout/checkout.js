@@ -6,7 +6,6 @@ app.directive('checkout', function (Order, $state) {
       scope.submitOrder = function (order) {
         Order.postOrder(order)
         .then(function (postedOrder) {
-          console.log('successful order!');
           $state.go('order', {order: postedOrder._id});
         });
       }
