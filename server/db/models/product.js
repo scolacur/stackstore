@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var Category = mongoose.model('Category');
 
 
 var schema = new mongoose.Schema({
@@ -21,6 +22,19 @@ schema.pre('save', function (next) {
     next();
 
 });
+
+schema.statics.createWithDefault = function (reqBody) {
+    var self = this;
+    return Category.findOne({title: reqBody.category})
+    .then(function (cat) {
+        if (!cat) return Category.findOne({title: 'Default'})
+        else return cat;
+    })
+    .then(function (cat) {
+        reqBody.category = cat._id;
+        return self.create(reqBody)
+    });
+}
 
 
 mongoose.model('Product', schema);
