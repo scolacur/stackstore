@@ -6,18 +6,23 @@ module.exports = router;
 var Order = require('mongoose').model('Order');
 
 router.get('/', function (req, res) {
-    var query = {};
-    if (req.query.status) {
-        query.status = req.query.status;
-    }
-	Order.find(query)
+    // var query = {};
+    // if (req.query.status) {
+    //     query.status = req.query.status;
+    // }
+	Order.find(req.query)
 	.then(function (orders) {
 		res.json(orders);
 	});
 });
 
+// gets a full "order" from frontend, adds session.id and user
+// on backend
 router.post('/', function (req, res, next) {
-	Order.create(req.body) //replace with req.session.cart
+	req.body.session = req.session.id;
+	req.body.status = req.body.status || 'pending';
+	if (req.user) req.body.user = req.user._id;
+	Order.create(req.body)
 	.then(function (order) {
 		res.status(201).json(order);
 	})

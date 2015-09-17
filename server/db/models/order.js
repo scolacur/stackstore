@@ -5,6 +5,8 @@ var Promise = require('bluebird');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var validator = require('email-validator');
+
 
 var schema = new mongoose.Schema({
     status: {
@@ -39,8 +41,22 @@ var schema = new mongoose.Schema({
     session: {
         type: String,
         required: true
-    }
+    },
+    address: {
+        address1: String,
+        address2: String,
+        city: String,
+        zip: Number,
+        state: String
+    },
+    email: {
+        type: String
+    } 
 
+});
+
+schema.path('email').validate(function (value) {
+    return validator.validate(value);
 });
 
 schema.plugin(deepPopulate);
