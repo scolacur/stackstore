@@ -23,6 +23,8 @@ var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
+var Category = Promise.promisifyAll(mongoose.model('Category'));
+var Review = Promise.promisifyAll(mongoose.model('Review'));
 
 var seedUsers = function () {
 
@@ -41,9 +43,9 @@ var seedUsers = function () {
 
 };
 
-var seedProducts = function () {
+var seedProducts = function (category) {
 
-        var products = [
+    var products = [
         {
            name: "surfbort",
            price: 20,
@@ -57,10 +59,51 @@ var seedProducts = function () {
            description: "shooting sand shooting sand shooting sand shooting sand"
         }
     ];
+    products.forEach(function(current) {
+        current.category = category;
+    });
 
     return Product.createAsync(products);
 };
 
+var seedReviews = function (userId, productId) {
+
+    var reviews = [
+        {
+            title: "this surfboard rules",
+            rating: 5,
+            description: "like i said, like i said,like i said, like i said, like i said"
+        },
+        {
+            title: "this surfboard is terrrible",
+            rating: 1,
+            description: "like i said, dude -like i said, dude -like i said, dude"
+        }
+    ];
+    reviews.forEach(function(current) {
+        current.product = productId;
+        current.user = userId;
+    });
+    return Review.createAsync(reviews);
+};
+
+var seedCategories = function () {
+
+        var categories = [
+        {
+           title: "surf things"
+        },
+        {
+           title: "sand things"
+        }
+    ];
+    return Category.createAsync(categories);
+};
+
+
+var productId,
+    userId,
+    categoryId;
 
 connectToDb.then(function () {
     User.findAsync({}).then(function (users) {
@@ -70,16 +113,37 @@ connectToDb.then(function () {
             console.log(chalk.magenta('Seems to already be user data, exiting!'));
             process.kill(0);
         }
+    }).then(function(createdUsers) {
+        userId = createdUsers[0]._id;
+    }).then(function(){
+        return Category.findAsync({});
+    }).then(function (categories) {
+        if (categories.length === 0) {
+            return seedCategories();
+        } else {
+            console.log(chalk.magenta('Seems to already be category data, exiting!'));
+            process.kill(0);
+        }
+    }).then(function(createdCategories) {
+        categoryId = createdCategories[0]._id;
     }).then(function () {
-        console.log("seeding products: ", Product);
         return Product.findAsync({});
     }).then(function (products) {
-        console.log("seeding products2: ");
         if (products.length === 0) {
-            console.log("seeding products3: ");
-            return seedProducts();
+            return seedProducts(categoryId);
         } else {
             console.log(chalk.magenta('Seems to already be product data, exiting!'));
+            process.kill(0);
+        }
+    }).then(function(createdProducts) {
+        productId = createdProducts[0]._id;
+    }).then(function(){
+        return Review.findAsync({});
+    }).then(function (reviews) {
+        if (reviews.length === 0) {
+            return seedReviews(userId, productId);
+        } else {
+            console.log(chalk.magenta('Seems to already be review data, exiting!'));
             process.kill(0);
         }
     }).then(function () {

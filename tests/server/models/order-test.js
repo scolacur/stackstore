@@ -10,6 +10,8 @@ require('../../../server/db/models');
 
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
+var Product = mongoose.model('Product');
+
 
 describe('Order model', function () {
 
@@ -17,7 +19,12 @@ describe('Order model', function () {
         return User.create({ email: 'obama@gmail.com', password: 'potus' });
     };
 
-    var userId;
+    var createProduct = function () {
+        return Product.create({name: '99 red balloons'});
+    };
+
+    var userId,
+        productId;
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -27,6 +34,14 @@ describe('Order model', function () {
     beforeEach('create a new user', function(done){
         createUser({}).then(function(newUser){
             userId = newUser._id;
+            done();
+        })
+        .then(null, done);
+    })
+
+    beforeEach('create a new product', function(done){
+        createProduct().then(function(newProduct){
+            productId = newProduct._id;
             done();
         })
         .then(null, done);
@@ -42,15 +57,17 @@ describe('Order model', function () {
 
     describe('Validations', function () {
 
-        it('should err without session or user', function () {
-            function createOrder (){
-                Order.create({});
-            }
-            expect(createOrder).to.throw(Error);
+        it('should err without session', function (done) {
+            Order.create({items: [{quantity: 0, product: productId}]})
+            .then(null, function (error){
+                expect(error.errors.session).to.exist;
+                expect(error.errors.items).to.not.exist;
+                done();
+            })
         })
 
         it('should err without items', function (done) {
-            Order.create({user: userId})
+            Order.create({session: 'fakeSessionThing'})
             .then(null, function (error) {
                 expect(error.errors.items).to.exist;
                 done();

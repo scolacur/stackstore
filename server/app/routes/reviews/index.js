@@ -1,14 +1,14 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
+// var _ = require('lodash');
 
 var mongoose = require('mongoose');
 var Review = mongoose.model('Review');
 
 
 router.get('/', function (req, res) {
-  Review.find(req.query).populate('user', 'product')
+  Review.find(req.query).populate('user').populate('product')
   .then(function (reviews) {
     res.json(reviews);
   });
@@ -33,11 +33,12 @@ router.put('/:reviewId', function (req, res) {
 });
 
 router.get('/:reviewId', function (req, res) {
+  console.log("review:", req.review);
   res.json(req.review);
 });
 
 router.param('reviewId', function (req, res, next, reviewId) {
-  Review.findById(reviewId)
+  Review.findById(reviewId).populate("user").populate("product")
   .then(function (review) {
     req.review = review;
     next();

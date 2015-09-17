@@ -1,6 +1,4 @@
 app.factory('ProductFactory', function ($http) {
-
-    console.log("in factory");
     
     function getProduct(id) {
         return $http.get("/api/products/" + id).then(function(result) {
@@ -8,7 +6,7 @@ app.factory('ProductFactory', function ($http) {
         });
     }
     function getReviews(id) {
-        return $http.get("/api/reviews/" + id).then(function(result) {
+        return $http.get("/api/reviews?product=" + id).then(function(result) {
             return result.data;
         });
     }
@@ -26,7 +24,6 @@ app.factory('ProductFactory', function ($http) {
         getProduct: getProduct,
         getReviews: getReviews,
         getProducts: getProducts
-
     };
 
 });

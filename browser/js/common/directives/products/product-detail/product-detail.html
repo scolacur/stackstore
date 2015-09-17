@@ -1,2 +1,13 @@
-
 <p>Product Directive: {{product}}</p>
+
+<h2>Product</h2>
+<ul>
+	<li>{{product.name}}</li>
+	<li>${{product.price}}</li>
+	<li>{{product.description}}</li>
+  <li>
+    <p>How many?</p>
+    <input ng-model="quantity">
+  </li>
+  <button ng-click="addToCart(product, quantity)">Add to cart</button>
+</ul>

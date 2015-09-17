@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Order = mongoose.model('Order');
+var Product = mongoose.model('Product');
 
 var expect = require('chai').expect;
 
@@ -18,6 +19,18 @@ describe('Orders Route', function () {
 		mongoose.connect(dbURI, done);
 	});
 
+	var productId;
+
+	beforeEach('Create extremeboard', function (done) {
+		Product.create({
+			name: 'surfboard'
+		})
+		.then(function (product) {
+			productId = product._id;
+			done();
+		});
+	});
+
 	afterEach('Clear test database', function (done) {
 		clearDB(done);
 	});
@@ -31,12 +44,12 @@ describe('Orders Route', function () {
 		});
 
 		beforeEach('Make an order', function (done) {
-			Order.create({items:[{quantity: 314, product: 'surfboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			Order.create({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
 			.then(function (order) {
 				done();
 			})
 			.then(null, function(err){
-				console.error(err)
+				console.error(err);
 				done();
 			});
 		});
@@ -66,24 +79,24 @@ describe('Orders Route', function () {
 		it('should make an order', function (done) {
 
 			agent.post('/api/orders/')
-				// .field('session.cart', "{items:[{quantity: 314, product: 'extremeboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' }")
-				.send({items:[{quantity: 314, product: 'extremeboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+				.send({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
 				.expect(201)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body.items[0].product).to.equal('extremeboard');
+					expect(response.body.items[0].product.toString()).to.equal(productId.toString());
 					Order.find({}).exec()
 					.then(function(orders){
 						expect(orders).to.have.length(1);
-						expect(orders[0].items[0].product).to.equal('extremeboard');
+						expect(orders[0].items[0].product.toString()).to.equal(productId.toString());
 						done();
 					})
+					.then(null, done);
 				});
 		});
 
 	});
 
-	describe('GET /api/users/:userId', function () {
+	describe('GET /api/orders/:orderId', function () {
 
 		var agent,
 			orderId;
@@ -93,7 +106,7 @@ describe('Orders Route', function () {
 		});
 
 		beforeEach('Make an order', function (done) {
-			Order.create({items:[{quantity: 314, product: 'surfboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			Order.create({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
 			.then(function (order) {
 				orderId = order._id;
 				done();
@@ -107,14 +120,14 @@ describe('Orders Route', function () {
 				.expect(200)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body.items[0].product).to.equal('surfboard');
+					expect(response.body.items[0].product.toString()).to.equal(productId.toString());
 					done()
 				});
 		});
 
 	});
 
-	describe('PUT /api/users/:userId', function () {
+	describe('PUT /api/orders/:orderId', function () {
 
 		var agent,
 			orderId;
@@ -124,7 +137,7 @@ describe('Orders Route', function () {
 		});
 
 		beforeEach('Make an order', function (done) {
-			Order.create({items:[{quantity: 314, product: 'surfboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			Order.create({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
 			.then(function (order) {
 				orderId = order._id;
 				done();
@@ -135,13 +148,14 @@ describe('Orders Route', function () {
 
 		it('should edit an order', function (done) {
 			agent.put('/api/orders/' + orderId)
-				.send({items:[{quantity: 314, product: 'extremeboard'}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+				.send({status: 'shipped'})
 				.expect(201)
 				.end(function (err, response) {
 					if (err) return done(err);
 					Order.findById(orderId)
 					.then(function (order) {
-						expect(order.items[0].product).to.equal('extremeboard');
+						expect(order.items[0].product.toString()).to.equal(productId.toString());
+						expect(order.status).to.equal('shipped');
 						done();
 					});
 				});

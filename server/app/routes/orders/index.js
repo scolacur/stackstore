@@ -1,7 +1,7 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
+// var _ = require('lodash');
 
 var Order = require('mongoose').model('Order');
 
@@ -11,16 +11,19 @@ router.get('/', function (req, res) {
         query.status = req.query.status;
     }
 	Order.find(query)
-	.then(function (users) {
-		res.json(users);
+	.then(function (orders) {
+		res.json(orders);
 	});
 });
 
-router.post('/', function (req, res) {
-    // console.log(req.body);
+router.post('/', function (req, res, next) {
 	Order.create(req.body) //replace with req.session.cart
 	.then(function (order) {
 		res.status(201).json(order);
+	})
+	.then(null, function (error) {
+		console.log(error);
+		next(error);
 	});
 });
 
