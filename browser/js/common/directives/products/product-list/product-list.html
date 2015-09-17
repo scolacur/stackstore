@@ -1,5 +1,17 @@
+<div class="search">
+<label>Search All Products: <input ng-model="searchText"></label>
+</div>
 <div class="panel panel-default">
+  
   <ul>
-    <li ng-repeat="product in products"><a ui-sref="productDetail({productId: '{{product._id}}' })">{{product.name}}</a></li>
+    <li ng-repeat="product in products | filter:searchText:false">
+    	<h3><a ui-sref="productDetail({productId: '{{product._id}}' })">{{product.name}}</a></h3>
+    	<img src="{{product.photoUrl}}">
+    	<ul>
+    		<li>{{product.photoUrl}}</li>
+    		<li>${{product.price}}</li>
+    		<li>{{product.description}}</li>
+    	</ul>
+    </li>
   </ul>
 </div>
