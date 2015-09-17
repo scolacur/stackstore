@@ -38,7 +38,7 @@ var schema = new mongoose.Schema({
 
 schema.path('email').validate(function (value) {
     return validator.validate(value);
-})
+});
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.
