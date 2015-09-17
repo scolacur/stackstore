@@ -16,11 +16,11 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
     $scope.sendSignup= function (signupInfo) {
         $scope.error = null;
         AuthService.signup(signupInfo)
-        .then(function (user) {
+        .then(function () {
             $state.go('home');
         })
         .catch(function () {
-            $scope.error = 'Invalid signup credentials!';
+            $scope.error = 'Email is taken!';
         });
 
     };

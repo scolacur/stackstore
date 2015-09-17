@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
     price: Number,
     description: String,
     inventory: Number,
-    photoUrl: String,
+    photoUrl: {type: String, default: "http://budapestretro.weebly.com/uploads/2/1/6/9/21695204/8297955_orig.jpg?182"},
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",

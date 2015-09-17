@@ -5,6 +5,8 @@ var Promise = require('bluebird');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var validator = require('email-validator');
+
 
 var schema = new mongoose.Schema({
     status: {
@@ -39,26 +41,26 @@ var schema = new mongoose.Schema({
     session: {
         type: String,
         required: true
-    }
+    },
+    address: {
+        address1: String,
+        address2: String,
+        city: String,
+        zip: Number,
+        state: String
+    },
+    email: {
+        type: String
+    },
+    name: String
 
 });
 
+schema.path('email').validate(function (value) {
+    return validator.validate(value);
+});
+
 schema.plugin(deepPopulate);
-
-// schema.path('user').validate(function (value) {
-//     return !this.session;
-// }, 'session stuff');
-//
-// schema.path('session').validate(function (value) {
-//     return !this.user;
-// });
-
-// schema.pre('validate', function(next){
-//     if(this.session || this.user) return next();
-//     else {
-//         throw Error('needs either session or user');
-//     }
-// });
 
 schema.statics.populateItems = function (_orders) {
     return new Promise(function (resolve, reject) {
@@ -70,8 +72,9 @@ schema.statics.populateItems = function (_orders) {
 };
 
 schema.methods.populateItem = function () {
+    var self = this;
     return new Promise(function (resolve, reject) {
-        this.deepPopulate('items.product', function (err, post) {
+        self.deepPopulate('items.product', function (err, post) {
             if (err) return reject(err);
             return resolve(post);
         });

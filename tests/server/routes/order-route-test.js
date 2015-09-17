@@ -4,6 +4,7 @@ require('../../../server/db/models');
 var Order = mongoose.model('Order');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
+var User = mongoose.model('User');
 
 var expect = require('chai').expect;
 
@@ -90,7 +91,15 @@ describe('Orders Route', function () {
 		it('should make an order', function (done) {
 
 			agent.post('/api/orders/')
-				.send({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+				.send({
+					items: [{
+						quantity: 314, 
+						product: productId.toString()
+					}], 
+					status: 'pending', 
+					date: new Date(), 
+					session: 'someFakeSession',
+				})
 				.expect(201)
 				.end(function (err, response) {
 					if (err) return done(err);
@@ -101,7 +110,9 @@ describe('Orders Route', function () {
 						expect(orders[0].items[0].product.toString()).to.equal(productId.toString());
 						done();
 					})
-					.then(null, done);
+					.then(null, function (error) {
+						done(error);
+					});
 				});
 		});
 
@@ -110,14 +121,24 @@ describe('Orders Route', function () {
 	describe('GET /api/orders/:orderId', function () {
 
 		var agent,
-			orderId;
+			orderId,
+			userId;
 
 		beforeEach('Create agent', function () {
 			agent = supertest.agent(app);
 		});
 
+		beforeEach('Make a user', function (done) {
+			User.create({email: "sean@sean.com", password: "mypass"})
+			.then(function (user) {
+				userId = user._id;
+				done();
+			})
+			.then(null, done);
+		});
+
 		beforeEach('Make an order', function (done) {
-			Order.create({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
+			Order.create({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), user: userId, session: 'someFakeSession' })
 			.then(function (order) {
 				orderId = order._id;
 				done();
@@ -127,12 +148,22 @@ describe('Orders Route', function () {
 
 
 		it('should get the order', function (done) {
-			agent.get('/api/orders/' + orderId)
+			agent.get('/api/orders/' + orderId.toString())
 				.expect(200)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body.items[0].product.toString()).to.equal(productId.toString());
+					expect(response.body.items[0].product._id.toString()).to.equal(productId.toString());
 					done()
+				});
+		});
+
+		it('should get orders by user', function (done) {
+				agent.get('/api/orders?user=' + userId)
+				.expect(200)
+				.end(function (err, response) {
+					if (err) return done(err);
+					expect(response.body[0].items[0].product.toString()).to.equal(productId.toString());
+					done();
 				});
 		});
 

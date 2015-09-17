@@ -1,13 +1,10 @@
-<p>Product Directive: {{product}}</p>
-
-<h2>Product</h2>
+<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
 <ul>
-	<li>{{product.name}}</li>
 	<li>${{product.price}}</li>
 	<li>{{product.description}}</li>
-  <li>
+  <li ng-show="!home">
     <p>How many?</p>
     <input ng-model="quantity" type='number'>
   </li>
-  <button ng-click="addToCart(product, quantity)">Add to cart</button>
+  <button class="btn btn-success" ng-click="addToCart(product, quantity)">Add to cart</button>
 </ul>
