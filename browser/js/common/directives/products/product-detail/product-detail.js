@@ -1,3 +1,4 @@
+
 app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state) {
 
     return {
@@ -19,7 +20,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
               scope.product = product;
             });
           }
-    			
+
 
         }
     };

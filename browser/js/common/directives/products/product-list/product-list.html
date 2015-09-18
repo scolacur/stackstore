@@ -2,11 +2,10 @@
 <label>Search All Products: <input ng-model="searchText"></label>
 </div>
 <div class="panel panel-default">
-  
+ 
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="product in products | filter:searchText:false">
             <product-detail></product-detail>
-
         </li>
       </ul>
 

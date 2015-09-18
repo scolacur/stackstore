@@ -23,7 +23,7 @@ router.get('/', function(req,res,next){
 	if (req.query.categoryId) {
 		query.category = req.query.categoryId;
 	}
-	Product.find(query).exec()
+	Product.find(query).populate("category").exec()
 	.then(function(products){
 		res.json(products);
 	}).then(null, next);

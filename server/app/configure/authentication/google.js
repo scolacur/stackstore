@@ -25,8 +25,9 @@ module.exports = function (app) {
                 } else {
                     return UserModel.create({
                         google: {
-                            id: profile.id
-                        }
+                            id: profile.id,
+                        },
+						email: profile.emails[0].value
                     });
                 }
 
@@ -49,9 +50,13 @@ module.exports = function (app) {
     }));
 
     app.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/login' }),
+        passport.authenticate('google', {failureRedirect: '/login' }),
         function (req, res) {
-            res.redirect('/');
+			if (!req.session.cart) req.session.cart = [];
+			UserModel.findById(req.session.passport.user)
+			.then(function(foundUser){
+				req.session.cart = foundUser.consolidateCart(req.session.cart);
+            	res.redirect('/');
+			});
         });
-
 };
