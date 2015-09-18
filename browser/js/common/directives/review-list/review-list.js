@@ -1,12 +1,15 @@
-app.directive('reviewList', function($stateParams, ReviewFactory){
+app.directive('reviewList', function($stateParams, ReviewFactory, $state){
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/review-list/review-list.html',
     link: function(scope){
-        ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
-        .then(function(reviews){
-            scope.reviews = reviews;
-        })
+        scope.getStars = function (num) {
+            var arr = [];
+            for (var i = 0; i < num; i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
     }
   }
 })
