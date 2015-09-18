@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
+var User = mongoose.model('User');
+var Store = mongoose.model('Store');
 
 var expect = require('chai').expect;
 
@@ -14,26 +16,54 @@ var app = require('../../../server/app');
 
 describe('Products Route', function () {
 
-    var categoryId;
 
   beforeEach('Establish DB connection', function (done) {
     if (mongoose.connection.db) return done();
     mongoose.connect(dbURI, done);
   });
 
-  beforeEach("Create category", function (done) {
-    return Category.create({title: "NSFW"})
-    .then(function(category){
-        categoryId = category._id;
-        done();
-    });
-  });
+  var productId,
+      product,
+      categoryId,
+      userId,
+      storeId,
+      user = {email: "bowser@mariobros.com", password: "password"};
 
-  beforeEach("Create category", function (done) {
-    return Category.create({title: "Default"})
-    .then(function(category){
-        done();
-    });
+  beforeEach('Create user, store, category, product', function (done) {
+      User.create(user)
+      .then(function(foundUser){
+          userId = foundUser._id;
+          return Store.create({
+              name: "Princess Peach Kidnapping Tools",
+              url: "/peach",
+              user: userId
+          })
+      })
+      .then(function(store){
+          storeId = store._id;
+          return Category.create({
+              title: 'Extreme Watersports'
+          })
+      })
+      .then(function (category) {
+          categoryId = category._id;
+          return Category.create({
+              title: 'Default'
+          })
+      })
+      .then(function (){
+          return Product.create({
+              name: 'surfbort',
+              category: categoryId,
+              price: 56,
+              store: storeId
+          })
+      })
+      .then(function (foundProduct) {
+          productId = foundProduct._id;
+          product = foundProduct
+          done();
+      });
   });
 
   afterEach('Clear test database', function (done) {
@@ -46,14 +76,6 @@ describe('Products Route', function () {
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
-    });
-
-    beforeEach('Make a product', function (done) {
-      Product.create({name: "extreme anal beads", category: categoryId})
-      .then(function (product) {
-        done();
-      })
-      .then(null, done);
     });
 
     it('should get return products with 200 response', function (done) {
@@ -80,7 +102,7 @@ describe('Products Route', function () {
 
     it('should make a product', function (done) {
       agent.post('/api/products/')
-        .send({name: 'sand-sniffer'})
+        .send({name: 'sand-sniffer', store: storeId})
         .expect(201)
         .end(function (err, response) {
             console.log('LOOK AT ME ', response.body);
@@ -98,7 +120,7 @@ describe('Products Route', function () {
 
     it('should apply default category', function (done) {
       agent.post('/api/products/')
-        .send({name: 'sand-sniffer'})
+        .send({name: 'sand-sniffer', store: storeId})
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
@@ -135,20 +157,10 @@ describe('Products Route', function () {
 
   describe('PUT /api/products/:productId', function () {
 
-    var agent,
-        productId;
+    var agent;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
-    });
-
-    beforeEach('Make a product', function (done) {
-      Product.create({name: 'turdboard', category: categoryId})
-      .then(function (product) {
-        productId = product._id;
-        done();
-      })
-      .then(null, done);
     });
 
 

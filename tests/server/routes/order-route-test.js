@@ -6,6 +6,8 @@ var Order = mongoose.model('Order');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
 var User = mongoose.model('User');
+var Store = mongoose.model('Store');
+
 
 var expect = require('chai').expect;
 
@@ -23,12 +25,26 @@ describe('Orders Route', function () {
 	});
 
 	var productId,
-			product,
-		categoryId;
+		product,
+		categoryId,
+		userId,
+		storeId;
 
-	beforeEach('Create category and extremeboard', function (done) {
-		Category.create({
-			title: 'Extreme Watersports'
+	beforeEach('Create user, store, category, product', function (done) {
+		User.create({email: "bowser@mariobros.com"})
+		.then(function(user){
+			userId = user._id;
+			return Store.create({
+	            name: "Princess Peach Kidnapping Tools",
+	            url: "/peach",
+	            user: userId
+	        })
+		})
+		.then(function(store){
+			storeId = store._id;
+			return Category.create({
+				title: 'Extreme Watersports'
+			})
 		})
 		.then(function (category) {
 			categoryId = category._id;
@@ -37,7 +53,8 @@ describe('Orders Route', function () {
 			return Product.create({
 				name: 'surfboard',
 				category: categoryId,
-				price: 56
+				price: 56,
+				store: storeId
 			})
 		})
 		.then(function (foundProduct) {
@@ -97,9 +114,9 @@ describe('Orders Route', function () {
 			agent.post('/api/orders/')
 				.send({
 					items: [{
-						quantity: 314, 
+						quantity: 314,
 						product: product
-					}], 
+					}],
 					session: 'someFakeSession',
 				})
 				.expect(201)
