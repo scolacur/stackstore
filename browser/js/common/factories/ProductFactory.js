@@ -11,11 +11,14 @@ app.factory('ProductFactory', function ($http) {
         });
     }
     function getProducts(category) {
-        var params = {};
-        if (category) {
-            params.category = category;
-        }
-        return $http.get("/api/products", {params: params}).then(function(result) {
+        // var params = {};
+        // if (category) {
+        //     params.category = category;
+        // }
+        // return $http.get("/api/products", {params: params}).then(function(result) {
+        //     return result.data;
+        // });
+        return $http.get("/api/products").then(function(result) {
             return result.data;
         });
     }
@@ -30,6 +33,7 @@ app.factory('ProductFactory', function ($http) {
 		console.log(id);
 		console.log(item);
 		return $http.put('/api/products/' + id, item).then(function(result){
+            console.log("edited:", result.data);
 			return result.data;
 		});
 	}

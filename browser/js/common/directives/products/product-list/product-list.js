@@ -6,6 +6,7 @@ app.directive("productList", function (ProductFactory) {
             scope.selected = {category: ""};
             ProductFactory.getProducts()
             .then(function(products){
+                console.log("products");
                 scope.products = products;
             })
         }

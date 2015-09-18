@@ -4,7 +4,7 @@
 <div class="panel panel-default">
   <category-nav products="products" selected="selected"></category-nav>
   <div class="panel-body">
-      <ul>
+      <ul class="list-unstyled">
         <li ng-repeat="product in products | filter:searchText:false | filter:selected.category">
             <product-detail product="product"></product-detail>
         </li>

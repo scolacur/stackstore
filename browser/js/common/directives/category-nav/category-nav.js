@@ -8,8 +8,8 @@ app.directive("categoryNav", function (ProductFactory) {
             });
         },
         scope: {
-            products: "=",
-            selectedCategory: "=",
+            // products: "=",
+            // selectedCategory: "=",
             selected: "="
         }
     };
