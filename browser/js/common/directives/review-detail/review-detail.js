@@ -8,7 +8,7 @@ app.directive('reviewDetail', function(ReviewFactory, $stateParams){
             scope.review = review;
             scope.user = review.user;
             scope.product = review.product;
-        })
+        });
     }
-  }
-})
+  };
+});

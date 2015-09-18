@@ -1,10 +1,17 @@
-<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
-<ul>
-	<li>${{product.price}}</li>
-	<li>{{product.description}}</li>
-  <li ng-show="!home">
-    <p>How many?</p>
-    <input ng-model="quantity" type='number'>
-  </li>
-  <button class="btn btn-success" ng-click="addToCart(product, quantity)">Add to cart</button>
-</ul>
+<div class="row">
+  <div class="col-md-8">
+    <h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
+    <ul>
+      <li>${{product.price}}</li>
+      <li>{{product.description}}</li>
+      <li ng-show="!home">
+        <p>How many?</p>
+        <input ng-model="quantity" type='number'>
+      </li>
+      <button class="btn btn-success" ng-click="addToCart(product, quantity)">Add to cart</button>
+    </ul>
+  </div>
+  <div class="col-md-4">
+    <img class="pull-right" src="{{product.photoUrl}}"/>
+  </div>
+</div>
