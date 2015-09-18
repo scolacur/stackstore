@@ -12,6 +12,7 @@ var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
+var Store = mongoose.model('Store');
 
 
 describe('Review model', function () {
@@ -29,40 +30,49 @@ describe('Review model', function () {
         expect(Review).to.be.a('function');
     });
 
+    var productId,
+        product,
+        categoryId,
+        userId,
+        storeId;
+
+    beforeEach('Create user, store, category, product', function (done) {
+        User.create({email: "bowser@mariobros.com"})
+        .then(function(user){
+            userId = user._id;
+            return Store.create({
+                name: "Princess Peach Kidnapping Tools",
+                url: "/peach",
+                user: userId
+            })
+        })
+        .then(function(store){
+            storeId = store._id;
+            return Category.create({
+                title: 'Extreme Watersports'
+            })
+        })
+        .then(function (category) {
+            categoryId = category._id;
+        })
+        .then(function (){
+            return Product.create({
+                name: 'surfboard',
+                category: categoryId,
+                price: 56,
+                store: storeId
+            })
+        })
+        .then(function (foundProduct) {
+            productId = foundProduct._id;
+            product = foundProduct
+            done();
+        });
+    });
+
     describe('Review model', function () {
 
         describe('Validation', function () {
-
-            var userId,
-                productId,
-                categoryId;
-
-            beforeEach('make an user', function (done) {
-                User.create({email: "sean@sean.com", password: "mypass"})
-                .then(function (user) {
-                    userId = user._id;
-                    done();
-                })
-                .then(null, done);
-            });
-
-            beforeEach('make a category', function (done) {
-                Category.create({title: "NSFW"})
-                .then(function (category) {
-                    categoryId = category._id;
-                    done();
-                })
-                .then(null, done);
-            })
-
-            beforeEach('make a product', function (done) {
-                Product.create({name: "extreme jockstrap", category: categoryId})
-                .then(function (product) {
-                    productId = product._id;
-                    done();
-                })
-                .then(null, done);
-            })
 
             it('should err without user, product, and description', function (done) {
 

@@ -11,7 +11,9 @@ require('../../../server/db/models');
 var Order = mongoose.model('Order');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
-var Category = mongoose.model('Category')
+var Category = mongoose.model('Category');
+var Store = mongoose.model('Store')
+
 
 
 describe('Order model', function () {
@@ -24,39 +26,50 @@ describe('Order model', function () {
         return Category.create({title: 'Misc'});
     };
 
-    var userId,
-        productId,
-        categoryId;
-
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
         mongoose.connect(dbURI, done);
     });
 
-    beforeEach('create a new user', function(done){
-        createUser({}).then(function(newUser){
-            userId = newUser._id;;
-            done();
-        })
-        .then(null, done);
-    });
+    var productId,
+		product,
+		categoryId,
+		userId,
+		storeId;
 
-    beforeEach('create a new category', function(done){
-        createCategory().then(function(newCat){
-            categoryId = newCat._id;
-            done();
-        })
-        .then(null, done);
-    })
-
-    beforeEach('create a new product', function(done){
-        Product.create({name: '99 red balloons', category: categoryId})
-        .then(function(newProduct){
-            productId = newProduct._id;
-            done();
-        })
-        .then(null, done);
-    });
+	beforeEach('Create user, store, category, product', function (done) {
+		User.create({email: "bowser@mariobros.com"})
+		.then(function(user){
+			userId = user._id;
+			return Store.create({
+	            name: "Princess Peach Kidnapping Tools",
+	            url: "/peach",
+	            user: userId
+	        })
+		})
+		.then(function(store){
+			storeId = store._id;
+			return Category.create({
+				title: 'Extreme Watersports'
+			})
+		})
+		.then(function (category) {
+			categoryId = category._id;
+		})
+		.then(function (){
+			return Product.create({
+				name: 'surfboard',
+				category: categoryId,
+				price: 56,
+				store: storeId
+			})
+		})
+		.then(function (foundProduct) {
+			productId = foundProduct._id;
+			product = foundProduct
+			done();
+		});
+	});
 
     afterEach('Clear test database', function (done) {
         clearDB(done);
