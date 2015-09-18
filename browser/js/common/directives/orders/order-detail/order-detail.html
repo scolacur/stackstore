@@ -1,7 +1,7 @@
 
-<h2>Order</h2>
+<h2 ng-show="main">Order</h2>
 <ul>
-	<li>Order ID: {{order._id}}</li>
+	<li>Order ID: <a ui-sref="orderDetail({orderId: '{{order._id}}' })">{{order._id}}</a></li>
 	<li>Items
 		<ul ng-repeat="item in order.items">
 			<li>Product: {{item.product}}</li>

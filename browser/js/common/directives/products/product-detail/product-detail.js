@@ -12,9 +12,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
             });
     			};
           
-          //check to see if on home
           scope.home = $state.is('home');
-
           if (!scope.product) {
             ProductFactory.getProduct($stateParams.productId)
             .then(function(product){
@@ -23,9 +21,6 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
           }
     			
 
-        },
-        scope: {
-          product: '='
         }
     };
 

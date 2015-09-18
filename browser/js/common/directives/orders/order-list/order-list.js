@@ -3,10 +3,15 @@ app.directive('orderList', function(Order, $stateParams){
     restrict: 'E',
     templateUrl: '/js/common/directives/orders/order-list/order-list.html',
     link: function (scope, element){
-        Order.getAllOrders()
-        .then(function(orders){
-            scope.orders = orders;
-        });
+        if (!scope.orders && $stateParams.userId) {
+            Order.getOrders({user: $stateParams.userId})
+            .then(function(orders){
+                scope.orders = orders;
+            });
+        }
+    },
+    scope: {
+        orders: "="
     }
   }
 })
