@@ -3,7 +3,6 @@ app.directive('reviewDetail', function(ReviewFactory, $stateParams){
     restrict: 'E',
     templateUrl: '/js/common/directives/review-detail/review-detail.html',
     link: function(scope){
-        console.log(scope.review);
         ReviewFactory.getReview($stateParams.reviewId)
         .then(function(review){
             scope.review = review;
