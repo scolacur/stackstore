@@ -19,18 +19,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 				scope.isAdmin = false;
 			}
             scope.isDetail = $state.is("productDetail");
-            // if (!scope.product) {
-          //   ProductFactory.getProduct($stateParams.productId)
-          //   .then(function(product){
-          //     scope.product = product;
-          //   });
-          // }
         },
-
-        // scope: {
-        //   selected: "=",
-        //   product: "="
-        // }
     }
 
 });
