@@ -11,13 +11,6 @@ app.factory('ProductFactory', function ($http) {
         });
     }
     function getProducts(category) {
-        // var params = {};
-        // if (category) {
-        //     params.category = category;
-        // }
-        // return $http.get("/api/products", {params: params}).then(function(result) {
-        //     return result.data;
-        // });
         return $http.get("/api/products").then(function(result) {
             return result.data;
         });
