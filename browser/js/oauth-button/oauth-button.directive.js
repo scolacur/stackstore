@@ -8,5 +8,5 @@ app.directive('oauthButton', function () {
 		restrict: 'E',
 		templateUrl: '/js/oauth-button/oauth-button.html',
 		controller: 'LoginCtrl'
-	}
+	};
 });
