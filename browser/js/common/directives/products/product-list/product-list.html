@@ -2,13 +2,15 @@
 <label>Search All Products: <input ng-model="searchText"></label>
 </div>
 <div class="panel panel-default">
-
-  <category-nav selected="selected"></category-nav>
-  <div class="panel-body">
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="product in products | filter:searchText:false | filter:selected">
-            <product-detail product="product"></product-detail>
-        </li>
-      </ul>
+  
+  <div class="panel-heading">
+    <span>Category:</span>
+    <category-nav selected="selected"></category-nav>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="product in products | filter:searchText:false | filter:selected">
+        <product-detail product="product"></product-detail>
+    </li>
+  </ul>
 
 </div>
