@@ -2,10 +2,10 @@
 <label>Search All Products: <input ng-model="searchText"></label>
 </div>
 <div class="panel panel-default">
-  <category-nav products="products" selected="selected"></category-nav>
+  <category-nav selected="selected"></category-nav>
   <div class="panel-body">
       <ul class="list-unstyled">
-        <li ng-repeat="product in products | filter:searchText:false | filter:selected.category">
+        <li ng-repeat="product in products | filter:searchText:false | filter:selected">
             <product-detail product="product"></product-detail>
         </li>
       </ul>

@@ -5,7 +5,6 @@ app.config(function ($stateProvider) {
 		controller: function($rootScope){
 			$rootScope.editMode = false;
 			$rootScope.toggleEdit = function(){
-				console.log("edit mode? ",$rootScope.editMode)
 				$rootScope.editMode = !$rootScope.editMode;
 			};
 		}

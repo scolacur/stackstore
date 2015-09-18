@@ -20,10 +20,8 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 			} else {
 				scope.isAdmin = false;
 			}
-			console.log(scope.isAdmin);
 
             scope.isDetail = $state.is("productDetail");
-            console.log(scope.isDetail);
         },
 
         // scope: {

@@ -3,7 +3,7 @@ app.directive("productList", function (ProductFactory) {
         restrict: 'EA',
         templateUrl: 'js/common/directives/products/product-list/product-list.html',
         link: function (scope) {
-            scope.selected = {category: ""};
+            scope.selected = "";
             ProductFactory.getProducts()
             .then(function(products){
                 console.log("products");
