@@ -2,8 +2,8 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state('productDetail', {
         url: '/products/:productId',
-        templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function(Session, $scope, getProduct, ProductFactory){
+        templateUrl: '/js/products/product-detail/product-detail.html', 
+		controller: function(Session, $scope, getProduct, ProductFactory, ReviewFactory, $stateParams){
 			// console.log('session user: ', Session.user);
 			// console.log("product: ",$scope.product);
 			// if (Session.user){
@@ -18,6 +18,10 @@ app.config(function ($stateProvider) {
 				console.log("editing");
 				ProductFactory.editProduct($scope.product._id, $scope.newProduct);
 			};
+			ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
+          	.then(function(reviews){
+            	$scope.reviews = reviews;
+          	});
 		},
 		resolve:
 			{

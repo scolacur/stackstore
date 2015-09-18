@@ -5,29 +5,32 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
         restrict: 'EA',
         templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
         link: function (scope) {
-          scope.quantity = 1;
-    			scope.addToCart = function(item, quantity){
-    				CartFactory.addToCart(item, quantity)
-            .then(function () {
-              $state.go('cart');
-            });
-    		};
-
-          //check to see if on home
-          scope.home = $state.is('home');
-		  if (Session.user){
-		  	scope.isAdmin = Session.user.isAdmin;
-			} else {
+            scope.quantity = 1;
+        	scope.addToCart = function(item, quantity){
+        		CartFactory.addToCart(item, quantity)
+                .then(function () {
+                    $state.go('cart');
+                });
+        	};
+            scope.home = $state.is('home');
+	        if (Session.user){
+		  	   scope.isAdmin = Session.user.isAdmin;
+		    } else {
 				scope.isAdmin = false;
 			}
-
             scope.isDetail = $state.is("productDetail");
+            // if (!scope.product) {
+          //   ProductFactory.getProduct($stateParams.productId)
+          //   .then(function(product){
+          //     scope.product = product;
+          //   });
+          // }
         },
 
         // scope: {
         //   selected: "=",
         //   product: "="
         // }
-    };
+    }
 
 });
