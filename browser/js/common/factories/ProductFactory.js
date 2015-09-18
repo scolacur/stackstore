@@ -1,5 +1,5 @@
 app.factory('ProductFactory', function ($http) {
-    
+
     function getProduct(id) {
         return $http.get("/api/products/" + id).then(function(result) {
             return result.data;
@@ -24,12 +24,22 @@ app.factory('ProductFactory', function ($http) {
             return results.data;
         });
     }
-    
+
+	function editProduct(id, item){
+		console.log('Getting to factory!');
+		console.log(id);
+		console.log(item);
+		return $http.put('/api/products/' + id, item).then(function(result){
+			return result.data;
+		});
+	}
+
     return {
         getProduct: getProduct,
         getReviews: getReviews,
         getProducts: getProducts,
-        getCategories: getCategories
+        getCategories: getCategories,
+		editProduct: editProduct
     };
 
 });

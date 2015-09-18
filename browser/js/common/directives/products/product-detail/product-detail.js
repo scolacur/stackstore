@@ -1,5 +1,5 @@
 
-app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state) {
+app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state, Session) {
 
     return {
         restrict: 'EA',
@@ -15,19 +15,25 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 
           //check to see if on home
           scope.home = $state.is('home');
-
-          if (!scope.product) {
-            ProductFactory.getProduct($stateParams.productId)
-            .then(function(product){
-              scope.product = product;
-            });
-          }
+		  if (Session.user){
+		  	scope.isAdmin = Session.user.isAdmin;
+			} else {
+				scope.isAdmin = false;
+			}
+			console.log(scope.isAdmin);
+		  //
+        //   if (!scope.product) {
+        //     ProductFactory.getProduct($stateParams.productId)
+        //     .then(function(product){
+        //       scope.product = product;
+        //     });
+        //   }
 
 
         },
-        scope: {
-          product: '='
-        }
+        // scope: {
+        //   product: '='
+        // }
     };
 
 });

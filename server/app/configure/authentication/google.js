@@ -53,10 +53,7 @@ module.exports = function (app) {
         passport.authenticate('google', {failureRedirect: '/login' }),
         function (req, res) {
 			if (!req.session.cart) req.session.cart = [];
-			UserModel.findById(req.session.passport.user)
-			.then(function(foundUser){
-				req.session.cart = foundUser.consolidateCart(req.session.cart);
-            	res.redirect('/');
-			});
+			req.session.cart = req.user.consolidateCart(req.session.cart);
+            res.redirect('/');
         });
 };
