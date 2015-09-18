@@ -29,21 +29,22 @@ app.factory('ProductFactory', function ($http) {
     }
 
     function getCategoryByName(name) {
-        return $http.get("/api/categories?title=" + name).then(function(result) {
-            return result.data[0];
-        })
+		if (typeof name === 'string'){
+	        return $http.get("/api/categories?title=" + name).then(function(result) {
+	            return result.data[0];
+	        });
+		}
+		return Promise.resolve(name);
     }
 
 	function editProduct(id, item){
-        getCategoryByName(item.category).then(function(result){
-            console.log("resyulttt", result);
+        return getCategoryByName(item.category)
+		.then(function(result){
             item.category = result._id;
-            console.log("item to put:", item);
             return $http.put('/api/products/' + id, item).then(function(result){
-                console.log("edited:", result.data);
                 return result.data;
             });
-        })
+        });
 	}
 
     return {

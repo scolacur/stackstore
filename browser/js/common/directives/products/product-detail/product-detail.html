@@ -5,7 +5,7 @@
 		<ul>
 			<li>Price:<input ng-model = "newProduct.price" ></input></li>
 			<li>Description:<input ng-model = "newProduct.description" ></input></li>
-			<li>Quantity:<input ng-model = "newProduct.quantity" ></input></li>
+			<li>Inventory:<input ng-model = "newProduct.inventory" ></input></li>
 			<li>Store:<input ng-model = "newProduct.store" ></input></li>
 			<li>Category:
 				<category-nav selected="newProduct.category"></category-nav>
@@ -18,7 +18,7 @@
 	<ul ng-hide="editMode">
 		<li>{{product.price | currency}}</li>
 		<li>Description: {{product.description}}</li>
-		<li>We have {{product.quantity}} in stock</li>
+		<li>We have {{product.inventory}} in stock</li>
 		<li>Sold from: {{product.store}}</li>
 		<li>Category: {{product.category.title}}</li>
 	  	<li ng-show="!home">
