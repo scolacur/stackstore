@@ -21,11 +21,12 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
-var User = Promise.promisifyAll(mongoose.model('User'));
-var Product = Promise.promisifyAll(mongoose.model('Product'));
-var Category = Promise.promisifyAll(mongoose.model('Category'));
-var Review = Promise.promisifyAll(mongoose.model('Review'));
-var Order = Promise.promisifyAll(mongoose.model('Order'));
+var User = mongoose.model('User');
+var Product = mongoose.model('Product');
+var Category = mongoose.model('Category');
+var Review = mongoose.model('Review');
+var Order = mongoose.model('Order');
+var Store = mongoose.model('Store');
 
 var seedUsers = function () {
 
@@ -40,7 +41,24 @@ var seedUsers = function () {
         }
     ];
 
-    return User.createAsync(users);
+    return User.create(users);
+
+};
+
+var seedUsers = function () {
+
+    var users = [
+        {
+            email: 'testing@fsa.com',
+            password: 'password'
+        },
+        {
+            email: 'obama@gmail.com',
+            password: 'potus'
+        }
+    ];
+
+    return User.create(users);
 
 };
 
@@ -67,11 +85,46 @@ var seedProducts = function (category) {
         }
 
     ];
-    products.forEach(function(current) {
-        current.category = category;
-    });
+      var categoryId,
+      userId,
+      storeId;
 
-    return Product.createAsync(products);
+      return User.create(user)
+      .then(function(foundUser){
+          userId = foundUser._id;
+          return Store.create({
+              name: "Princess Peach Kidnapping Tools",
+              url: "/peach",
+              user: userId
+          })
+      })
+      .then(function(store){
+          storeId = store._id;
+          return Category.create({
+              title: 'Extreme Watersports'
+          })
+      })
+      .then(function (category) {
+          categoryId = category._id;
+          return Category.create({
+              title: 'Default'
+          })
+      })
+      .then(function (){
+          return Product.create({
+              name: 'surfbort',
+              category: categoryId,
+              price: 56,
+              store: storeId
+          })
+      })
+      .then(function () {
+          products.forEach(function(current) {
+                current.category = categoryId;
+                current.store = storeId;
+            });
+          return Product.create(products);
+      })
 };
 
 var seedReviews = function (userId, productId) {
@@ -92,7 +145,7 @@ var seedReviews = function (userId, productId) {
         current.product = productId;
         current.user = userId;
     });
-    return Review.createAsync(reviews);
+    return Review.create(reviews);
 };
 
 var seedCategories = function () {
@@ -105,7 +158,7 @@ var seedCategories = function () {
            title: "Weapons"
         }
     ];
-    return Category.createAsync(categories);
+    return Category.create(categories);
 };
 
 
@@ -133,7 +186,7 @@ var seedOrders = function (userId, productId) {
             user: userId
         }
     ];
-    return Order.createAsync(orders);
+    return Order.create(orders);
 };
 
 var productId,
@@ -141,7 +194,7 @@ var productId,
     categoryId;
 
 connectToDb.then(function () {
-    User.findAsync({}).then(function (users) {
+    User.find({}).then(function (users) {
         if (users.length === 0) {
             return seedUsers();
         } else {
@@ -151,7 +204,7 @@ connectToDb.then(function () {
     }).then(function(createdUsers) {
         userId = createdUsers[0]._id;
     }).then(function(){
-        return Category.findAsync({});
+        return Category.find({});
     }).then(function (categories) {
         if (categories.length === 0) {
             return seedCategories();
@@ -162,7 +215,7 @@ connectToDb.then(function () {
     }).then(function(createdCategories) {
         categoryId = createdCategories[0]._id;
     }).then(function () {
-        return Product.findAsync({});
+        return Product.find({});
     }).then(function (products) {
         if (products.length === 0) {
             return seedProducts(categoryId);
@@ -173,7 +226,7 @@ connectToDb.then(function () {
     }).then(function(createdProducts) {
         productId = createdProducts[0]._id;
     }).then(function(){
-        return Review.findAsync({});
+        return Review.find({});
     }).then(function (reviews) {
         if (reviews.length === 0) {
             return seedReviews(userId, productId);
@@ -182,7 +235,7 @@ connectToDb.then(function () {
             process.kill(0);
         }
     }).then(function(){
-        return Order.findAsync({});
+        return Order.find({});
     }).then(function (orders) {
         if (orders.length === 0) {
             return seedOrders(userId, productId);
