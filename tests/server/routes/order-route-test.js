@@ -23,6 +23,7 @@ describe('Orders Route', function () {
 	});
 
 	var productId,
+			product,
 		categoryId;
 
 	beforeEach('Create category and extremeboard', function (done) {
@@ -35,11 +36,13 @@ describe('Orders Route', function () {
 		.then(function (){
 			return Product.create({
 				name: 'surfboard',
-				category: categoryId
+				category: categoryId,
+				price: 56
 			})
 		})
-		.then(function (product) {
-			productId = product._id;
+		.then(function (foundProduct) {
+			productId = foundProduct._id;
+			product = foundProduct
 			done();
 		});
 	});
@@ -95,18 +98,17 @@ describe('Orders Route', function () {
 				.send({
 					items: [{
 						quantity: 314, 
-						product: productId.toString()
+						product: product
 					}], 
-					status: 'pending', 
-					date: new Date(), 
 					session: 'someFakeSession',
 				})
 				.expect(201)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body.items[0].product.toString()).to.equal(productId.toString());
+					expect(response.body.items[0].product._id.toString()).to.equal(productId.toString());
 					Order.find({}).exec()
 					.then(function(orders){
+						console.log(orders);
 						expect(orders).to.have.length(1);
 						expect(orders[0].items[0].product.toString()).to.equal(productId.toString());
 						done();
