@@ -20,8 +20,8 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.path('description').validate(function (value) {
-    return value.length > 50;
-});
+schema.path('url').validate(function(value){
+    return /^\/[\w\-]+/.test(value);
+})
 
 mongoose.model('Store', schema);
