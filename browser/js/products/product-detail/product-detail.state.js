@@ -4,12 +4,6 @@ app.config(function ($stateProvider) {
         url: '/products/:productId',
         templateUrl: '/js/products/product-detail/product-detail.html',
 		controller: function(Session, $scope, getProduct, ProductFactory, ReviewFactory, $stateParams, $rootScope, $state){
-			// console.log('session user: ', Session.user);
-			// console.log("product: ",$scope.product);
-			// if (Session.user){
-			// 	$scope.isAdmin = Session.user.isAdmin;
-			// 	console.log($scope.isAdmin);
-			// }
 			$scope.product = getProduct;
 			$scope.newProduct = $scope.product;
 			$scope.editProduct = function () {
