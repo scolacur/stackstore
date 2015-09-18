@@ -6,6 +6,9 @@ app.config(function ($stateProvider) {
       store: function (Store) {
         return Store.getStore();
       }
-    }    
+    },
+    controller: function ($scope, store) {
+      $scope.store = store;
+    }  
   })
 });
