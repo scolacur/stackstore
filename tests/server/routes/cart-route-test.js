@@ -85,7 +85,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 					.send({
 						quantity: 5,
-						product: productId.toString()
+						product: product
 					})
 					.expect(201)
 					.end(function (err, response) {
@@ -106,7 +106,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 					.send({
 						quantity: 5,
-						product: productId.toString()
+						product: product
 					})
 					.expect(201)
 					.end(function (err, response) {
@@ -145,7 +145,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 				.send({
 					quantity: 5,
-					product: productId.toString()
+					product: product
 				})
 				.expect(201)
 				.end(function (err, response) {
@@ -169,7 +169,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 				.send({
 					quantity: 5,
-					product: productId.toString()
+					product: product
 				})
 				.end(function (err, response) {
 					if (err) return done(err);
@@ -183,7 +183,7 @@ describe('Cart Route', function () {
 						console.log(response.body);
 						expect(response.body).to.be.an('array');
 						expect(response.body).to.be.length(1);
-						expect(response.body[0].product._id.toString()).to.equal(productId.toString());
+						expect(response.body[0].product._id.toString()).to.equal(product._id.toString());
 						expect(response.body[0].quantity).to.equal(206);
 						done();
 					});
@@ -204,7 +204,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 				.send({
 					quantity: 1491,
-					product: productId.toString()
+					product: product
 				})
 				.end(function (err, response) {
 					if (err) return done(err);
@@ -268,7 +268,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 				.send({
 					quantity: 5,
-					product: productId.toString()
+					product: product
 				})
 				.end(function (err, response) {
 					if (err) return done(err);
@@ -280,7 +280,7 @@ describe('Cart Route', function () {
 				agent.post('/api/cart')
 				.send({
 					quantity: 1491,
-					product: productId.toString()
+					product: product
 				})
 				.end(function (err, response) {
 					if (err) return done(err);
@@ -329,7 +329,7 @@ describe('Cart Route', function () {
 			agent.post('/api/cart')
 			.send({
 				quantity: 1491,
-				product: productId.toString()
+				product: product
 			})
 			.end(function (err, response) {
 				if (err) return done(err);
