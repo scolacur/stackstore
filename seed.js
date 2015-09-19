@@ -84,7 +84,7 @@ var seedCategoriesAndProducts = function () {
         var products = [{
             name: "surfbort",
             description: "a surfbort which is obviously coolest",
-            quantity: 8,
+            inventory: 8,
             price: 12,
             category: waterCat._id,
             store: nsa._id,
@@ -92,7 +92,7 @@ var seedCategoriesAndProducts = function () {
         }, {
             name: "sand shooter",
             description: "shooting sand shooting sand shooting sand shooting sand and also maybe people???? never",
-            quantity: 89,
+            inventory: 89,
             price: 12932,
             category: waterCat._id,
             store: nsa._id,
@@ -100,7 +100,7 @@ var seedCategoriesAndProducts = function () {
         }, {
             name: "Improvised Explosive Device",
             description: "Please buy one of these. It will make our job much easier.",
-            quantity: 89,
+            inventory: 89,
             price: 1,
             category: terrCat._id,
             store: nsa._id,
@@ -108,7 +108,7 @@ var seedCategoriesAndProducts = function () {
         }, {
             name: "American Flag",
             description: "Go for the full American. Get this giant flag.",
-            quantity: 89,
+            inventory: 89,
             price: 1,
             category: fightCat._id,
             store: gobama._id,

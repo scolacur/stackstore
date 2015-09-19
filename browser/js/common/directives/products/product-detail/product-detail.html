@@ -17,7 +17,7 @@
 	<ul ng-hide="editMode">
 		<li>{{product.price | currency}}</li>
 		<li>Description: {{product.description}}</li>
-		<li>We have {{product.quantity}} in stock</li>
+		<li>We have {{product.inventory}} in stock</li>
 		<li>Sold from: {{product.store.name}}</li>
 		<li>Category: {{product.category.title}}</li>
 	  	<li ng-show="!home">
@@ -34,5 +34,4 @@
 	<div class="col-md-4">
 		<img  class = "pull-right" src = "{{product.photoUrl}}"></img>
 	</div>
-	<pre>{{editMode | json}}</pre>
 </div>
