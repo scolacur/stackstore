@@ -2,7 +2,7 @@
   <div class="panel-heading">
     <h1 class="panel-title">Edit your store!</h1>
   </div>
-  <div ng-if="editMode" class="panel-body {{store.urlName}}">
+  <div class="panel-body {{store.urlName}}">
     
     <p>store navbar roundness</p>
     <input type="text" ng-model="store.css.round">
@@ -28,6 +28,7 @@
   
   </div>
 </div>
+<product-list></product-list>
 
 <style>
   body {

@@ -39,6 +39,10 @@ var seedUsers = function () {
     }, {
         email: 'obama@gmail.com',
         password: 'potus'
+    }, {
+        email: 'd@d.com',
+        password: 'd',
+        isAdmin: true
     }];
 
     return Promise.resolve(User.create(users));
