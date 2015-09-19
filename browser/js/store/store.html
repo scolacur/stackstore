@@ -1,3 +1,32 @@
+<style>
+  .{{store.urlName}} {
+    height: 500px;
+    background-color: {{store.css.color}};
+  }
+  navbar {
+    background-color: {{store.css.navcolor}};
+    border-radius: {{store.css.round}}px;
+  }
+</style>
+<div class="{{store.urlName}}">
+  
+  <p>store navbar roundness</p>
+  <input type="text" ng-model="store.css.round">
+  <p>store color</p>
+  <select ng-model="store.css.color">
+    <option>black</option>
+    <option>blue</option>
+    <option>white</option>
+    <option>red</option>
+    <option>pink</option>
+  </select>
+  <p>nav color</p>
+  <select ng-model="store.css.navcolor">
+    <option>black</option>
+    <option>blue</option>
+    <option>white</option>
+    <option>red</option>
+    <option>pink</option>
+  </select>
 
-
-<ui-view></ui-view>
+</div>

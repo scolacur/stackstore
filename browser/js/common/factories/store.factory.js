@@ -9,22 +9,25 @@ app.factory('Store', function ($http) {
   }
 
   Store.getAll = function () {
-    $http.get('/api/stores').then(returnData);
+    return $http.get('/api/stores').then(returnData);
   }
 
-  Store.getOne = function (storeId) {
-    $http.get('/api/stores/' + storeId).then(returnData);
+  Store.getByName = function (storeName) {
+    console.log('/api/stores/' + storeName);
+    return $http.get('/api/stores/' + storeName).then(returnData);
   }
 
   Store.make = function (store) {
-    $http.post('/api/stores', store).then(returnData);
+    return $http.post('/api/stores', store).then(returnData);
   }
 
-  Store.edit = function (storeId, props) {
-    $http.put('/api/stores/' + storeId, props).then(returnData);
+  Store.edit = function (storeName, props) {
+    return $http.put('/api/stores/' + storeName, props).then(returnData);
   }
 
-  Store.delete = function (storeId) {
-    $http.put('/api/stores/' + storeId).then(returnData);
+  Store.delete = function (storeName) {
+    return $http.put('/api/stores/' + storeName).then(returnData);
   }
+
+  return Store;
 });

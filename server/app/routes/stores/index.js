@@ -21,7 +21,7 @@ router.post('/', function (req, res) {
   });
 });
 
-router.put('/:storeId', function (req, res) {
+router.put('/:storeName', function (req, res) {
 
     req.store = _.assign(req.store, req.body)
     req.store.save()
@@ -30,12 +30,12 @@ router.put('/:storeId', function (req, res) {
     });
 });
 
-router.get('/:storeId', function (req, res) {
+router.get('/:storeName', function (req, res) {
   res.json(req.store);
 });
 
-router.param('storeId', function (req, res, next, storeId) {
-  Store.findById(storeId).populate("user")
+router.param('storeName', function (req, res, next, storeName) {
+  Store.findOne({urlName: storeName}).populate("user")
   .then(function (store) {
     req.store = store;
     next();
