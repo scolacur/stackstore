@@ -82,7 +82,7 @@ schema.method('saveCart', function(cart){
 //this method removes any possible duplicates from the combined cart
 schema.method('consolidateCart', function(cart){
     var bigCart = cart.concat(this.cart);
-    var consolidated = _.uniq(bigCart, function (item, index, array) {
+    var consolidated = _.uniq(bigCart, function (item) {
         return item.product._id.toString();
     });
 	return consolidated;

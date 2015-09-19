@@ -1,5 +1,3 @@
-var path = require('path')
-
 var keys = require('../../../env/development');
 
 var mandrill = require('mandrill-api/mandrill');
@@ -30,18 +28,18 @@ var sendEmail = function sendEmail(order, subject, message_html) {
               "name": order.name
           }],
       "important": false,
-      "track_opens": true,    
+      "track_opens": true,
       "auto_html": false,
       "preserve_recipients": true,
       "merge": false,
       "tags": [
           extreme.tag
-      ]    
+      ]
   };
   var async = false;
   var ip_pool = "Main Pool";
-  mandrillClient.messages.send({"message": message, "async": async, "ip_pool": ip_pool}, function(result) {
-      console.log('email sent!!!');   
+  mandrillClient.messages.send({"message": message, "async": async, "ip_pool": ip_pool}, function() {
+      console.log('email sent!!!');
   }, function(e) {
       console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
   });
@@ -50,6 +48,7 @@ var sendEmail = function sendEmail(order, subject, message_html) {
 function renderTemp(templateFilename, order) {
   templateFilename = __dirname + templateFilename;
   fs.readFile(templateFilename, function (err, contents) {
+      if(err) throw new Error(err);
     contents = contents.toString();
     var renderedTemp = swig.render(contents, {locals: {order: order}});
     var subject = order.status === "confirmed" ? extreme.confirmSubj : extreme.updateSubj;
@@ -65,4 +64,3 @@ var confirmEmail = function (order) {
 module.exports = {
   confirmEmail: confirmEmail
 };
-

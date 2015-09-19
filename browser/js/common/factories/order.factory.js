@@ -26,7 +26,7 @@ app.factory('Order', function($http){
     });
   };
 
-  Order.getAllOrders = function (userId) {
+  Order.getAllOrders = function () {
     return $http.get('/api/orders')
     .then(function (response) {
       return response.data;
