@@ -1,4 +1,4 @@
-app.factory('CartFactory', function($http, $rootScope){
+app.factory('Cart', function($http, $rootScope){
 
 
 	var factoryObj = {};

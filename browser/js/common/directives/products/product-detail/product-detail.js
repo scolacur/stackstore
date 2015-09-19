@@ -1,4 +1,4 @@
-app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state, Session) {
+app.directive("productDetail", function (Cart, $stateParams, $state, Session) {
 
 	return {
 		restrict: 'EA',
@@ -6,7 +6,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 		link: function (scope) {
 			scope.quantity = 1;
 			scope.addToCart = function(item, quantity){
-				CartFactory.addToCart(item, quantity)
+				Cart.addToCart(item, quantity)
 				.then(function () {
 					$state.go('cart');
 				});

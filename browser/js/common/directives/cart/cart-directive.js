@@ -1,4 +1,4 @@
-app.directive('cart', function(Session, CartFactory){
+app.directive('cart', function(Session, Cart){
 	return {
 		restrict: 'E',
 		templateUrl: '/js/common/directives/cart/cart.html',
@@ -9,24 +9,24 @@ app.directive('cart', function(Session, CartFactory){
         scope.cart = cart;
       });
 
-			CartFactory.getCart();
+			Cart.getCart();
 
 			scope.edit = function (index) {
 				scope.editIndex = index;
 			};
 			scope.delete = function (item) {
 				item.quantity = 0;
-				return CartFactory.editItem(item);
+				return Cart.editItem(item);
 			};
 			scope.saveQuantity = function (item) {
-				return CartFactory.editItem(item)
+				return Cart.editItem(item)
 				.then(function () {
 					scope.saved = true;
 					scope.editIndex = null;
 				});
 			};
 			scope.deleteCart = function(){
-				return CartFactory.deleteCart();
+				return Cart.deleteCart();
 			};
 		}
 	};

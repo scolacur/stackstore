@@ -1,9 +1,9 @@
-app.directive("categoryNav", function (ProductFactory) {
+app.directive("categoryNav", function (Product) {
     return {
         restrict: 'EA',
         templateUrl: 'js/common/directives/category-nav/category-nav.html',
         link: function (scope) {
-            ProductFactory.getCategories().then(function(categories) {
+            Product.getCategories().then(function(categories) {
                 scope.categories = categories;
             });
         },

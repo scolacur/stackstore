@@ -1,10 +1,10 @@
-app.directive("productList", function (ProductFactory) {
+app.directive("productList", function (Product) {
     return {
         restrict: 'EA',
         templateUrl: 'js/common/directives/products/product-list/product-list.html',
         link: function (scope) {
             scope.selected = "";
-            ProductFactory.getProducts()
+            Product.getProducts()
             .then(function(products){
                 scope.products = products;
             })

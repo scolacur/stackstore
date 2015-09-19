@@ -1,4 +1,4 @@
-app.factory('ProductFactory', function ($http) {
+app.factory('Product', function ($http) {
 
 	function getProduct(id) {
 		return $http.get("/api/products/" + id).then(function(result) {
