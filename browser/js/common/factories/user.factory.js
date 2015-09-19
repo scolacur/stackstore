@@ -32,5 +32,12 @@ app.factory('User', function($http){
     });
   };
 
+  User.getStores = function (id) {
+      return $http.get('/api/stores?user=' + id)
+      .then(function(response){
+          return response.data;
+      });
+  };
+
   return User;
 });

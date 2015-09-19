@@ -37,5 +37,12 @@ app.factory('Store', function ($http, $state) {
     return $http.put('/api/stores/' + storeName).then(returnData);
   }
 
+  Store.addStore = function (store) {
+      return $http.post('/api/stores', store)
+      .then(function (res) {
+          return res.data;
+      })
+  }
+
   return Store;
 });

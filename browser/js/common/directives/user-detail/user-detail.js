@@ -15,6 +15,10 @@ app.directive('userDetail', function(User, $stateParams){
         .then(function(reviews){
             scope.reviews = reviews;
         });
+        User.getStores($stateParams.userId)
+        .then(function(stores){
+            scope.stores = stores;
+        });
     }
   };
 });
