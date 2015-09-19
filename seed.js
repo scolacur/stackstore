@@ -41,21 +41,17 @@ var seedUsers = function () {
         password: 'potus'
     }];
 
-    console.log(users);
-
     return Promise.resolve(User.create(users));
 };
 
 var seedStores = function () {
 
-    console.log('in seedstores')
 
     return Promise.all([
         User.findOne({email: 'testing@nsa.com'}).exec(),
         User.findOne({email: 'obama@gmail.com'}).exec()
     ])
     .then(function (users) {
-        console.log('found users', users)
         var stores = [{
             name: "We're Watching You",
             description: "Look We're Still Looking At You",

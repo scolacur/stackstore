@@ -8,7 +8,7 @@ var Category = mongoose.model('Category');
 
 
 router.get('/', function (req, res) {
-  Category.find().exec()
+  Category.find(req.query).exec()
   .then(function (categories) {
     res.json(categories);
   });
