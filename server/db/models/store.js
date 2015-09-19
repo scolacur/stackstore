@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
         required: true
     },
     description: String,
-    url: {
+    urlName: {
         type: String,
         required: true,
         unique: true
@@ -20,8 +20,8 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.path('url').validate(function(value){
-    return /^\/[\w\-]+/.test(value);
+schema.path('urlName').validate(function(value){
+    return /^[\w\-]+/.test(value);
 })
 
 mongoose.model('Store', schema);

@@ -51,7 +51,7 @@ describe('Store model', function () {
                     done();
                 })
                 .then(null, function (error) {
-                    expect(error.errors).to.have.property('url');
+                    expect(error.errors).to.have.property('urlName');
                     expect(error.errors).to.have.property('user');
                     expect(error.errors).to.have.property('name');
 
@@ -68,7 +68,7 @@ describe('Store model', function () {
                     user: userId
                 })
                 .then(null, function (error) {
-                    expect(error.errors).to.have.property('url');
+                    expect(error.errors).to.have.property('urlName');
                     done();
                 });
 
@@ -78,7 +78,7 @@ describe('Store model', function () {
 
                 Store.create({
                     name: "I like basketball",
-                    url: "/basketball",
+                    urlName: "basketball",
                     user: userId
                 })
                 .then(function (store) {

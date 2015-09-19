@@ -38,15 +38,12 @@ var sendEmail = function sendEmail(order, subject, message_html) {
           extreme.tag
       ]    
   };
-  //console.log(message);
   var async = false;
   var ip_pool = "Main Pool";
   mandrillClient.messages.send({"message": message, "async": async, "ip_pool": ip_pool}, function(result) {
       console.log('email sent!!!');   
   }, function(e) {
-      // Mandrill returns the error as an object with name and message keys
       console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-      // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
   });
 };
 
@@ -54,27 +51,16 @@ function renderTemp(templateFilename, order) {
   templateFilename = __dirname + templateFilename;
   fs.readFile(templateFilename, function (err, contents) {
     contents = contents.toString();
-    if (err) console.log("readfile error:", err);
     var renderedTemp = swig.render(contents, {locals: {order: order}});
     var subject = order.status === "confirmed" ? extreme.confirmSubj : extreme.updateSubj;
-    console.log("STATUS, SUBJECT: ", order.status, subject);
     sendEmail(order, subject, renderedTemp);
   });
 }
 
 var confirmEmail = function (order) {
   var templateFile = order.status === "confirmed" ? "/confirmTemp.html" : "/updateTemp.html";
-  console.log("templateFile: ", templateFile);
   renderTemp(templateFile, order);
 };
-
-// var updateEmail = function (order) {
-//   renderTemp('updateTemp.html', order)
-//   .then(function (renderedHtml) {
-//     console.log('sending email...')
-//     sendEmail(order, extreme.updateSubj, renderedHtml);
-//   });
-// };
 
 module.exports = {
   confirmEmail: confirmEmail

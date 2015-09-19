@@ -27,7 +27,7 @@ describe('Stores Route', function () {
   var testStore = {
     name: "extreme basketball",
     description: "This store is the best thing in the world for me to play basketball with.",
-    url: "/bestBasketball"
+    urlName: "bestBasketball"
   };
 
   describe('GET /api/stores/', function () {

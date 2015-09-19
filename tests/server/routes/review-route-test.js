@@ -40,7 +40,7 @@ describe('Reviews Route', function () {
           userId = foundUser._id;
           return Store.create({
               name: "Princess Peach Kidnapping Tools",
-              url: "/peach",
+              urlName: "peach",
               user: userId
           })
       })

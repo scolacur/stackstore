@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var schema = new mongoose.Schema({
     title: {
         type: String,
-        enum: ["Extreme Watersports", "Misc", "Weapons", "Books", "Default", "NSFW"],
+        enum: ["Extreme Watersports", "Misc", "Weapons", "Books", "Default", "NSFW", "Fighting Equipment", "Watersports Gear", "Terrorist Tools"],
         default: "Default",
         required: true
     }
