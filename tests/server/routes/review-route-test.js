@@ -5,6 +5,7 @@ var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
 var Category = mongoose.model('Category');
+var Store = mongoose.model('Store');
 
 
 var expect = require('chai').expect;
@@ -26,6 +27,50 @@ describe('Reviews Route', function () {
     clearDB(done);
   });
 
+  var productId,
+      product,
+      categoryId,
+      userId,
+      storeId,
+      user = {email: "bowser@mariobros.com", password: "password"};
+
+  beforeEach('Create user, store, category, product', function (done) {
+      User.create(user)
+      .then(function(foundUser){
+          userId = foundUser._id;
+          return Store.create({
+              name: "Princess Peach Kidnapping Tools",
+              urlName: "peach",
+              user: userId
+          })
+      })
+      .then(function(store){
+          storeId = store._id;
+          return Category.create({
+              title: 'Extreme Watersports'
+          })
+      })
+      .then(function (category) {
+          categoryId = category._id;
+          return Category.create({
+              title: 'Default'
+          })
+      })
+      .then(function (){
+          return Product.create({
+              name: 'surfbort',
+              category: categoryId,
+              price: 56,
+              store: storeId
+          })
+      })
+      .then(function (foundProduct) {
+          productId = foundProduct._id;
+          product = foundProduct
+          done();
+      });
+  });
+
   var testReview = {
     title: "I like basketball",
     rating: 5,
@@ -36,45 +81,25 @@ describe('Reviews Route', function () {
 
   describe('GET /api/reviews/', function () {
 
-    var agent,
-        userId,
-        productId,
-        productId2,
-        userId2,
-        categoryId;
+      var agent,
+      userId2,
+      productId2;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
     });
 
-    beforeEach('Make 2 users', function (done) {
+    beforeEach('Make second user', function (done) {
       User.create({email: "sean@sean.com", password: "mypass"})
       .then(function (user) {
-        userId = user._id;
-        return User.create({email: "sean2@sean2.com", password: "mypass"});
-      })
-      .then(function (user) {
-          userId2 = user._id;
-          done();
+        userId2 = user._id;
+        done();
       })
       .then(null, done);
     });
 
-    beforeEach('Create a category for the review', function(done){
-        Category.create({title: 'Misc'})
-        .then(function(category){
-            categoryId = category._id;
-            done();
-        })
-        .then(null, done);
-    });
-
-    beforeEach('Create 2 products for the review', function(done){
-        Product.create({name: 'extreme toupee', category: categoryId})
-        .then(function(product){
-            productId = product._id;
-            return Product.create({name: 'luxury north korean car blessed by glorious leader', category: categoryId});
-        })
+    beforeEach('Create second product', function(done){
+        Product.create({name: 'extreme toupee', category: categoryId, store: storeId})
         .then(function(product){
             productId2 = product._id;
             done();
@@ -238,42 +263,13 @@ describe('Reviews Route', function () {
 
   describe('PUT /api/reviews/:reviewId', function () {
 
-    var agent,
-        reviewId,
-        productId,
-        userId,
-        categoryId;
+      var agent,
+      reviewId;
 
     beforeEach('Create agent', function () {
       agent = supertest.agent(app);
     });
 
-    beforeEach('Make a user', function (done) {
-      User.create({email: "sean@sean.com", password: "mypass"})
-      .then(function (user) {
-        userId = user._id;
-        done();
-      })
-      .then(null, done);
-    });
-
-    beforeEach('Create a category for the review', function(done){
-        Category.create({title: 'Default'})
-        .then(function(category){
-            categoryId = category._id;
-            done();
-        })
-        .then(null, done);
-    });
-
-    beforeEach('Create a product for the review', function(done){
-        Product.create({name: 'extreme toupee', category: categoryId})
-        .then(function(product){
-            productId = product._id;
-            done();
-        })
-        .then(null, done);
-    });
 
     beforeEach('Write a review', function (done) {
       testReview.user = userId;

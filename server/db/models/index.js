@@ -6,3 +6,4 @@ require('./order')
 require('./category');
 require('./product');
 require('./review');
+require('./store');

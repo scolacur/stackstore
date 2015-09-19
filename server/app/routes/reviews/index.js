@@ -33,7 +33,6 @@ router.put('/:reviewId', function (req, res) {
 });
 
 router.get('/:reviewId', function (req, res) {
-  console.log("review:", req.review);
   res.json(req.review);
 });
 

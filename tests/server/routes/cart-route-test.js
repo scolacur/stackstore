@@ -4,6 +4,7 @@ require('../../../server/db/models');
 var Product = mongoose.model('Product');
 var User = mongoose.model('User');
 var Category = mongoose.model('Category');
+var Store = mongoose.model('Store');
 
 var expect = require('chai').expect;
 
@@ -20,40 +21,45 @@ describe('Cart Route', function () {
 		mongoose.connect(dbURI, done);
 	});
 
-	var product, productId, categoryId;
+	var productId,
+		product,
+		categoryId,
+		userId,
+		storeId,
+		user = {email: "bowser@mariobros.com", password: "password"};
 
-	beforeEach("Create test category", function (done) {
-    return Category.create({title: "Books"})
-    .then(function(category){
-        categoryId = category._id;
-        done();
-    });
-  });
-
-	beforeEach('Make a product', function (done) {
-		Product.create({
-			name: "surfbort",
-			inventory: 5,
-			description: 'my favorite bort',
-			category: categoryId
+	beforeEach('Create user, store, category, product', function (done) {
+		User.create(user)
+		.then(function(foundUser){
+			userId = foundUser._id;
+			return Store.create({
+	            name: "Princess Peach Kidnapping Tools",
+	            urlName: "peach",
+	            user: userId
+	        })
+		})
+		.then(function(store){
+			storeId = store._id;
+			return Category.create({
+				title: 'Extreme Watersports'
+			})
+		})
+		.then(function (category) {
+			categoryId = category._id;
+		})
+		.then(function (){
+			return Product.create({
+				name: 'surfbort',
+				category: categoryId,
+				price: 56,
+				store: storeId
+			})
 		})
 		.then(function (foundProduct) {
-			product = foundProduct;
-			productId = product._id
+			productId = foundProduct._id;
+			product = foundProduct
 			done();
-		})
-		.then(null, done);
-	});
-
-	var userId,
-			user = {email: "sean@sean.com", password: "mypass"};
-	beforeEach('Make a user', function (done) {
-		User.create(user)
-		.then(function (user) {
-			userId = user._id;
-			done();
-		})
-		.then(null, done);
+		});
 	});
 
 	afterEach('Clear test database', function (done) {
@@ -180,7 +186,6 @@ describe('Cart Route', function () {
 					})
 					.end(function (err, response) {
 						if (err) return done(err);
-						console.log(response.body);
 						expect(response.body).to.be.an('array');
 						expect(response.body).to.be.length(1);
 						expect(response.body[0].product._id.toString()).to.equal(product._id.toString());
