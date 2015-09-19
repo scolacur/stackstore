@@ -6,8 +6,10 @@ app.directive("productList", function (ProductFactory) {
             scope.selected = "";
             ProductFactory.getProducts()
             .then(function(products){
-                console.log("products");
                 scope.products = products;
+            })
+            scope.$on('newProduct', function (e, product) {
+                scope.products.push(product);
             })
         }
     };

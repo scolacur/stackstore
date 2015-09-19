@@ -41,12 +41,28 @@ app.factory('ProductFactory', function ($http) {
 		});
 	}
 
+	function addProduct(product){
+		return $http.post('/api/products', product)
+		.then(function(response){
+			return response.data;
+		})
+	}
+
+	function addCategory(category){
+		return $http.post('/api/categories', category)
+		.then(function(response){
+			return response.data;
+		})
+	}
+
 	return {
 		getProduct: getProduct,
 		getReviews: getReviews,
 		getProducts: getProducts,
 		getCategories: getCategories,
-		editProduct: editProduct
+		editProduct: editProduct,
+		addProduct: addProduct,
+		addCategory: addCategory
 	};
 
 });
