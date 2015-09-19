@@ -30,215 +30,231 @@ var Store = mongoose.model('Store');
 
 var seedUsers = function () {
 
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
+    var users = [{
+        email: 'testing@fsa.com',
+        password: 'password'
+    }, {
+        email: 'testing@nsa.com',
+        password: 'password'
+    }, {
+        email: 'obama@gmail.com',
+        password: 'potus'
+    }];
 
-    return User.create(users);
+    console.log(users);
 
+    return Promise.resolve(User.create(users));
 };
 
-var seedUsers = function () {
+var seedStores = function () {
 
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
+    console.log('in seedstores')
 
-    return User.create(users);
-
+    return Promise.all([
+        User.findOne({email: 'testing@nsa.com'}).exec(),
+        User.findOne({email: 'obama@gmail.com'}).exec()
+    ])
+    .then(function (users) {
+        console.log('found users', users)
+        var stores = [{
+            name: "We're Watching You",
+            description: "Look We're Still Looking At You",
+            urlName: "NSA",
+            user: users[0]._id
+        }, {
+            name: "Uncle Sam's Cabin",
+            description: "Loving the way you live your freedom.",
+            urlName: "gobama",
+            user: users[1]._id
+        }];
+        return Promise.resolve(Store.create(stores));
+    });
 };
 
-var seedProducts = function (category) {
+var seedCategoriesAndProducts = function () {
 
-    var products = [
-        {
-           name: "surfbort",
-           price: 20,
-           quantity: 10,
-           description: "a surfbort"
-        },
-        {
-           name: "sand shooter",
-           price: 5,
-           quantity: 100,
-           description: "shooting sand shooting sand shooting sand shooting sand"
-        },
-        {
-           name: "three products!",
-           price: 7,
-           quantity: 1,
-           description: "it doesn't matter what it is"
-        }
-
-    ];
-      var categoryId,
-      userId,
-      storeId;
-
-      return User.create(user)
-      .then(function(foundUser){
-          userId = foundUser._id;
-          return Store.create({
-              name: "Princess Peach Kidnapping Tools",
-              url: "/peach",
-              user: userId
-          })
-      })
-      .then(function(store){
-          storeId = store._id;
-          return Category.create({
-              title: 'Extreme Watersports'
-          })
-      })
-      .then(function (category) {
-          categoryId = category._id;
-          return Category.create({
-              title: 'Default'
-          })
-      })
-      .then(function (){
-          return Product.create({
-              name: 'surfbort',
-              category: categoryId,
-              price: 56,
-              store: storeId
-          })
-      })
-      .then(function () {
-          products.forEach(function(current) {
-                current.category = categoryId;
-                current.store = storeId;
-            });
-          return Product.create(products);
-      })
+    return Promise.all([
+        Category.create({title: 'Fighting Equipment'}),
+        Category.create({title: 'Terrorist Tools'}),
+        Category.create({title: 'Watersports Gear'}),
+        Store.findOne({urlName: "NSA"}).exec(),
+        Store.findOne({urlName: "gobama"}).exec()
+    ])
+    .spread(function (fightCat, terrCat, waterCat, nsa, gobama) {
+        var products = [{
+            name: "surfbort",
+            description: "a surfbort which is obviously coolest",
+            quantity: 8,
+            price: 12,
+            category: waterCat._id,
+            store: nsa._id,
+            photoUrl: 'https://s-media-cache-ak0.pinimg.com/736x/d7/f2/6c/d7f26cd70a54599ba3515ac42ce26a9c.jpg'
+        }, {
+            name: "sand shooter",
+            description: "shooting sand shooting sand shooting sand shooting sand and also maybe people???? never",
+            quantity: 89,
+            price: 12932,
+            category: waterCat._id,
+            store: nsa._id,
+            photoUrl: 'http://www.gravelshooter.net/images/Commercialservices.jpg'
+        }, {
+            name: "Improvised Explosive Device",
+            description: "Please buy one of these. It will make our job much easier.",
+            quantity: 89,
+            price: 1,
+            category: terrCat._id,
+            store: nsa._id,
+            photoUrl: 'http://s.hswstatic.com/gif/ied-2.jpg',
+        }, {
+            name: "American Flag",
+            description: "Go for the full American. Get this giant flag.",
+            quantity: 89,
+            price: 1,
+            category: fightCat._id,
+            store: gobama._id,
+            photoUrl: 'http://cdn.meme.am/instances/54484550.jpg'
+        }];
+        return Promise.resolve(Product.create(products));
+    });
 };
 
 var seedReviews = function (userId, productId) {
 
-    var reviews = [
-        {
+    return Promise.all([
+        Product.findOne({name: "sand shooter"}).exec(),
+        Product.findOne({name: "American Flag"}).exec(),
+        Product.findOne({name: "Improvised Explosive Device"}).exec(),
+        Product.findOne({name: "surfbort"}).exec(),
+        User.findOne({email: "obama@gmail.com"}).exec(),
+        User.findOne({email: "testing@nsa.com"}).exec()
+    ])
+    .spread(function (ss, af, ied, sb, obama, nsa) {
+        var reviews = [{
             title: "this surfboard rules",
             rating: 5,
-            description: "like i said, like i said,like i said, like i said, like i said"
-        },
-        {
+            description: "like i said, like i said,like i said, like i said, like i said",
+            user: obama._id,
+            product: sb._id
+        }, {
             title: "this surfboard is terrrible",
             rating: 1,
-            description: "like i said, dude -like i said, dude -like i said, dude"
-        }
-    ];
-    reviews.forEach(function(current) {
-        current.product = productId;
-        current.user = userId;
+            description: "like i said, dude -like i said, dude -like i said, dude",
+            user: obama._id,
+            product: sb._id
+        }, {
+            title: "This IED worked for me",
+            rating: 4,
+            description: "Not so sure about others, so YMMV. Whut up playassssssssssssssss",
+            user: nsa._id,
+            product: ied._id
+        }, {
+            title: "AMURICA",
+            rating: 5,
+            description: "dis here flag is the bestest dis here flag is the bestest dis here flag is the bestest dis here flag is the bestest",
+            user: obama._id,
+            product: af._id
+        }];
+        return Promise.resolve(Review.create(reviews));   
     });
-    return Review.create(reviews);
-};
-
-var seedCategories = function () {
-
-        var categories = [
-        {
-           title: "Misc"
-        },
-        {
-           title: "Weapons"
-        }
-    ];
-    return Category.create(categories);
 };
 
 
 var seedOrders = function (userId, productId) {
-
-        var orders = [
-        {
-            session: "fake session",
-            date: new Date(),
-            status: "pending",
-            items: {
+    return Promise.all([
+        Product.findOne({name: "sand shooter"}).exec(),
+        Product.findOne({name: "American Flag"}).exec(),
+        Product.findOne({name: "Improvised Explosive Device"}).exec(),
+        Product.findOne({name: "surfbort"}).exec(),
+        User.findOne({email: "obama@gmail.com"}).exec(),
+        User.findOne({email: "testing@nsa.com"}).exec()
+    ])
+    .spread(function (ss, af, ied, sb, obama, nsa) {
+        var orders = [{
+            items: [{
                 quantity: 200,
-                product: productId
+                product: ied._id
+            }, {
+                quantity: 12,
+                product: af._id
+            }],
+            user: obama._id,
+            session: "fakesession1",
+            address: {
+                address1: "1121 E Tallahassee Blvd",
+                address2: "Apt 12",
+                city: "Gary",
+                zip: "12345",
+                state: "IN"
             },
-            user: userId
-        },
-        {
-            session: "fake session",
-            date: new Date(),
-            status: "pending",
-            items: {
-                quantity: 1,
-                product: productId
+            email: obama.email,
+            name: "obama",
+            total: 123
+        }, {
+            items: [{
+                quantity: 200,
+                product: ss._id
+            }, {
+                quantity: 12,
+                product: sb._id
+            }],
+            user: nsa._id,
+            session: "fakesession2",
+            address: {
+                address1: "1121 E Tallahassee Blvd",
+                address2: "Apt 12",
+                city: "Gary",
+                zip: "12345",
+                state: "IN"
             },
-            user: userId
-        }
-    ];
-    return Order.create(orders);
+            email: obama.email,
+            name: "obama",
+            total: 123425
+        }];
+        return Promise.resolve(Order.create(orders));
+    });
 };
-
-var productId,
-    userId,
-    categoryId;
-
+    
 connectToDb.then(function () {
-    User.find({}).then(function (users) {
+    return Promise.resolve(User.find().exec())
+    .then(function (users) {
         if (users.length === 0) {
             return seedUsers();
         } else {
             console.log(chalk.magenta('Seems to already be user data, exiting!'));
             process.kill(0);
         }
-    }).then(function(createdUsers) {
-        userId = createdUsers[0]._id;
-    }).then(function(){
-        return Category.find({});
-    }).then(function (categories) {
-        if (categories.length === 0) {
-            return seedCategories();
-        } else {
-            console.log(chalk.magenta('Seems to already be category data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function(createdCategories) {
-        categoryId = createdCategories[0]._id;
     }).then(function () {
-        return Product.find({});
-    }).then(function (products) {
-        if (products.length === 0) {
-            return seedProducts(categoryId);
+        return Store.find().exec();
+    }).then(function (stores) {
+        if (stores.length === 0) {
+            return seedStores();
         } else {
-            console.log(chalk.magenta('Seems to already be product data, exiting!'));
+            console.log(chalk.magenta('Seems to already be store data, exiting!'));
             process.kill(0);
         }
-    }).then(function(createdProducts) {
-        productId = createdProducts[0]._id;
-    }).then(function(){
-        return Review.find({});
+    }).then(function () {
+        return Promise.all([Category.find().exec(), Product.find().exec()]);
+    }).then(function (catsProds) {
+        if (catsProds[0].length === 0 && catsProds[1].length === 0) {
+            return seedCategoriesAndProducts();
+        } else {
+            console.log(chalk.magenta('Seems to already be category/product data, exiting!'));
+            process.kill(0);
+        }
+    }).then(function () {
+        return Review.find().exec();
     }).then(function (reviews) {
         if (reviews.length === 0) {
-            return seedReviews(userId, productId);
+            return seedReviews();
         } else {
             console.log(chalk.magenta('Seems to already be review data, exiting!'));
             process.kill(0);
         }
-    }).then(function(){
-        return Order.find({});
+    }).then(function () {
+        return Order.find().exec();
     }).then(function (orders) {
         if (orders.length === 0) {
-            return seedOrders(userId, productId);
+            return seedOrders();
         } else {
             console.log(chalk.magenta('Seems to already be review data, exiting!'));
             process.kill(0);
@@ -247,7 +263,7 @@ connectToDb.then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {
-        console.error(err);
+        console.dir(err);
         process.kill(1);
     });
 });
