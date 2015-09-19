@@ -42,7 +42,7 @@ describe('Review model', function () {
             userId = user._id;
             return Store.create({
                 name: "Princess Peach Kidnapping Tools",
-                url: "/peach",
+                urlName: "peach",
                 user: userId
             })
         })

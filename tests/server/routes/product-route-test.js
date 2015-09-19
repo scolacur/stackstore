@@ -35,7 +35,7 @@ describe('Products Route', function () {
           userId = foundUser._id;
           return Store.create({
               name: "Princess Peach Kidnapping Tools",
-              url: "/peach",
+              urlName: "peach",
               user: userId
           })
       })
@@ -105,11 +105,9 @@ describe('Products Route', function () {
         .send({name: 'sand-sniffer', store: storeId})
         .expect(201)
         .end(function (err, response) {
-            console.log('LOOK AT ME ', response.body);
           if (err) return done(err);
           expect(response.body.name).to.equal('sand-sniffer');
           Product.find({name: "sand-sniffer"}).exec().then(function (result){
-              console.log('result', result)
             expect(result).to.have.length(1);
             expect(result[0].name).to.equal("sand-sniffer");
             done();
@@ -145,7 +143,7 @@ describe('Products Route', function () {
     });
 
     beforeEach('Make a product', function (done) {
-      Product.create({name: 'sand-snarker', category: categoryId})
+      Product.create({name: 'sand-snarker', category: categoryId, store: storeId})
       .then(function (product) {
         productId = product._id;
         done();

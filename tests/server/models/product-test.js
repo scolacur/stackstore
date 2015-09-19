@@ -51,7 +51,7 @@ describe('Product model', function () {
     beforeEach("Create test store", function (done) {
       return Store.create({
           name: "Princess Peach Kidnapping Tools",
-          url: "/peach",
+          urlName: "peach",
           user: userId
       })
       .then(function(store){

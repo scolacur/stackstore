@@ -35,10 +35,10 @@ describe('Orders Route', function () {
 		.then(function(user){
 			userId = user._id;
 			return Store.create({
-	            name: "Princess Peach Kidnapping Tools",
-	            url: "/peach",
-	            user: userId
-	        })
+				name: "Princess Peach Kidnapping Tools",
+				urlName: "peach",
+				user: userId
+			})
 		})
 		.then(function(store){
 			storeId = store._id;
@@ -78,7 +78,7 @@ describe('Orders Route', function () {
 
 		beforeEach('Make an order', function (done) {
 			Order.create({items:[{quantity: 314, product: productId}], status: 'pending', date: new Date(), session: 'someFakeSession' })
-			.then(function (order) {
+			.then(function () {
 				done();
 			})
 			.then(null, function(err){

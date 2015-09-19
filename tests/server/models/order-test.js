@@ -18,20 +18,20 @@ var Store = mongoose.model('Store')
 
 describe('Order model', function () {
 
-    var createUser = function () {
-        return User.create({ email: 'obama@gmail.com', password: 'potus' });
-    };
+	var createUser = function () {
+		return User.create({ email: 'obama@gmail.com', password: 'potus' });
+	};
 
-    var createCategory = function () {
-        return Category.create({title: 'Misc'});
-    };
+	var createCategory = function () {
+		return Category.create({title: 'Misc'});
+	};
 
-    beforeEach('Establish DB connection', function (done) {
-        if (mongoose.connection.db) return done();
-        mongoose.connect(dbURI, done);
-    });
+	beforeEach('Establish DB connection', function (done) {
+		if (mongoose.connection.db) return done();
+		mongoose.connect(dbURI, done);
+	});
 
-    var productId,
+	var productId,
 		product,
 		categoryId,
 		userId,
@@ -42,10 +42,10 @@ describe('Order model', function () {
 		.then(function(user){
 			userId = user._id;
 			return Store.create({
-	            name: "Princess Peach Kidnapping Tools",
-	            url: "/peach",
-	            user: userId
-	        })
+				name: "Princess Peach Kidnapping Tools",
+				urlName: "peach",
+				user: userId
+			})
 		})
 		.then(function(store){
 			storeId = store._id;
@@ -71,46 +71,46 @@ describe('Order model', function () {
 		});
 	});
 
-    afterEach('Clear test database', function (done) {
-        clearDB(done);
-    });
+	afterEach('Clear test database', function (done) {
+		clearDB(done);
+	});
 
-    it('should exist', function () {
-        expect(Order).to.be.a('function');
-    });
+	it('should exist', function () {
+		expect(Order).to.be.a('function');
+	});
 
-    describe('Validations', function () {
+	describe('Validations', function () {
 
-        it('should err without session', function (done) {
-            Order.create({items: [{quantity: 0, product: productId}]})
-            .then(null, function (error){
-                expect(error.errors.session).to.exist;
-                expect(error.errors.items).to.not.exist;
-                done();
-            })
-        })
+		it('should err without session', function (done) {
+			Order.create({items: [{quantity: 0, product: productId}]})
+			.then(null, function (error){
+				expect(error.errors.session).to.exist;
+				expect(error.errors.items).to.not.exist;
+				done();
+			})
+		})
 
-        it('should err without items', function (done) {
-            Order.create({session: 'fakeSessionThing'})
-            .then(null, function (error) {
-                expect(error.errors.items).to.exist;
-                done();
-            })
-        })
+		it('should err without items', function (done) {
+			Order.create({session: 'fakeSessionThing'})
+			.then(null, function (error) {
+				expect(error.errors.items).to.exist;
+				done();
+			})
+		})
 
-        it('should err with items without quantity, product', function (done) {
-            Order.create({
-                user: userId,
-                items: [{}]
-            })
-            .then(function(order){
-                done();
-            })
-            .then(null, function (error) {
-                expect(error.errors['items.0.product']).to.exist;
-                expect(error.errors['items.0.quantity']).to.exist;
-                done();
-            })
-        })
-    })
+		it('should err with items without quantity, product', function (done) {
+			Order.create({
+				user: userId,
+				items: [{}]
+			})
+			.then(function(order){
+				done();
+			})
+			.then(null, function (error) {
+				expect(error.errors['items.0.product']).to.exist;
+				expect(error.errors['items.0.quantity']).to.exist;
+				done();
+			})
+		})
+	})
 });
