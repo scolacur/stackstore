@@ -9,11 +9,13 @@ app.config(function ($stateProvider) {
         $scope.store = store;
       });
 
+      // Products.
+
       $scope.editMode = true;
 
       $scope.saveStore = function (storeName, props) {
         Store.edit(storeName, props)
-        .then(function (store) {
+        .then(function () {
           console.log('store saved!')
         })
       }

@@ -140,7 +140,7 @@ describe('Stores Route', function () {
   describe('GET /api/stores/:storeId', function () {
 
     var agent,
-        storeId,
+        storeName,
         userId;
 
     beforeEach('Create agent', function () {
@@ -160,7 +160,7 @@ describe('Stores Route', function () {
       testStore.user = userId;
       Store.create(testStore)
       .then(function (store) {
-        storeId = store._id;
+        storeName = store.urlName;
         done();
       })
       .then(null, function (err) {
@@ -170,7 +170,7 @@ describe('Stores Route', function () {
 
 
     it('should get the store', function (done) {
-      agent.get('/api/stores/' + storeId)
+      agent.get('/api/stores/' + storeName)
         .expect(200)
         .end(function (err, response) {
           if (err) return done(err);
@@ -184,7 +184,7 @@ describe('Stores Route', function () {
   describe('PUT /api/stores/:storeId', function () {
 
     var agent,
-        storeId,
+        storeName,
         userId;
 
     beforeEach('Create agent', function () {
@@ -204,7 +204,7 @@ describe('Stores Route', function () {
       testStore.user = userId;
       Store.create(testStore)
       .then(function (store) {
-        storeId = store._id;
+        storeName = store.urlName;
         done();
       })
       .then(null, function (err) {
@@ -214,12 +214,12 @@ describe('Stores Route', function () {
 
 
     it('should edit a store', function (done) {
-      agent.put('/api/stores/' + storeId)
+      agent.put('/api/stores/' + storeName)
         .send({name: "unextreme basketball"})
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
-          Store.findById(storeId)
+          Store.findOne({urlName: storeName})
           .then(function (store) {
             expect(store.name).to.equal("unextreme basketball");
             done();

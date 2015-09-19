@@ -1,4 +1,4 @@
-app.factory('Store', function ($http) {
+app.factory('Store', function ($http, $state) {
 
   var Store = function (props) {
     angular.extend(this, props);
@@ -9,7 +9,15 @@ app.factory('Store', function ($http) {
   }
 
   Store.getAll = function () {
-    return $http.get('/api/stores').then(returnData);
+    return $http.get('/api/stores').then(function (response) {
+      return response.data.map(function (store) {
+        return new Store(store);
+      });
+    });
+  }
+
+  Store.prototype.go = function () {
+    $state.go('store', {storeName: this.urlName});
   }
 
   Store.getByName = function (storeName) {
