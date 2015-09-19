@@ -1,4 +1,4 @@
-app.directive('addProduct', function(ProductFactory, $stateParams){
+app.directive('addProduct', function(ProductFactory){
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/add-product/add-product.html',
@@ -6,8 +6,8 @@ app.directive('addProduct', function(ProductFactory, $stateParams){
         scope.addProduct = function (product, store) {
             product.store = store._id;
             ProductFactory.addProduct(product)
-            .then(function(product){
-                scope.$emit('newProduct', product);
+            .then(function(prod){
+                scope.$emit('newProduct', prod);
                 scope.product = {};
             })
         }

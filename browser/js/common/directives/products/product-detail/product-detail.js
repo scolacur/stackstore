@@ -13,7 +13,7 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 			};
 			scope.home = $state.is('home');
 			if (Session.user){
-			   scope.isAdmin = Session.user.isAdmin;
+				scope.isAdmin = Session.user.isAdmin;
 			} else {
 				scope.isAdmin = false;
 			}

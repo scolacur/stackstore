@@ -22,23 +22,11 @@ app.factory('ProductFactory', function ($http) {
 		});
 	}
 
-	function getCategoryByName(name) {
-		if (typeof name === 'string'){
-			return $http.get("/api/categories?title=" + name).then(function(result) {
-				return result.data[0];
-			});
-		}
-		return Promise.resolve(name);
-	}
-
 	function editProduct(id, item){
-		return getCategoryByName(item.category)
-		.then(function(result){
-			item.category = result._id;
+		item.category = JSON.parse(item.category);
 			return $http.put('/api/products/' + id, item).then(function(result){
 				return result.data;
 			});
-		});
 	}
 
 	function addProduct(product){

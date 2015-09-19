@@ -1,4 +1,4 @@
-app.directive('reviewList', function($stateParams, ReviewFactory, $state){
+app.directive('reviewList', function(){
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/review-list/review-list.html',
