@@ -17,7 +17,8 @@ var schema = new mongoose.Schema({
         type: ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    css: mongoose.Schema.Types.Mixed
 });
 
 schema.path('urlName').validate(function(value){
