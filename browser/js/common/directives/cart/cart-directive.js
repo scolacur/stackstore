@@ -4,7 +4,6 @@ app.directive('cart', function(Session, CartFactory){
 		templateUrl: '/js/common/directives/cart/cart.html',
 		link: function(scope) {
 
-
 			scope.$on('updateCart', function(e, cart){
         scope.cart = cart;
       });

@@ -1,14 +1,13 @@
 app.factory('CartFactory', function($http, $rootScope){
-
-
+	
 	var factoryObj = {};
 
 	function returnData (res){
 		factoryObj.cart = res.data;
 		$rootScope.$broadcast('updateCart', res.data);
 		return res.data;
-	};
-	
+	}
+
 	factoryObj.getCart = function () {
 		return $http.get('/api/cart')
 		.then(returnData);

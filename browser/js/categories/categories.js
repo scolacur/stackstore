@@ -7,10 +7,10 @@ app.config(function($stateProvider){
       ProductFactory.getCategories()
       .then(function (categories) {
           $scope.categories = categories;
-      })
+      });
       $scope.$on('newCategory', function (e, category) {
           $scope.categories.push(category);
-      })
+      });
     }
-  })
-})
+	});
+});

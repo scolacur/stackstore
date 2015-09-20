@@ -1,5 +1,4 @@
 app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state, Session) {
-
 	return {
 		restrict: 'EA',
 		templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
@@ -19,6 +18,5 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 			}
 			scope.isDetail = $state.is("productDetail");
 		},
-	}
-
+	};
 });

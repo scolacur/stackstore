@@ -1,9 +1,6 @@
 app.factory('Order', function($http){
 
-
-  var Order = function () {
-
-  };
+  var Order = function () {};
 
   Order.postOrder = function (order) {
     return $http.post('/api/orders', order)

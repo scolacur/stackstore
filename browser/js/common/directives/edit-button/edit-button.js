@@ -1,5 +1,4 @@
 app.directive("editButton", function ($rootScope) {
-
   return {
     restrict: 'EA',
     templateUrl: 'js/common/directives/edit-button/edit-button.html',
@@ -11,8 +10,7 @@ app.directive("editButton", function ($rootScope) {
           edited = true;
         }
         $rootScope.editMode = !$rootScope.editMode;
-      }
+      };
     }
   };
-
 });

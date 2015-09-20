@@ -8,7 +8,7 @@ app.directive('checkout', function (Order, $state) {
         .then(function (postedOrder) {
           $state.go('order', {order: postedOrder._id});
         });
-      }
+      };
     }
-  }
+  };
 });

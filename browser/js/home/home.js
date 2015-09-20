@@ -6,10 +6,10 @@ app.config(function ($stateProvider) {
 			Store.getAll()
 			.then(function (stores) {
 				$scope.stores = stores;
-			})
+			});
 			var edited = false;
 			$rootScope.toggleEdit = function(){
-				console.log('running toggleEdit')
+				console.log('running toggleEdit');
 				if (!edited) {
 					$rootScope.editMode = false;
 					edited = true;

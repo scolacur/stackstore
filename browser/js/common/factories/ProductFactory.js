@@ -33,14 +33,14 @@ app.factory('ProductFactory', function ($http) {
 		return $http.post('/api/products', product)
 		.then(function(response){
 			return response.data;
-		})
+		});
 	}
 
 	function addCategory(category){
 		return $http.post('/api/categories', category)
 		.then(function(response){
 			return response.data;
-		})
+		});
 	}
 
 	return {
