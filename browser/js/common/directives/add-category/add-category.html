@@ -1,0 +1,11 @@
+<button class="btn btn-info" ng-click="adding = true">Add a category</button>
+<form ng-show="adding" ng-submit="addCategory(category)">
+    <ul>
+        <li> Category:
+            <input ng-model="category.title"></input>
+        </li>
+    </ul>
+    <div>
+        <button class="btn btn-danger" ng-show="adding" type="submit">Add your category</button>
+    </div>
+</form>

@@ -2,8 +2,6 @@
 var router = require('express').Router();
 module.exports = router;
 var _ = require('lodash');
-var Product = require('mongoose').model('Product');
-var Promise = require('bluebird');
 
 //getting cart
 router.get('/', function (req, res) {
@@ -12,7 +10,7 @@ router.get('/', function (req, res) {
 });
 
 var dealWithSameItem = function (bodyItem, cart) {
-	var dupeItem = _.find(cart, function (item, index) {
+	var dupeItem = _.find(cart, function (item) {
 		return item.product._id.toString() === bodyItem.product._id;
 	});
 	if (dupeItem) dupeItem.quantity += bodyItem.quantity;

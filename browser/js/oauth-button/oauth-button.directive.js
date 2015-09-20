@@ -1,5 +1,3 @@
-'use strict';
-
 app.directive('oauthButton', function () {
 	return {
 		scope: {

@@ -1,9 +1,6 @@
 app.factory('Order', function($http){
 
-
-  var Order = function () {
-
-  };
+  var Order = function () {};
 
   Order.postOrder = function (order) {
     return $http.post('/api/orders', order)
@@ -26,7 +23,7 @@ app.factory('Order', function($http){
     });
   };
 
-  Order.getAllOrders = function (userId) {
+  Order.getAllOrders = function () {
     return $http.get('/api/orders')
     .then(function (response) {
       return response.data;

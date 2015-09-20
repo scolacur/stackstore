@@ -2,32 +2,57 @@
   <div class="panel-heading">
     <h1 class="panel-title">Edit your store!</h1>
   </div>
-  <div ng-if="editMode" class="panel-body {{store.urlName}}">
-    
-    <p>store navbar roundness</p>
-    <input type="text" ng-model="store.css.round">
-    <p>store color</p>
-    <select ng-model="store.css.color">
-      <option>black</option>
-      <option>blue</option>
-      <option>white</option>
-      <option>red</option>
-      <option>pink</option>
-    </select>
-    <p>nav color</p>
-    <select ng-model="store.css.navcolor">
-      <option>black</option>
-      <option>blue</option>
-      <option>white</option>
-      <option>red</option>
-      <option>pink</option>
-    </select>
-    <button 
+  <div class="panel-body {{store.urlName}}">
+		<div class="edit-option">
+	    <p>Store Navbar Roundness (1-100)</p>
+	    <input type="text" ng-model="store.css.round">
+		</div>
+		<div class="edit-option">
+	    <p>Store Color</p>
+	    <select ng-model="store.css.color">
+	      <option>black</option>
+	      <option>blue</option>
+	      <option>white</option>
+	      <option>red</option>
+	      <option>pink</option>
+				<option>lightBlue</option>
+				<option>lightCoral</option>
+				<option>lightGoldenRodYellow</option>
+				<option>lightGray</option>
+				<option>lightSeaGreen</option>
+				<option>aquamarine</option>
+				<option>ghostwhite</option>
+				<option>indianred</option>
+				<option>lavender</option>
+	    </select>
+		</div>
+
+		<div class="edit-option">
+	    <p>Navbar Color</p>
+	    <select ng-model="store.css.navcolor">
+				<option>black</option>
+	      <option>blue</option>
+	      <option>white</option>
+	      <option>red</option>
+	      <option>pink</option>
+				<option>lightBlue</option>
+				<option>lightCoral</option>
+				<option>lightGoldenRodYellow</option>
+				<option>lightGray</option>
+				<option>lightSeaGreen</option>
+				<option>aquamarine</option>
+				<option>ghostwhite</option>
+				<option>indianred</option>
+				<option>lavender</option>
+	    </select>
+		</div>
+    <button
       class="btn btn-success"
-      ng-click="saveStore(store.urlName, store)">Save style</button>
-  
+      ng-click="saveStore(store.urlName, store)">Save style
+		</button>
   </div>
 </div>
+<product-list></product-list>
 
 <style>
   body {
@@ -37,4 +62,8 @@
     background-color: {{store.css.navcolor}};
     border-radius: {{store.css.round}}px;
   }
+	.edit-option {
+		display: inline-block;
+		width: 30%;
+	}
 </style>

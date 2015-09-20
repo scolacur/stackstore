@@ -125,7 +125,6 @@ describe('Orders Route', function () {
 					expect(response.body.items[0].product._id.toString()).to.equal(productId.toString());
 					Order.find({}).exec()
 					.then(function(orders){
-						console.log(orders);
 						expect(orders).to.have.length(1);
 						expect(orders[0].items[0].product.toString()).to.equal(productId.toString());
 						done();

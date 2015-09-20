@@ -1,0 +1,17 @@
+<button class="btn btn-info" ng-click="adding = true">Add a store</button>
+<form ng-show="adding" ng-submit="addStore(store, user._id)">
+    <ul>
+        <li> Name:
+            <input ng-model="store.name"></input>
+        </li>
+        <li>Description:
+            <input ng-model="store.description"></input>
+        </li>
+        <li>URL:
+            <input ng-model="store.urlName"></input>
+        </li>
+    </ul>
+    <div>
+        <button class="btn btn-danger" ng-show="adding" type="submit">Add your store</button>
+    </div>
+</form>
