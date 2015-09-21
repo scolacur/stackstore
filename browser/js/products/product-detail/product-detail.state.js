@@ -4,7 +4,7 @@ app.config(function($stateProvider) {
 		url: '/products/:productId',
 		templateUrl: '/js/products/product-detail/product-detail.html',
 		controller: function($scope, ProductFactory, ReviewFactory, $stateParams, $rootScope, Session) {
-
+			$scope.editMode = false;
 			ProductFactory.getProduct($stateParams.productId)
 				.then(function(product) {
 					$scope.product = product;
@@ -21,7 +21,7 @@ app.config(function($stateProvider) {
 			$scope.editProduct = function(product) {
 				ProductFactory.editProduct(product._id, product)
 					.then(function() {
-						$rootScope.editMode = false;
+						$scope.editMode = false;
 					});
 			};
 			ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
