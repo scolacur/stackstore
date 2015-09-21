@@ -3,13 +3,9 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, $rootSco
 	restrict: 'E',
 	templateUrl: '/js/common/directives/user/user-detail/user-detail.html',
 	link: function (scope){
-				scope.isDetail = true;
-				scope.isAdmin = Session.user.isAdmin;
+		scope.isDetail = true;
+		scope.isAdmin = Session.user.isAdmin;
 
-		UserFactory.getById($stateParams.userId)
-		.then(function(user){
-			scope.user = user;
-		});
 		UserFactory.getOrders($stateParams.userId)
 		.then(function (orders) {
 			scope.orders = orders;

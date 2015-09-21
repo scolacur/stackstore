@@ -18,11 +18,11 @@
         </li>
         <li>Category: (required)
             <category-edit selected="product.category"></category-edit>
-            <p ng-show="" ></p>
+            <span ng-show="addForm.$dirty && addForm.cat.$error.required" >Category is required</span>
         </li>
     </ul>
     <div>
-        <button class="btn btn-success" ng-show="adding" type="submit" ng-click="adding = false">Add your product</button>
-				<button class="btn btn-danger" ng-show="adding" ng-click="adding = false">Cancel</button>
-		</div>
+        <button class="btn btn-success" ng-show="addForm.$valid && adding" type="submit" ng-click="adding = false">Add your product</button>
+	</div>
 </form>
+<button class="btn btn-danger" ng-show="adding" ng-click="adding = false">Cancel</button>
