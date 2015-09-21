@@ -6,10 +6,14 @@ app.config(function($stateProvider){
     resolve:{
       users: function(UserFactory){
         return UserFactory.getAll();
-      }
+	}
     },
-    controller: function ($scope, users) {
+    controller: function ($scope, users, Session, $state) {
       $scope.users = users;
+	  if (!Session.user || !Session.user.isAdmin){
+		  console.log('not allowed!');
+		  $state.go('home');
+	  }
     }
-  })
-})
+});
+});

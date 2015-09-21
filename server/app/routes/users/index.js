@@ -6,6 +6,7 @@ var _ = require('lodash');
 var User = require('mongoose').model('User');
 
 router.get('/', function (req, res) {
+	console.log("req.user: ",req.body);
 	User.find()
 	.then(function (users) {
 		users = users.map(function (user) {
