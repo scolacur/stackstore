@@ -41,7 +41,6 @@ router.post('/', function(req,res,next){
   	return createdProduct.populate('category').populate('store').execPopulate();
   })
   .then(function (popProduct) {
-  	console.log("this is product", popProduct)
     res.status(201).json(popProduct);
   })
   .then(null, next);
