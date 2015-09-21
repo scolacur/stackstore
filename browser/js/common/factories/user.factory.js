@@ -39,5 +39,12 @@ app.factory('User', function($http){
     });
   };
 
+	User.edit = function (id, props) {
+    return $http.put('/api/users/' + id, props)
+    .then(function(response){
+        return response.data;
+    });
+  };
+
   return User;
 });

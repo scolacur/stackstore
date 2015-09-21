@@ -1,8 +1,11 @@
-app.directive('userDetail', function(User, $stateParams){
+app.directive('userDetail', function(User, $stateParams, $state, $rootScope, Session){
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/user-detail/user-detail.html',
     link: function (scope){
+				scope.isDetail = true;
+				scope.isAdmin = Session.user.isAdmin;
+
         User.getById($stateParams.userId)
         .then(function(user){
             scope.user = user;
@@ -19,6 +22,15 @@ app.directive('userDetail', function(User, $stateParams){
         .then(function(stores){
             scope.stores = stores;
         });
+
+				scope.saveUser = function (user) {
+					User.edit(user._id, user)
+					.then(function (updatedUser) {
+						scope.user = updatedUser;
+						$rootScope.editMode = false;
+						console.log('user saved!', updatedUser);
+					});
+				};
     }
   };
 });

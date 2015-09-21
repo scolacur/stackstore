@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
       Store.getAll()
       .then(function (stores) {
         $scope.stores = stores;
-      })
+      });
     }
-  })
+  });
 });

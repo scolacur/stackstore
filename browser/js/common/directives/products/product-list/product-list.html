@@ -11,7 +11,7 @@
     <li class="list-group-item" ng-repeat="product in products | filter:searchText:false | filter:selected">
         <product-detail product="product"></product-detail>
     </li>
-    <li class="list-group-item">
+    <li class="list-group-item" ng-hide="!isAdmin && !isOwner">
         <add-product></add-product>
     </li>
   </ul>

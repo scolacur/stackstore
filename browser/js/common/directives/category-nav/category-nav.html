@@ -1,5 +1,6 @@
 <select ng-model="selected">
 	<option
 		value="{{category}}"
+		ng-init="selected=categories[1]"
 		ng-repeat="category in categories">{{category.title}}</option>
 </select>
