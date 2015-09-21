@@ -3,9 +3,10 @@
 	<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
 	<form ng-show="editMode" ng-submit="editProduct(product)">
 		<ul>
-			<li>Price:<input ng-model = "product.price" ></input></li>
-			<li>Description:<input ng-model = "product.description" ></input></li>
-			<li>Inventory:<input ng-model = "product.inventory" ></input></li>
+			<li>Name:<input ng-model = "product.name"></input></li>
+			<li>Price:<input ng-model = "product.price"></input></li>
+			<li>Description:<input ng-model = "product.description"></input></li>
+			<li>Inventory:<input ng-model = "product.inventory"></input></li>
 			<li>Category:
 				<category-nav selected="product.category"></category-nav>
 			</li>
