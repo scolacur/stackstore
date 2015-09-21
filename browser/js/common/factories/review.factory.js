@@ -14,6 +14,7 @@ app.factory('ReviewFactory', function ($http) {
 
   function updateReview(id, item) {
     return $http.put('/api/reviews/' + id, item).then(function(result){
+      console.log("factory", result.data);
       return result.data;
     });
   }

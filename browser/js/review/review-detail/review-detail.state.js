@@ -5,6 +5,7 @@ app.config(function($stateProvider){
     templateUrl: '/js/review/review-detail/review-detail.html',
     controller: function ($scope, findReview, Session, ReviewFactory, $rootScope) {
 		  $scope.review = findReview;
+      $scope.isDetail = true;
       if (Session.user) {
         $scope.isAdmin = Session.user.isAdmin;
         $scope.isOwner = Session.user._id === $scope.review.user._id;
@@ -12,11 +13,19 @@ app.config(function($stateProvider){
         $scope.isAdmin = false;
         $scope.isOwner = false;
       }
-      $scope.isDetail = true;
+      $scope.enableEdit = function () {
+        $scope.cached = angular.copy($scope.product);
+        $scope.editMode = true;
+      };
+      $scope.cancelEdit = function(){
+        $scope.product = angular.copy($scope.cached);
+        $scope.editMode = false;
+      };
       $scope.editReview = function(review) {
         ReviewFactory.updateReview(review._id, review)
-          .then(function() {
-            $rootScope.editMode = false;
+          .then(function(updated) {
+            $scope.review.description = updated.description;
+            $scope.editMode = false;
           });
       };
     },

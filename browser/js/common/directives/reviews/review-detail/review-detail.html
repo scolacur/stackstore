@@ -1,11 +1,15 @@
-<div>edit mode {{editMode}}
+<div>
 <h2>{{review.title}}</h2>
 	<h4>A review for: <a ui-sref="productDetail({productId: review.product._id})">{{review.product.name}}</li></a></h4>
   	<p class="review-text" ng-show="!editMode">{{review.description}}</p>
-  	<form ng-show="editMode" ng-submit="updateReview(review)">
-  		<textarea></textarea>
-  		<button type="submit">Save Changes</button>
+  	<form ng-show="editMode" ng-submit="editReview(review)">
+  		<textarea ng-model="review.description" class="text-area" value="{{review.description}}">{{review.description}}</textarea>
+      <div>
+  		  <button class="btn btn-primary" type="submit">Save Changes</button>
+        <button class="btn btn-danger" ng-click="cancelEdit()">Cancel</button>
+      </div>
   	</form>
+
   	<edit-button></edit-button>
 	<div>Cool review, as written by: 
 		<a ui-sref="user({userId: review.user._id })">{{review.user.email}} </a>
