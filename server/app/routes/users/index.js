@@ -24,14 +24,23 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:userId', function (req, res) {
-	req.foundUser = Object.keys(req.body).reduce(function (oldUser, newProp) {
-		if (newProp === 'isAdmin') return oldUser; // fix with support for admins
-		oldUser[newProp] = req.body[newProp];
-		return oldUser;
-	}, req.foundUser);
-	req.foundUser.save()
-	.then(function (editedUser) {
-		res.status(201).json(_.omit(editedUser.toJSON(), ['salt', 'password']));
+	console.log("session user",req.session.passport);
+	console.log(req.foundUser);
+	var admin;
+	User.findById(req.session.passport.user)
+	.then(function(sessionUser){
+		admin = sessionUser.isAdmin;
+	}).then(function(){
+		req.foundUser = Object.keys(req.body).reduce(function (oldUser, newProp) {
+			if (newProp === 'isAdmin' && !admin) return oldUser; // fix with support for admins
+			oldUser[newProp] = req.body[newProp];
+			return oldUser;
+		}, req.foundUser);
+	}).then(function(){
+		req.foundUser.save()
+		.then(function (editedUser) {
+			res.status(201).json(_.omit(editedUser.toJSON(), ['salt', 'password']));
+		});
 	});
 });
 
