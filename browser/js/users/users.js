@@ -5,7 +5,6 @@ app.config(function($stateProvider){
     templateUrl: '/js/users/users.html',
     resolve:{
       users: function(UserFactory){
-        console.log("getting users");
         return UserFactory.getAll();
       }
     },

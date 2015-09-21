@@ -48,6 +48,13 @@ router.get('/:userId', function (req, res) {
 	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
 });
 
+router.delete('/:userId', function (req, res, next){
+	req.foundUser.remove()
+	.then(function(){
+		res.status(204).end();
+	}).then(null, next);
+});
+
 router.param('userId', function (req, res, next, userId) {
 	User.findById(userId)
 	.then(function (user) {

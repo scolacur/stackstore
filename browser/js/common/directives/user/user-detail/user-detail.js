@@ -31,6 +31,13 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 				scope.editMode = false;
 			});
 		};
+		scope.deleteUser = function(user){
+			UserFactory.delete(user)
+			.then(function(){
+				scope.editMode = false;
+				$state.go('home');
+			});
+		};
 		scope.enableEdit = function () {
 			scope.cached = angular.copy(scope.user);
 			scope.editMode = true;
