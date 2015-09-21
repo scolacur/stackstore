@@ -35,7 +35,8 @@ router.get("/:productId", function (req, res){
 
 //create a product
 router.post('/', function(req,res,next){
-  Product.createWithDefault(req.body)
+  // Product.createWithDefault(req.body) //this was causing a 500 error
+	Product.create(req.body)
   .then(function(createdProduct){
     res.status(201).json(createdProduct);
   })
