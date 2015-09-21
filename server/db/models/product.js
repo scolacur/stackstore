@@ -37,7 +37,6 @@ schema.statics.createWithDefault = function (reqBody) {
         else return cat;
     })
     .then(function (cat) {
-        console.log(cat)
         reqBody.category = cat._id;
         return self.create(reqBody)
     });
