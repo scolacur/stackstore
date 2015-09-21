@@ -3,8 +3,8 @@ app.config(function($stateProvider){
   .state('user', {
     url: '/user/:userId',
     templateUrl: '/js/user/user.html',
-    controller: function ($scope, Store, User, $rootScope) {
-      Store.getAll()
+    controller: function ($scope, StoreFactory, $rootScope) {
+      StoreFactory.getAll()
       .then(function (stores) {
           $scope.stores = stores;
       });

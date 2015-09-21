@@ -1,7 +1,7 @@
 app.directive('addProduct', function(ProductFactory){
   return {
     restrict: 'E',
-    templateUrl: '/js/common/directives/add-product/add-product.html',
+    templateUrl: '/js/common/directives/products/add-product/add-product.html',
     link: function (scope) {
 			// scope.adding = false;
       scope.addProduct = function (product, store) {

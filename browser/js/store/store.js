@@ -2,10 +2,10 @@ app.config(function ($stateProvider) {
   $stateProvider.state('store', {
     url: '/stores/:storeName',
     templateUrl: '/js/store/store.html',
-    controller: function ($scope, Store, $stateParams, ProductFactory, Session, $state, $rootScope) {
+    controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state, $rootScope) {
 			$scope.isDetail = $state.is("store");
 
-			Store.getByName($stateParams.storeName)
+			StoreFactory.getByName($stateParams.storeName)
       .then(function (store) {
         $scope.store = store;
 
@@ -16,7 +16,6 @@ app.config(function ($stateProvider) {
 					$scope.isAdmin = false;
 					$scope.isOwner = false;
 				}
-				console.log("do you own this store? ", $scope.isOwner);
         return ProductFactory.getProducts({store: store._id});
       })
       .then(function (products) {
@@ -24,10 +23,9 @@ app.config(function ($stateProvider) {
       });
 
       $scope.saveStore = function (storeName, props) {
-        Store.edit(storeName, props)
+        StoreFactory.edit(storeName, props)
         .then(function () {
 					$rootScope.editMode = false;
-          console.log('store saved!')
         })
       }
     }

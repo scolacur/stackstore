@@ -4,9 +4,9 @@ app.config(function($stateProvider){
     url: '/users',
     templateUrl: '/js/users/users.html',
     resolve:{
-      users: function(User){
+      users: function(UserFactory){
         console.log("getting users");
-        return User.getAll();
+        return UserFactory.getAll();
       }
     },
     controller: function ($scope, users) {
