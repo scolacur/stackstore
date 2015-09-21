@@ -6,7 +6,6 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 			scope.quantity = 1;
 			scope.home = $state.is('home');
 			scope.isDetail = $state.is("productDetail");
-
 			scope.addToCart = function(item, quantity){
 				CartFactory.addToCart(item, quantity)
 				.then(function () {

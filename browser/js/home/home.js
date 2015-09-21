@@ -7,14 +7,14 @@ app.config(function ($stateProvider) {
 			.then(function (stores) {
 				$scope.stores = stores;
 			});
-			var edited = false;
-			$rootScope.toggleEdit = function(){
-				if (!edited) {
-					$rootScope.editMode = false;
-					edited = true;
-				}
-				$rootScope.editMode = !$rootScope.editMode;
-			};
+			// var edited = false;
+			// $rootScope.toggleEdit = function(){
+			// 	if (!edited) {
+			// 		$rootScope.editMode = false;
+			// 		edited = true;
+			// 	}
+			// 	$rootScope.editMode = !$rootScope.editMode;
+			// };
 		}
 	});
 });

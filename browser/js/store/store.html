@@ -16,6 +16,16 @@
 	    <input type="text" ng-model="store.css.round">
 		</div>
 		<div class="edit-option">
+	    <p>Font Type</p>
+	    <select ng-model="store.css.fontFamily">
+	      <option>Times New Roman</option>
+	      <option>Courier New</option>
+	      <option>Helvetica</option>
+	      <option>Verdana</option>
+	    </select>
+		</div>
+
+		<div class="edit-option">
 	    <p>Store Color</p>
 	    <select ng-model="store.css.color">
 	      <option>black</option>
@@ -76,5 +86,9 @@
   }
 	.edit-option {
 		display: inline-block;
+	}
+
+	h1, h2, h3, h4, h5, h6, p {
+		font-family: {{store.css.fontFamily}}
 	}
 </style>
