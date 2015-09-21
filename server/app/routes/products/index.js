@@ -38,7 +38,11 @@ router.post('/', function(req,res,next){
   // Product.createWithDefault(req.body) //this was causing a 500 error
 	Product.create(req.body)
   .then(function(createdProduct){
-    res.status(201).json(createdProduct);
+  	return createdProduct.populate('category').populate('store').execPopulate();
+  })
+  .then(function (popProduct) {
+  	console.log("this is product", popProduct)
+    res.status(201).json(popProduct);
   })
   .then(null, next);
 });
