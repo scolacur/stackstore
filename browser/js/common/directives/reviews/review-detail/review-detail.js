@@ -6,7 +6,9 @@ app.directive('reviewDetail', function(ReviewFactory, $stateParams){
 
     // },
     scope: {
-      review: "="
+      review: "=",
+      isAdmin: "=",
+      isOwner: "="
     }
   };
 });

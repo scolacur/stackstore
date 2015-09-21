@@ -1,8 +1,10 @@
 <div>
 <h2>{{review.title}}</h2>
-  <p>{{review.description}} </p>
-  <ul>
-    <a ui-sref="user({userId: review.user._id })"><li>{{review.user.email}} </li></a>
-    <a ui-sref="productDetail({productId: review.product._id})"><li>{{review.product.name}}</li></a>
-  </ul>
+	<h4>A review for: <a ui-sref="productDetail({productId: review.product._id})">{{review.product.name}}</li></a></h4>
+  	<p class="review-text">{{review.description}} </p>
+  	is owner: {{isOwner}}
+  	<button ng-show="isOwner" class="btn btn-primary">Edit Review</button>
+	<div>Cool review, as written by: 
+		<a ui-sref="user({userId: review.user._id })">{{review.user.email}} </a>
+	</div>
 </div>
