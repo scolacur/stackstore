@@ -1,4 +1,4 @@
-<button class="btn btn-info" ng-click="adding = true">Add a product</button>
+<button class="btn btn-info" ng-hide = "adding" ng-click="adding = !adding">Add a product</button>
 <form ng-show="adding" ng-submit="addProduct(product, store)">
     <ul>
         <li> Name:
@@ -16,11 +16,12 @@
         <li>Photo URL:
             <input ng-model="product.photoUrl"></input>
         </li>
-        <li>Category:
+        <li>Category (required):
             <category-nav selected="product.category"></category-nav>
         </li>
     </ul>
     <div>
-        <button class="btn btn-danger" ng-show="adding" type="submit">Add your product</button>
-    </div>
+        <button class="btn btn-success" ng-show="adding" type="submit" ng-click="adding = false">Add your product</button>
+				<button class="btn btn-danger" ng-show="adding" ng-click="adding = false">Cancel</button>
+		</div>
 </form>

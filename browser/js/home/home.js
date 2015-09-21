@@ -9,7 +9,6 @@ app.config(function ($stateProvider) {
 			});
 			var edited = false;
 			$rootScope.toggleEdit = function(){
-				console.log('running toggleEdit');
 				if (!edited) {
 					$rootScope.editMode = false;
 					edited = true;

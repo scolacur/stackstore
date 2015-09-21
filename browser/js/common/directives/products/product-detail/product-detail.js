@@ -4,19 +4,15 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 		templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
 		link: function (scope) {
 			scope.quantity = 1;
+			scope.home = $state.is('home');
+			scope.isDetail = $state.is("productDetail");
+
 			scope.addToCart = function(item, quantity){
 				CartFactory.addToCart(item, quantity)
 				.then(function () {
 					$state.go('cart');
 				});
 			};
-			scope.home = $state.is('home');
-			if (Session.user){
-				scope.isAdmin = Session.user.isAdmin;
-			} else {
-				scope.isAdmin = false;
-			}
-			scope.isDetail = $state.is("productDetail");
 		},
 	};
 });

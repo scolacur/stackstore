@@ -23,13 +23,25 @@ app.factory('ProductFactory', function ($http) {
 	}
 
 	function editProduct(id, item){
-		item.category = JSON.parse(item.category);
-			return $http.put('/api/products/' + id, item).then(function(result){
-				return result.data;
-			});
+		if (typeof item.category ==='string'){
+			item.category = JSON.parse(item.category);
+		}
+		return $http.put('/api/products/' + id, item).then(function(result){
+			return result.data;
+		});
 	}
 
 	function addProduct(product){
+		if (!product.category) {
+			product.category = "55fed272070a7bffb9a5a3af";
+			//this will set the default to watersports equipment.
+			//doing this check b/c the category dropdown directive has no default.
+			//probably better to just have the dropdown default to "All"
+			//or something, but I wanted to discuss that with the team before changing it
+		} else {
+			product.category = JSON.parse(product.category)._id;
+		}
+
 		return $http.post('/api/products', product)
 		.then(function(response){
 			return response.data;

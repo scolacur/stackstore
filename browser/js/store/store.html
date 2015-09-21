@@ -1,8 +1,16 @@
-<div class="panel panel-default">
+<h3>Welcome to {{store.name}}!</a></h3>
+<div>
+	<edit-button></edit-button>
+</div>
+<div ng-show="editMode" class="panel panel-default">
   <div class="panel-heading">
     <h1 class="panel-title">Edit your store!</h1>
   </div>
-  <div class="panel-body {{store.urlName}}">
+  <div  class="panel-body {{store.urlName}}">
+		<div class=edit-option>
+			<p>Store Name</p>
+			<input type="text" ng-model="store.name">
+		</div>
 		<div class="edit-option">
 	    <p>Store Navbar Roundness (1-100)</p>
 	    <input type="text" ng-model="store.css.round">
@@ -48,7 +56,11 @@
 		</div>
     <button
       class="btn btn-success"
-      ng-click="saveStore(store.urlName, store)">Save style
+      ng-click="saveStore(store.urlName, store)">Save
+		</button>
+		<button
+			class="btn btn-danger"
+			ng-click="toggleEdit()">Cancel
 		</button>
   </div>
 </div>
@@ -64,6 +76,5 @@
   }
 	.edit-option {
 		display: inline-block;
-		width: 30%;
 	}
 </style>
