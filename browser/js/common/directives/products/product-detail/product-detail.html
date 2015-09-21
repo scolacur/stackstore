@@ -15,7 +15,7 @@
 			<button class="btn btn-success" ng-show = "editMode" type="submit">Save Changes</button>
 		</div>
 	</form>
-	<button class="btn btn-danger" ng-show = "editMode" ng-click="toggleEdit()">Cancel</button>
+	<button class="btn btn-danger" ng-show = "editMode" ng-click="cancelEdit()">Cancel</button>
 	<ul ng-hide="editMode">
 		<li>{{product.price | currency}}</li>
 		<li>Description: {{product.description}}</li>

@@ -13,13 +13,21 @@ app.config(function($stateProvider) {
 				$scope.isAdmin = false;
 				$scope.isOwner = false;
 			}
+			$scope.enableEdit = function () {
+				$scope.cached = angular.copy($scope.product);
+				$scope.editMode = true;
+			};
+			$scope.cancelEdit = function(){
+				$scope.product = angular.copy($scope.cached);
+				$scope.editMode = false;
+			};
+
 			$scope.editProduct = function(product) {
 				ProductFactory.editProduct(product._id, product)
 					.then(function() {
-						$rootScope.editMode = false;
+						$scope.editMode = false;
 					});
 			};
-
 		},
 		resolve: {
 			findProduct: function (ProductFactory, $stateParams) {
