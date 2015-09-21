@@ -3,8 +3,8 @@ app.config(function($stateProvider){
   .state('orderList', {
     url: '/orders',
     templateUrl: '/js/order/order-list/order-list.html',
-    controller: function ($scope, Order) {
-      Order.getOrders()
+    controller: function ($scope, OrderFactory) {
+      OrderFactory.getOrders()
       .then(function (orders) {
         $scope.orders = orders;
       });
