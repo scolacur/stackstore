@@ -4,14 +4,12 @@ module.exports = router;
 var emailer = require('../../configure/email');
 // var _ = require('lodash');
 
-var Order = require('mongoose').model('Order');
+var mongoose = require('mongoose');
+var Order = mongoose.model('Order');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 router.get('/', function (req, res) {
-    // var query = {};
-    // if (req.query.status) {
-    //     query.status = req.query.status;
-    // }
-	Order.find(req.query)
+	Order.find(req.query).deepPopulate("items.product items.product.store items.product.category")
 	.then(function (orders) {
 		res.json(orders);
 	});

@@ -4,12 +4,18 @@
 	<li>Order ID: <a ui-sref="orderDetail({orderId: '{{order._id}}' })">{{order._id}}</a></li>
 	<li>Items
 		<ul ng-repeat="item in order.items">
-			<li>Product: {{item.product}}</li>
-			<li>Quantity: {{item.quantity}}</li>
+			<li><ul>
+				<li>Product Name: <a ui-sref="productDetail({productId: '{{item.product._id}}'})">{{item.product.name}}</a></li>
+				<li>Product Price: {{item.product.price}}</li>
+				<li>Product Store: <a ui-sref='store({storeName: "{{item.product.store.urlName}}"})'>{{item.product.store.name}}</a></li>
+				<li>Product Category: {{item.product.category.title}}</li>
+				<li>Quantity: {{item.quantity}}</li>
+			</li></ul>
 		</ul>
 	</li>
 	<li>Date: {{order.date}}</li>
 	<li>Address: {{order.address}}</li>
-	<li>Email: {{order.email}}</li>
+	<li>Email: <a ui-sref="user({userId: '{{order.user}}' })">{{order.email}}</a></li>
+	<li>Status: {{order.status}}</li>
 </ul>
  <button>Save Changes?</button>
