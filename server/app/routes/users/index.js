@@ -6,6 +6,7 @@ var _ = require('lodash');
 var User = require('mongoose').model('User');
 
 router.get('/', function (req, res) {
+	console.log("req.user: ",req.body);
 	User.find()
 	.then(function (users) {
 		users = users.map(function (user) {
@@ -46,6 +47,13 @@ router.put('/:userId', function (req, res) {
 
 router.get('/:userId', function (req, res) {
 	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
+});
+
+router.delete('/:userId', function (req, res, next){
+	req.foundUser.remove()
+	.then(function(){
+		res.status(204).end();
+	}).then(null, next);
 });
 
 router.param('userId', function (req, res, next, userId) {
