@@ -1,7 +1,6 @@
 <div>
-  <h3>{{ user.email }} </h3>
-	<h4 ng-show="user.isAdmin"> Admin </h4>
-	<h4 ng-hide="user.isAdmin"> Basic User </h4>
+  <h3> {{ user.email }} </h3>
+	<h4> Admin: {{user.isAdmin}} </h4>
 	<div>
 		<edit-button></edit-button>
 		<div ng-show="editMode" class="panel panel-default">
@@ -23,5 +22,5 @@
   <order-list></order-list>
   <review-list reviews="reviews"></review-list>
   <store-list></store-list>
-  <button add-store>Make a store</button>
+  <add-store>Make a store</add-store>
 </div>
