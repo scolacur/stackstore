@@ -12,7 +12,8 @@ var schema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        required: true
+        required: true,
+				// default: mongoose.Schema.Types.ObjectId("55fed272070a7bffb9a5a3af")
     },
     store: {
         type: mongoose.Schema.Types.ObjectId,

@@ -23,6 +23,6 @@ var schema = new mongoose.Schema({
 
 schema.path('urlName').validate(function(value){
     return /^[\w\-]+/.test(value);
-})
+});
 
 mongoose.model('Store', schema);
