@@ -1,13 +1,12 @@
 app.config(function ($stateProvider) {
-  $stateProvider.state('store', {
-    url: '/stores/:storeName',
-    templateUrl: '/js/store/store.html',
-    controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state, $rootScope) {
+	$stateProvider.state('store', {
+		url: '/stores/:storeName',
+		templateUrl: '/js/store/store.html',
+		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state) {
 			$scope.isDetail = $state.is("store");
-
 			StoreFactory.getByName($stateParams.storeName)
-      .then(function (store) {
-        $scope.store = store;
+			.then(function (store) {
+				$scope.store = store;
 
 				if (Session.user){
 					$scope.isAdmin = Session.user.isAdmin;
@@ -16,18 +15,18 @@ app.config(function ($stateProvider) {
 					$scope.isAdmin = false;
 					$scope.isOwner = false;
 				}
-        return ProductFactory.getProducts({store: store._id});
-      })
-      .then(function (products) {
-        $scope.products = products;
-      });
+			return ProductFactory.getProducts({store: store._id});
+			})
+			.then(function (products) {
+				$scope.products = products;
+			});
 
-      $scope.saveStore = function (storeName, props) {
-        StoreFactory.edit(storeName, props)
-        .then(function () {
-					$rootScope.editMode = false;
-        })
-      }
-    }
-  })
+			$scope.saveStore = function (storeName, props) {
+				StoreFactory.edit(storeName, props)
+				.then(function () {
+					$scope.editMode = false;
+				});
+			};
+		}
+	});
 });

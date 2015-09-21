@@ -1,10 +1,11 @@
-app.directive('userDetail', function(UserFactory, $stateParams, $state, $rootScope, Session){
+app.directive('userDetail', function(UserFactory, $stateParams, $state, Session){
   return {
 	restrict: 'E',
 	templateUrl: '/js/common/directives/user/user-detail/user-detail.html',
 	link: function (scope){
-				scope.isDetail = true;
-				scope.isAdmin = Session.user.isAdmin;
+		scope.isDetail = true;
+		scope.isAdmin = Session.user.isAdmin;
+		scope.editMode = false;
 
 		UserFactory.getById($stateParams.userId)
 		.then(function(user){
@@ -27,7 +28,7 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, $rootSco
 			UserFactory.edit(user._id, user)
 			.then(function (updatedUser) {
 				scope.user = updatedUser;
-				$rootScope.editMode = false;
+				scope.editMode = false;
 				console.log('user saved!', updatedUser);
 			});
 		};
