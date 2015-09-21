@@ -31,7 +31,7 @@ schema.pre('save', function (next) {
 
 schema.statics.createWithDefault = function (reqBody) {
     var self = this;
-    return Category.findOne({title: reqBody.category})
+    return Category.findOne({title: reqBody.category.title})
     .then(function (cat) {
         if (!cat) return Category.findOne({title: 'Default'})
         else return cat;
