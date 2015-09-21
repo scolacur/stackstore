@@ -1,7 +1,7 @@
 app.config(function ($stateProvider) {
 	$stateProvider.state('home', {
-			url: '/',
-			templateUrl: 'js/home/home.html',
+		url: '/',
+		templateUrl: 'js/home/home.html',
 		controller: function($scope, $rootScope, findStores){
 			$scope.stores = findStores;
 		},
@@ -10,7 +10,8 @@ app.config(function ($stateProvider) {
 				return StoreFactory.getAll()
 				.then(function (stores) {
 					return stores;
-			});
+				});
+			}
 		}
 	});
 });
