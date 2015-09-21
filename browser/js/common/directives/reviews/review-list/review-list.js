@@ -10,6 +10,9 @@ app.directive('reviewList', function(){
           }
         return arr;
       };
+    },
+    scope: {
+      reviews: "="
     }
   };
 });

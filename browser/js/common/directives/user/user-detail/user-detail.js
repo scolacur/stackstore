@@ -24,6 +24,14 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 			scope.stores = stores;
 		});
 
+		scope.enableEdit = function () {
+			scope.cached = angular.copy(scope.user);
+			scope.editMode = true;
+		};
+		scope.cancelEdit = function(){
+			scope.user = angular.copy(scope.cached);
+			scope.editMode = false;
+		};
 		scope.saveUser = function (user) {
 			UserFactory.edit(user._id, user)
 			.then(function (updatedUser) {
@@ -38,14 +46,12 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 				$state.go('home');
 			});
 		};
-		scope.enableEdit = function () {
-			scope.cached = angular.copy(scope.user);
-			scope.editMode = true;
-		};
-		scope.cancelEdit = function(){
-			scope.user = angular.copy(scope.cached);
-			scope.editMode = false;
-		};
+	},
+	scope: {
+		user: "=",
+		stores: "=",
+		reviews: "=",
+		orders: "="
 	}
   };
 });

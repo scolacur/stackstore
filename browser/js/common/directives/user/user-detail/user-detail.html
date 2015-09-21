@@ -1,5 +1,5 @@
 <div>
-  <h3> {{ user.email }} </h3>
+  <h3>{{ user.email }} </h3>
 	<h4 ng-show="user.isAdmin"> Admin </h4>
 	<h4 ng-hide="user.isAdmin"> Basic User </h4>
 	<div>
@@ -25,7 +25,7 @@
 	</div>
 	</div>
   <order-list></order-list>
-  <review-list></review-list>
+  <review-list reviews="reviews"></review-list>
   <store-list></store-list>
   <button add-store>Make a store</button>
 </div>

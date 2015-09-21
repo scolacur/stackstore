@@ -64,8 +64,10 @@ schema.path('email').validate(function (value) {
 schema.plugin(deepPopulate);
 
 schema.statics.populateItems = function (_orders) {
+    var self = this;
     return new Promise(function (resolve, reject) {
-        this.constructor.deepPopulate(_orders, 'items.product', function (err, orders) {
+        self.deepPopulate(_orders, 'items.product items.product.store items.product.category', function (err, orders) {
+            console.log("constructor", err, orders);
             if (err) return reject(err);
             return resolve(orders);
         });
@@ -75,7 +77,8 @@ schema.statics.populateItems = function (_orders) {
 schema.methods.populateItem = function () {
     var self = this;
     return new Promise(function (resolve, reject) {
-        self.deepPopulate('items.product', function (err, post) {
+        self.deepPopulate('items.product items.product.store items.product.category', function (err, post) {
+            console.log("POST", post.items[0].product);
             if (err) return reject(err);
             return resolve(post);
         });
