@@ -9,8 +9,8 @@ var schema = new mongoose.Schema({
     description: String,
     inventory: Number,
     photoUrl: {type: String, default: "http://budapestretro.weebly.com/uploads/2/1/6/9/21695204/8297955_orig.jpg?182"},
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
+    categories: {
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "Category",
         required: true,
 				// default: mongoose.Schema.Types.ObjectId("55fed272070a7bffb9a5a3af")
