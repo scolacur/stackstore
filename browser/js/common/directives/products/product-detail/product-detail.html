@@ -1,7 +1,6 @@
 <div class="row">
 <div class="col-md-8">
 	<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
-	<pre>editMode{{ editMode }}</pre>
 	<form ng-show="editMode" ng-submit="editProduct(product)">
 		<ul>
 			<li>Name:<input ng-model = "product.name"></input></li>
