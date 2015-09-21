@@ -5,6 +5,7 @@ app.config(function ($stateProvider) {
 		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state) {
 			$scope.isDetail = $state.is("store");
 			$scope.editMode = false;
+
 			StoreFactory.getByName($stateParams.storeName)
 			.then(function (store) {
 				$scope.store = store;
@@ -29,6 +30,7 @@ app.config(function ($stateProvider) {
 				});
 			};
 			$scope.enableEdit = function () {
+				console.log('this should get called');
 				$scope.cached = angular.copy($scope.store);
 				$scope.editMode = true;
 			};

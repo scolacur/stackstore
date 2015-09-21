@@ -4,6 +4,7 @@ module.exports = router;
 var _ = require('lodash');
 
 var User = require('mongoose').model('User');
+var Store = require('mongoose').model('Store');
 
 router.get('/', function (req, res) {
 	console.log("req.user: ",req.body);
@@ -50,7 +51,10 @@ router.get('/:userId', function (req, res) {
 });
 
 router.delete('/:userId', function (req, res, next){
-	req.foundUser.remove()
+	Store.remove({user: req.foundUser})
+	.then(function(){
+		return req.foundUser.remove();
+	})
 	.then(function(){
 		res.status(204).end();
 	}).then(null, next);

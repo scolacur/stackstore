@@ -6,6 +6,8 @@ app.config(function($stateProvider) {
 		controller: function($scope, findProduct, findReviews, $stateParams, ProductFactory, Session) {
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
+			$scope.editMode = false;
+
 			if (Session.user){
 				$scope.isAdmin = Session.user.isAdmin;
 				$scope.isOwner = Session.user._id === $scope.product.store.user;
@@ -14,6 +16,7 @@ app.config(function($stateProvider) {
 				$scope.isOwner = false;
 			}
 			$scope.enableEdit = function () {
+				console.log('something');
 				$scope.cached = angular.copy($scope.product);
 				$scope.editMode = true;
 			};
