@@ -59,7 +59,7 @@ describe('Reviews Route', function () {
       .then(function (){
           return Product.create({
               name: 'surfbort',
-              category: categoryId,
+              categories: [categoryId],
               price: 56,
               store: storeId
           })

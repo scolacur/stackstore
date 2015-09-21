@@ -52,7 +52,7 @@ describe('Orders Route', function () {
 		.then(function (){
 			return Product.create({
 				name: 'surfboard',
-				category: categoryId,
+				categories: [categoryId],
 				price: 56,
 				store: storeId
 			})

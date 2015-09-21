@@ -54,7 +54,7 @@ describe('Products Route', function () {
       .then(function (){
           return Product.create({
               name: 'surfbort',
-              category: categoryId,
+              categories: [categoryId],
               price: 56,
               store: storeId
           })
@@ -102,7 +102,7 @@ describe('Products Route', function () {
 
     it('should make a product', function (done) {
       agent.post('/api/products/')
-        .send({name: 'sand-sniffer', store: storeId})
+        .send({name: 'sand-sniffer', store: storeId, categories: [categoryId]})
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);

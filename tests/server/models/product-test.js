@@ -35,7 +35,7 @@ describe('Product model', function () {
 
     beforeEach("Create test category", function (done) {
       return Category.create({title: "Default"})
-      .then(function(category){
+      .then(function(){
           done();
       });
     });
@@ -61,7 +61,7 @@ describe('Product model', function () {
     });
 
     beforeEach("Create test product", function () {
-      return Product.create({name: "surfbort", category: categoryId, store: storeId});
+      return Product.create({name: "surfbort", categories: [categoryId], store: storeId});
     });
 
     afterEach('Clear test database', function (done) {
@@ -82,7 +82,7 @@ describe('Product model', function () {
       });
 
       it('should be unique', function (done) {
-          return Product.create({name: "surfbort", category: categoryId, store: storeId})
+          return Product.create({name: "surfbort", categories: [categoryId], store: storeId})
           .then(function(product){
             // shouldnt get here, sad
             done();
