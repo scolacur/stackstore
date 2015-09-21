@@ -1,0 +1,37 @@
+<div class="row">
+<div class="col-md-8">
+	<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
+	<form ng-show="editMode" ng-submit="editProduct(product)">
+		<ul>
+			<li>Price:<input ng-model = "product.price" ></input></li>
+			<li>Description:<input ng-model = "product.description" ></input></li>
+			<li>Inventory:<input ng-model = "product.inventory" ></input></li>
+			<li>Category:
+				<category-nav selected="product.category"></category-nav>
+			</li>
+		</ul>
+		<div>
+			<button class="btn btn-danger" ng-show = "editMode" type="submit">Save Changes</button>
+		</div>
+	</form>
+	<ul ng-hide="editMode">
+		<li>{{product.price | currency}}</li>
+		<li>Description: {{product.description}}</li>
+		<li>We have {{product.inventory}} in stock</li>
+		<li>Sold from: {{product.store.name}}</li>
+		<li>Category: {{product.category.title}}</li>
+	  	<li ng-show="!home">
+	    <p>How many?</p>
+	    <input ng-model="quantity" type='number'>
+	  </li>
+	</ul>
+	<ul>
+	<div>
+	  <button class="btn btn-success" ng-show-"!editMode" ng-click="addToCart(product, quantity)">Add to cart</button>
+	  <edit-button></edit-button>
+	</div>
+</div>
+	<div class="col-md-4">
+		<img  class = "pull-right" src = "{{product.photoUrl}}"></img>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+
+<h2 ng-show="main">Order</h2>
+<ul>
+	<li>Order ID: <a ui-sref="orderDetail({orderId: '{{order._id}}' })">{{order._id}}</a></li>
+	<li>Items
+		<ul ng-repeat="item in order.items">
+			<li>Product: {{item.product}}</li>
+			<li>Quantity: {{item.quantity}}</li>
+		</ul>
+	</li>
+	<li>Date: {{order.date}}</li>
+	<li>Address: {{order.address}}</li>
+	<li>Email: {{order.email}}</li>
+</ul>
+ <button>Save Changes?</button>

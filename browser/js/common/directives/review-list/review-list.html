@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">Reviews</h1>
+  </div>
+  <ul class="list-group">
+    <li 
+      class="list-group-item"
+      ng-repeat="review in reviews">
+      <a ui-sref="reviewDetail({reviewId: review._id })">
+        {{review.title}}
+      </a>
+      <div class="pull-right">
+        <span ng-repeat="i in getStars(review.rating)">☆</span>
+      </div>
+    </li>
+  </ul>
+</div>
