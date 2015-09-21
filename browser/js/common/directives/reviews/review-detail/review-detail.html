@@ -1,9 +1,12 @@
-<div>
+<div>edit mode {{editMode}}
 <h2>{{review.title}}</h2>
 	<h4>A review for: <a ui-sref="productDetail({productId: review.product._id})">{{review.product.name}}</li></a></h4>
-  	<p class="review-text">{{review.description}} </p>
-  	is owner: {{isOwner}}
-  	<button ng-show="isOwner" class="btn btn-primary">Edit Review</button>
+  	<p class="review-text" ng-show="!editMode">{{review.description}}</p>
+  	<form ng-show="editMode" ng-submit="updateReview(review)">
+  		<textarea></textarea>
+  		<button type="submit">Save Changes</button>
+  	</form>
+  	<edit-button></edit-button>
 	<div>Cool review, as written by: 
 		<a ui-sref="user({userId: review.user._id })">{{review.user.email}} </a>
 	</div>

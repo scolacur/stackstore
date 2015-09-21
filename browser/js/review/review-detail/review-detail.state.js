@@ -3,7 +3,7 @@ app.config(function($stateProvider){
   .state('reviewDetail', {
     url: '/review/:reviewId',
     templateUrl: '/js/review/review-detail/review-detail.html',
-    controller: function ($scope, findReview, Session) {
+    controller: function ($scope, findReview, Session, ReviewFactory, $rootScope) {
 		  $scope.review = findReview;
       if (Session.user) {
         $scope.isAdmin = Session.user.isAdmin;
@@ -12,7 +12,13 @@ app.config(function($stateProvider){
         $scope.isAdmin = false;
         $scope.isOwner = false;
       }
-      console.log("session", $scope.isAdmin, $scope.isOwner);
+      $scope.isDetail = true;
+      $scope.editReview = function(review) {
+        ReviewFactory.updateReview(review._id, review)
+          .then(function() {
+            $rootScope.editMode = false;
+          });
+      };
     },
     resolve: {
     	findReview: function (ReviewFactory, $stateParams) {
