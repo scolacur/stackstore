@@ -21,7 +21,6 @@ app.factory('Store', function ($http, $state) {
   };
 
   Store.getByName = function (storeName) {
-    console.log('/api/stores/' + storeName);
     return $http.get('/api/stores/' + storeName).then(returnData);
   };
 

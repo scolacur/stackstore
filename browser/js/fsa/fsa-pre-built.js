@@ -100,7 +100,6 @@
             return $http.post('/login', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
-                    // console.log('CREDS: ', credentials);
                     return $q.reject({ message: 'Invalid login credentials.' });
                 });
         };

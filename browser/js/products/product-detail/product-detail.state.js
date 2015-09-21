@@ -11,7 +11,6 @@ app.config(function($stateProvider) {
 
 										if (Session.user){
 											$scope.isAdmin = Session.user.isAdmin;
-											console.log(product);
 											$scope.isOwner = Session.user._id === product.store.user;
 										} else {
 											$scope.isAdmin = false;
