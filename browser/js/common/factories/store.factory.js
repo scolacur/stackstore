@@ -1,4 +1,4 @@
-app.factory('Store', function ($http, $state) {
+app.factory('StoreFactory', function ($http, $state) {
 
   var Store = function (props) {
     angular.extend(this, props);

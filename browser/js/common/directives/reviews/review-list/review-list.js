@@ -1,7 +1,7 @@
 app.directive('reviewList', function(){
   return {
     restrict: 'E',
-    templateUrl: '/js/common/directives/review-list/review-list.html',
+    templateUrl: '/js/common/directives/reviews/review-list/review-list.html',
     link: function(scope){
       scope.getStars = function (num) {
           var arr = [];

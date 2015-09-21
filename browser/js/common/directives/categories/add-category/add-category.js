@@ -1,7 +1,7 @@
 app.directive('addCategory', function(ProductFactory){
   return {
     restrict: 'E',
-    templateUrl: '/js/common/directives/add-category/add-category.html',
+    templateUrl: '/js/common/directives/categories/add-category/add-category.html',
     link: function (scope) {
       scope.addCategory = function (category) {
         ProductFactory.addCategory(category)
