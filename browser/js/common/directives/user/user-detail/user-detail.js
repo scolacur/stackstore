@@ -29,8 +29,15 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 			.then(function (updatedUser) {
 				scope.user = updatedUser;
 				scope.editMode = false;
-				console.log('user saved!', updatedUser);
 			});
+		};
+		scope.enableEdit = function () {
+			scope.cached = angular.copy(scope.user);
+			scope.editMode = true;
+		};
+		scope.cancelEdit = function(){
+			scope.user = angular.copy(scope.cached);
+			scope.editMode = false;
 		};
 	}
   };

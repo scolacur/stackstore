@@ -5,9 +5,11 @@ app.config(function($stateProvider) {
 		templateUrl: '/js/products/product-detail/product-detail.html',
 		controller: function($scope, ProductFactory, ReviewFactory, $stateParams, Session) {
 			$scope.editMode = false;
+			
 			ProductFactory.getProduct($stateParams.productId)
 				.then(function(product) {
 					$scope.product = product;
+					$scope.cached = angular.copy(product);
 
 					if (Session.user){
 						$scope.isAdmin = Session.user.isAdmin;
@@ -23,6 +25,14 @@ app.config(function($stateProvider) {
 					.then(function() {
 						$scope.editMode = false;
 					});
+			};
+			$scope.enableEdit = function () {
+				$scope.cached = angular.copy($scope.product);
+				$scope.editMode = true;
+			};
+			$scope.cancelEdit = function(){
+				$scope.product = angular.copy($scope.cached);
+				$scope.editMode = false;
 			};
 			ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
 				.then(function(reviews) {

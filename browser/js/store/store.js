@@ -4,6 +4,7 @@ app.config(function ($stateProvider) {
 		templateUrl: '/js/store/store.html',
 		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state) {
 			$scope.isDetail = $state.is("store");
+			$scope.editMode = false;
 			StoreFactory.getByName($stateParams.storeName)
 			.then(function (store) {
 				$scope.store = store;
@@ -26,6 +27,14 @@ app.config(function ($stateProvider) {
 				.then(function () {
 					$scope.editMode = false;
 				});
+			};
+			$scope.enableEdit = function () {
+				$scope.cached = angular.copy($scope.store);
+				$scope.editMode = true;
+			};
+			$scope.cancelEdit = function(){
+				$scope.store = angular.copy($scope.cached);
+				$scope.editMode = false;
 			};
 		}
 	});
