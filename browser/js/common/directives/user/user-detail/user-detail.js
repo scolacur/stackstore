@@ -1,4 +1,4 @@
-app.directive('userDetail', function(UserFactory, $stateParams, $state, $rootScope, Session){
+app.directive('userDetail', function(UserFactory, $stateParams, $state, Session){
   return {
 	restrict: 'E',
 	templateUrl: '/js/common/directives/user/user-detail/user-detail.html',

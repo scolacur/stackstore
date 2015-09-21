@@ -2,7 +2,7 @@ app.config(function ($stateProvider) {
 	$stateProvider.state('store', {
 		url: '/stores/:storeName',
 		templateUrl: '/js/store/store.html',
-		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state, $rootScope) {
+		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state) {
 			$scope.isDetail = $state.is("store");
 			StoreFactory.getByName($stateParams.storeName)
 			.then(function (store) {
