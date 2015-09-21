@@ -22,7 +22,6 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:storeName', function (req, res) {
-
     req.store = _.assign(req.store, req.body)
     req.store.save()
     .then(function (editedStore) {
