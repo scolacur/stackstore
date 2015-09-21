@@ -9,7 +9,7 @@ var Order = mongoose.model('Order');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 router.get('/', function (req, res) {
-	Order.find(req.query).deepPopulate("items.product items.product.store items.product.category")
+	Order.find(req.query).deepPopulate("items.product items.product.store items.product.categories")
 	.then(function (orders) {
 		res.json(orders);
 	});

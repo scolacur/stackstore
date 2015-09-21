@@ -86,7 +86,7 @@ var seedCategoriesAndProducts = function () {
             description: "a surfbort which is obviously coolest",
             inventory: 8,
             price: 12,
-            category: waterCat._id,
+            categories: [waterCat._id],
             store: nsa._id,
             photoUrl: 'https://s-media-cache-ak0.pinimg.com/736x/d7/f2/6c/d7f26cd70a54599ba3515ac42ce26a9c.jpg'
         }, {
@@ -94,7 +94,7 @@ var seedCategoriesAndProducts = function () {
             description: "shooting sand shooting sand shooting sand shooting sand and also maybe people???? never",
             inventory: 89,
             price: 12932,
-            category: waterCat._id,
+            categories: [waterCat._id, fightCat._id],
             store: nsa._id,
             photoUrl: 'http://www.gravelshooter.net/images/Commercialservices.jpg'
         }, {
@@ -102,7 +102,7 @@ var seedCategoriesAndProducts = function () {
             description: "Please buy one of these. It will make our job much easier.",
             inventory: 89,
             price: 1,
-            category: terrCat._id,
+            categories:[terrCat._id],
             store: nsa._id,
             photoUrl: 'http://s.hswstatic.com/gif/ied-2.jpg',
         }, {
@@ -110,7 +110,7 @@ var seedCategoriesAndProducts = function () {
             description: "Go for the full American. Get this giant flag.",
             inventory: 89,
             price: 1,
-            category: fightCat._id,
+            categories: [fightCat._id],
             store: gobama._id,
             photoUrl: 'http://cdn.meme.am/instances/54484550.jpg'
         }];
@@ -154,7 +154,7 @@ var seedReviews = function (userId, productId) {
             user: obama._id,
             product: af._id
         }];
-        return Promise.resolve(Review.create(reviews));   
+        return Promise.resolve(Review.create(reviews));
     });
 };
 
@@ -213,7 +213,7 @@ var seedOrders = function (userId, productId) {
         return Promise.resolve(Order.create(orders));
     });
 };
-    
+
 connectToDb.then(function () {
     return Promise.resolve(User.find().exec())
     .then(function (users) {

@@ -21,7 +21,7 @@
 		<li>Description: {{product.description}}</li>
 		<li>We have {{product.inventory}} in stock</li>
 		<li>Sold from: {{product.store.name}}</li>
-		<li>Category: {{product.category.title}}</li>
+		<li>Categories: <span ng-repeat="cat in product.categories">{{cat.title}} </span></li>
 	  	<li ng-show="!home">
 	    <p>How many?</p>
 	    <input ng-model="quantity" type='number'>
@@ -34,6 +34,6 @@
 	</div>
 </div>
 	<div class="col-md-4">
-		<img  class = "pull-right" src = "{{product.photoUrl}}"></img>
+		<img  class = "pull-right" ng-src = "{{product.photoUrl}}"></img>
 	</div>
 </div>

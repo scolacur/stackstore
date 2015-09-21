@@ -9,12 +9,11 @@ var schema = new mongoose.Schema({
     description: String,
     inventory: Number,
     photoUrl: {type: String, default: "http://budapestretro.weebly.com/uploads/2/1/6/9/21695204/8297955_orig.jpg?182"},
-    categories: {
-        type: [mongoose.Schema.Types.ObjectId],
+    categories: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: true,
-				// default: mongoose.Schema.Types.ObjectId("55fed272070a7bffb9a5a3af")
-    },
+    }],
     store: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Store',
@@ -22,12 +21,9 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.pre('save', function (next) {
-
-    //add pre-save hook here
-    next();
-
-});
+schema.path('categories').validate(function(value){
+    return value.length > 0;
+})
 
 schema.statics.createWithDefault = function (reqBody) {
     var self = this;

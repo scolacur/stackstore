@@ -5,8 +5,9 @@ var mongoose = require('mongoose');
 var Product = mongoose.model('Product');
 
 router.param('productId', function(req,res,next,id){
-	Product.findById(id).populate("store").populate("category").exec()
+	Product.findById(id).populate("store").populate("categories").exec()
 	.then(function(foundProduct){
+		console.log('found product:', foundProduct);
 		req.foundProduct = foundProduct;
 		next();
 	}, function(err){
@@ -23,7 +24,7 @@ router.get('/', function(req,res,next){
 	// if (req.query.categoryId) {
 	// 	query.category = req.query.categoryId;
 	// }
-	Product.find(req.query).populate("category").populate("store").exec()
+	Product.find(req.query).populate("categories").populate("store").exec()
 	.then(function(products){
 		res.json(products);
 	}).then(null, next);

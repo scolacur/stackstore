@@ -16,6 +16,19 @@ app.directive('addProduct', function(ProductFactory){
             scope.product = {};
         });
       };
+      scope.range = _.range;
+
+      ProductFactory.getCategories().then(function(categories) {
+        scope.categories = categories;
+      });
+
+      scope.updateCats = function () {
+          [].splice.call(scope.product.categories, scope.numCats, scope.product.categories.length);
+      }
+      scope.nextCat = function () {
+          scope.numCats++;
+          scope.updateCats();
+      }
     }
   };
 });

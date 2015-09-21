@@ -129,13 +129,24 @@ describe('Users Route', function () {
 	describe('PUT /api/users/:userId', function () {
 
 		var agent,
-				userId;
+			userId,
+			userId2,
+			adminId;
 
 		beforeEach('Create agent', function () {
 			agent = supertest.agent(app);
 		});
 
-		beforeEach('Make a user', function (done) {
+		beforeEach('Make a basic user', function (done) {
+			User.create({email: "dude@dood.com", password: "dude"})
+			.then(function (user) {
+				userId2 = user._id;
+				done();
+			})
+			.then(null, done);
+		});
+
+		beforeEach('Make a second basic user', function (done) {
 			User.create({email: "sean@sean.com", password: "mypass"})
 			.then(function (user) {
 				userId = user._id;
@@ -144,30 +155,91 @@ describe('Users Route', function () {
 			.then(null, done);
 		});
 
-
-		it('should edit a user', function (done) {
-			agent.put('/api/users/' + userId)
-				.send({email: "poop@poop.com"})
-				.expect(201)
-				.end(function (err, response) {
-					if (err) return done(err);
-					User.findById(userId)
-					.then(function (user) {
-						expect(user.email).to.equal('poop@poop.com');
-						done();
-					});
-				});
+		beforeEach('Make an admin user', function (done) {
+			User.create({email: "bean@bean.com", password: "mypass", isAdmin: true})
+			.then(function (user) {
+				adminId = user._id;
+				done();
+			})
+			.then(null, done);
 		});
 
-		it('should not give back passwords', function (done) {
+		it('should err if not logged in', function (done) {
 			agent.put('/api/users/' + userId)
 				.send({email: "poop@poop.com"})
-				.expect(201)
+				.expect(401)
+				.end(done);
+		})
+
+		it('should err if basic user tries to edit other user', function (done) {
+			agent.post('/login')
+				.send({email: "dude@dood.com", password: "dude"})
 				.end(function (err, response) {
-					if (err) return done(err);
-					expect(response.body.password).to.not.be.ok;
-					done();
-				});
+					agent.put('/api/users/' + userId)
+						.send({email: "poop@poop.com"})
+						.expect(403)
+						.end(done);
+				})
+		});
+
+		it('should edit own user when logged in', function (done) {
+			agent.post('/login')
+				.send({email: "sean@sean.com", password: "mypass"})
+				.end(function (err, response) {
+					agent.put('/api/users/' + userId)
+						.send({email: "poop@poop.com"})
+						.expect(201)
+						.end(function (err, response) {
+							if (err) return done(err);
+							User.findById(userId)
+							.then(function (user) {
+								expect(user.email).to.equal('poop@poop.com');
+								done();
+							});
+						});
+				})
+
+		});
+
+		it('should edit other user when admin', function (done) {
+			agent.post('/login')
+				.send({email: "bean@bean.com", password: "mypass"})
+				.end(function (err, response) {
+					agent.put('/api/users/' + userId)
+						.send({email: "poop@poop.com"})
+						.expect(201)
+						.end(function (err, response) {
+							if (err) return done(err);
+							User.findById(userId)
+							.then(function (user) {
+								expect(user.email).to.equal('poop@poop.com');
+								done();
+							});
+						});
+				})
+
+		});
+
+
+		it('should not give back passwords', function (done) {
+			agent.post('/login')
+				.send({email: "sean@sean.com", password: "mypass"})
+				.end(function (err, response) {
+					agent.put('/api/users/' + userId)
+						.send({email: "poop@poop.com"})
+						.expect(201)
+						.end(function (err, response) {
+							agent.put('/api/users/' + userId)
+								.send({email: "poop@poop.com"})
+								.expect(201)
+								.end(function (err, response) {
+									if (err) return done(err);
+									expect(response.body.password).to.not.be.ok;
+									done();
+								});
+						});
+				})
+
 		});
 
 	});

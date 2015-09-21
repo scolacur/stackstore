@@ -72,16 +72,16 @@ describe('Product model', function () {
         expect(Product).to.be.a('function');
     });
 
-    describe('name', function () {
+    describe('validations', function () {
 
-      it('should exist', function (done) {
+      it('name should exist', function (done) {
         Product.find({}).then(function(results){
           expect(results.length).to.equal(1);
           done();
         });
       });
 
-      it('should be unique', function (done) {
+      it('name should be unique', function (done) {
           return Product.create({name: "surfbort", categories: [categoryId], store: storeId})
           .then(function(product){
             // shouldnt get here, sad
@@ -92,6 +92,14 @@ describe('Product model', function () {
             done();
           });
       });
+
+      it('category should exist', function (done) {
+          Product.create({name: "WMD", store: storeId})
+          .then(null, function(err){
+            expect(err.errors.categories).to.exist;
+            done();
+          });
+      })
 
     });
 

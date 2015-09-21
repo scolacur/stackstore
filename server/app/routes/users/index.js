@@ -23,24 +23,22 @@ router.post('/', function (req, res) {
 	});
 });
 
-router.put('/:userId', function (req, res) {
-	console.log("session user",req.session.passport);
-	console.log(req.foundUser);
-	var admin;
-	User.findById(req.session.passport.user)
-	.then(function(sessionUser){
-		admin = sessionUser.isAdmin;
-	}).then(function(){
-		req.foundUser = Object.keys(req.body).reduce(function (oldUser, newProp) {
-			if (newProp === 'isAdmin' && !admin) return oldUser; // fix with support for admins
-			oldUser[newProp] = req.body[newProp];
-			return oldUser;
-		}, req.foundUser);
-	}).then(function(){
-		req.foundUser.save()
-		.then(function (editedUser) {
-			res.status(201).json(_.omit(editedUser.toJSON(), ['salt', 'password']));
-		});
+router.put('/:userId', function (req, res, next) {
+	if(!req.user) {
+		var err = new Error('Not logged in')
+		err.status = 401;
+		return next(err);
+	}
+	if(req.user._id.toString() !== req.params.userId && !req.user.isAdmin) {
+		console.log('says not same user')
+		var err = new Error('You can\'t edit someone else\'s page')
+		err.status = 403;
+		return next(err);
+	}
+	req.foundUser = _.assign(req.foundUser, req.body);
+	req.foundUser.save()
+	.then(function (editedUser) {
+		res.status(201).json(_.omit(editedUser.toJSON(), ['salt', 'password']));
 	});
 });
 

@@ -1,5 +1,5 @@
 <button class="btn btn-info" ng-hide = "adding" ng-click="adding = !adding">Add a product</button>
-<form ng-show="adding" ng-submit="addProduct(product, store)">
+<form ng-show="adding" ng-submit="addProduct(product, store)" ng-init="product={}">
     <ul>
         <li> Name:
             <input ng-model="product.name"></input>
@@ -16,12 +16,14 @@
         <li>Photo URL:
             <input ng-model="product.photoUrl"></input>
         </li>
-        <li>Category: (required)
-            <category-edit selected="product.category"></category-edit>
+        <li ng-init="numCats = 1">Categories: (required)
+            <select ng-repeat="category in range(numCats)" ng-model="product.categories[$index]" ng-change="nextCat()" ng-options="cat.title for cat in categories"></select>
+            <!-- <category-edit ng-repeat="category in range(numCats)" selected="product.categories[$index]"></category-edit> -->
         </li>
+        <pre>{{product}}</pre>
     </ul>
     <div>
         <button class="btn btn-success" ng-show="adding" type="submit" ng-click="adding = false">Add your product</button>
-				<button class="btn btn-danger" ng-show="adding" ng-click="adding = false">Cancel</button>
 		</div>
 </form>
+		<button class="btn btn-danger" ng-show="adding" ng-click="adding = false; product = {}; numCats = 1">Cancel</button>
