@@ -22,11 +22,22 @@ app.config(function($stateProvider){
         $scope.editMode = false;
       };
       $scope.editReview = function(review) {
+        if (typeof review.rating !== "number") {
+          review.rating = review.rating.length;
+        }
         ReviewFactory.updateReview(review._id, review)
           .then(function(updated) {
             $scope.review.description = updated.description;
             $scope.editMode = false;
           });
+      };
+      
+      $scope.makeStars = function (num) {
+        var stars = [];
+        for (var i = 0; i < num; i++) {
+          stars.push(i);
+        }
+        return stars;
       };
     },
     resolve: {
