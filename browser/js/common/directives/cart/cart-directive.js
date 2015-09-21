@@ -3,11 +3,9 @@ app.directive('cart', function(Session, CartFactory){
 		restrict: 'E',
 		templateUrl: '/js/common/directives/cart/cart.html',
 		link: function(scope) {
-
 			scope.$on('updateCart', function(e, cart){
-        scope.cart = cart;
-      });
-
+				scope.cart = cart;
+		});
 			CartFactory.getCart();
 
 			scope.edit = function (index) {
