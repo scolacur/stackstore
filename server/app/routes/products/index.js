@@ -7,7 +7,6 @@ var Product = mongoose.model('Product');
 router.param('productId', function(req,res,next,id){
 	Product.findById(id).populate("store").populate("categories").exec()
 	.then(function(foundProduct){
-		console.log('found product:', foundProduct);
 		req.foundProduct = foundProduct;
 		next();
 	}, function(err){
@@ -39,7 +38,10 @@ router.post('/', function(req,res,next){
   // Product.createWithDefault(req.body) //this was causing a 500 error
 	Product.create(req.body)
   .then(function(createdProduct){
-    res.status(201).json(createdProduct);
+  	return createdProduct.populate('categories').populate('store').execPopulate();
+  })
+  .then(function (popProduct) {
+    res.status(201).json(popProduct);
   })
   .then(null, next);
 });

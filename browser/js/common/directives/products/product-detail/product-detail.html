@@ -7,9 +7,9 @@
 			<li>Price:<input ng-model = "product.price"></input></li>
 			<li>Description:<input ng-model = "product.description"></input></li>
 			<li>Inventory:<input ng-model = "product.inventory"></input></li>
-			<li>Category:
-				<category-edit selected="product.category"></category-edit>
-			</li>
+			<li ng-init="numCats = product.categories.length + 1">Categories: (required)
+            <select ng-repeat="category in range(numCats)" ng-model="product.categories[$index]" ng-change="nextCat()" ng-options="cat.title for cat in categories"></select>
+        </li>
 		</ul>
 		<div>
 			<button class="btn btn-success" ng-show = "editMode" type="submit">Save Changes</button>

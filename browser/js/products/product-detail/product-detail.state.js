@@ -3,7 +3,7 @@ app.config(function($stateProvider) {
 	$stateProvider.state('productDetail', {
 		url: '/products/:productId',
 		templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function($scope, findProduct, findReviews, $stateParams, $rootScope, Session) {
+		controller: function($scope, ProductFactory, findProduct, findReviews, $stateParams, $rootScope, Session) {
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
 			if (Session.user){
