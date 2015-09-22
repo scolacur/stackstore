@@ -1,27 +1,36 @@
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-  background: #fdfdfd;
+	background: #3D3E99;
+	background: -moz-linear-gradient(top,  #3D3E99 0%, #8DA3E8 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3D3E99), color-stop(100%,#7db9e8));
+	background: -webkit-linear-gradient(top,  #3D3E99 0%,#8DA3E8 100%);
+	background: -o-linear-gradient(top,  #3D3E99 0%,#8DA3E8 100%);
+	background: -ms-linear-gradient(top,  #3D3E99 0%,#8DA3E8 100%);
+	background: linear-gradient(to bottom,  #3D3E99 0%,#8DA3E8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 );
+	background-attachment: fixed;
+	font-family: 'Roboto', sans-serif
 }
 
 @mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
 }
 
 #main {
-  padding-top: 60px;
-  width: 1200px;
-  margin: 0 auto;
+	margin-top: 40px;
+	padding-top: 100px;
+	width: 1200px;
+	margin: 0 auto;
+	font-family: 'Roboto', sans-serif
 }
 
 @import 'directives/main';
 @import 'home/main';
-@import 'about/main';
-@import 'tutorial/main';
 @import 'login/main';

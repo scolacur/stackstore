@@ -1,36 +1,34 @@
 navbar {
 
-  display: block;
-  background: white;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
+	display: block;
+
+	.navbar-inverse {
+		background: #1F1F4F;
+		background: -moz-linear-gradient(top,  #1F1F4F 0%, #8DA3E8 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1F1F4F), color-stop(100%,#7db9e8));
+		background: -webkit-linear-gradient(top,  #1F1F4F 0%,#8DA3E8 100%);
+		background: -o-linear-gradient(top,  #1F1F4F 0%,#8DA3E8 100%);
+		background: -ms-linear-gradient(top,  #1F1F4F 0%,#8DA3E8 100%);
+		background: linear-gradient(to bottom,  #1F1F4F 0%,#8DA3E8 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 );
+		background-attachment: fixed;
+		font-family: 'Roboto', sans-serif
+	}
 
   .container {
     width: 91%;
     max-width: 1340px;
-    padding-top: 20px;
   }
 
-  fullstack-logo {
-    margin-top: 5px;
-    margin-right: 20px;
-    width: 40px;
-  }
-
-  a {
-    color: black;
-    font-size: 16px;
-  }
-
-  .nav > li > a {
+  .navbar-inverse .navbar-nav > li > a {
     cursor: pointer;
     transition: color 0.2s;
     &.active {
-      color: darken(#f31214, 10%);
+      color: darken(#049300, 10%);
     }
     &:hover {
       background: none;
-      color: #f31214;
+      color: #049300;
     }
     &:focus {
       background: none;
@@ -56,9 +54,7 @@ navbar {
   .welcome {
     float: right;
     margin-top: 12px;
-    span {
-      color: black;
-    }
+
     a {
       color: #f30046;
       cursor: pointer;
