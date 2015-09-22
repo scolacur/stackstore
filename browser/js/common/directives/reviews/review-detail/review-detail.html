@@ -1,8 +1,25 @@
 <div>
 <h2>{{review.title}}</h2>
-  <p>{{review.description}} </p>
-  <ul>
-    <a ui-sref="user({userId: review.user._id })"><li>{{review.user.email}} </li></a>
-    <a ui-sref="productDetail({productId: review.product._id})"><li>{{review.product.name}}</li></a>
-  </ul>
+	<h4>A review for: <a ui-sref="productDetail({productId: review.product._id})">{{review.product.name}}</li></a></h4>
+    <div ng-show="!editMode">
+      <h4>Rating: <span ng-repeat="star in makeStars(review.rating)">☆</span></h4>
+    </div>
+  	<p class="review-text" ng-show="!editMode">{{review.description}}</p>
+  	<form ng-show="editMode" ng-submit="editReview(review)">
+      <div>
+        <select ng-model="review.rating">
+          <option ng-repeat="star in ['☆', '☆☆', '☆☆☆', '☆☆☆☆', '☆☆☆☆☆']">{{star}}</option>
+        </select>
+      </div>
+  		<textarea ng-model="review.description" class="text-area" value="{{review.description}}">{{review.description}}</textarea>
+      <div>
+  		  <button class="btn btn-primary" type="submit">Save Changes</button>
+        <button class="btn btn-danger" ng-click="cancelEdit()">Cancel</button>
+      </div>
+  	</form>
+
+  	<edit-button></edit-button>
+	<div>Cool review, as written by: 
+		<a ui-sref="user({userId: review.user._id })">{{review.user.email}} </a>
+	</div>
 </div>
