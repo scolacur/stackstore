@@ -38,7 +38,6 @@ router.post('/', function (req, res, next) {
 });
 
 router.put('/:orderId', function (req, res) {
-	console.log("REQ", req.body);
 	req.foundOrder = Object.keys(req.body).reduce(function (oldOrder, newProp) {
 		oldOrder[newProp] = req.body[newProp];
 		return oldOrder;
