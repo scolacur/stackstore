@@ -1,8 +1,8 @@
 <h3>Welcome to {{store.name}}!</a></h3>
 <div>
-	<edit-button></edit-button>
+	<button class="btn btn-warning" ng-show = "(isAdmin || isOwner) && isDetail && !storeEdit" ng-click ="enableStoreEdit()">Edit</button>
 </div>
-<div ng-show="editMode" class="panel panel-default">
+<div ng-show="storeEdit" class="panel panel-default">
 	<div class="panel-heading">
 		<h1 class="panel-title">Edit your store!</h1>
 	</div>
@@ -64,14 +64,8 @@
 			<option>lavender</option>
 	    	</select>
 		</div>
-	<button
-		class="btn btn-success"
-		ng-click="saveStore(store.urlName, store)">Save
-	</button>
-	<button
-		class="btn btn-danger"
-		ng-click="cancelEdit()">Cancel
-	</button>
+	<button class="btn btn-success" ng-click="saveStore(store.urlName, store)">Save</button>
+	<button class="btn btn-danger" ng-click="cancelStoreEdit()">Cancel</button>
   </div>
 </div>
 <product-list></product-list>

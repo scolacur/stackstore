@@ -12,7 +12,9 @@ app.directive('reviewList', function(){
       };
     },
     scope: {
-      reviews: "="
+      reviews: "=",
+      product: "=",
+      isLoggedIn: "="
     }
   };
 });

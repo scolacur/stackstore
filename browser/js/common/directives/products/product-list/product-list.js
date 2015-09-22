@@ -12,10 +12,10 @@ app.directive("productList", function (ProductFactory) {
         return JSON.parse('{"title": ""}').title;
       };
 
-
       scope.$on('newProduct', function (e, product) {
         scope.products.push(product);
       });
+
     }
   };
 });

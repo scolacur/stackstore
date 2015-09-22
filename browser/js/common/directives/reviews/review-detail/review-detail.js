@@ -1,12 +1,6 @@
-app.directive('reviewDetail', function(ReviewFactory, $stateParams){
+app.directive('reviewDetail', function(ReviewFactory){
   return {
     restrict: 'E',
-    templateUrl: '/js/common/directives/reviews/review-detail/review-detail.html',
-    // link: function(scope){
-
-    // },
-    scope: {
-      review: "="
-    }
+    templateUrl: '/js/common/directives/reviews/review-detail/review-detail.html'
   };
 });
