@@ -17,6 +17,10 @@ h1 {
 	color: black;
 }
 
+.main-header {
+	text-align: center;
+}
+
 @mixin clearfix {
   &:after {
     content: "";
@@ -31,9 +35,37 @@ h1 {
   margin: 0 auto;
 }
 
+.search {
+	float: right;
+	display: inline;
+}
+
+.filter {
+	float: left;
+	display: inline;
+}
+
+.option {
+	display: inline;
+	float: right;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.top-bar {
+	height: 20px;
+}
+
+.store-item {
+	min-height: 350px;
+	width: 48%;
+	margin: 10px;
+}
+
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
 @import 'login/main';
 @import 'panels/main';
 @import 'storefronts/main';
+@import 'buttons/main';

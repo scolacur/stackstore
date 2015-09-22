@@ -3,16 +3,14 @@
 	padding: 0;
 	margin: 10px;
 	text-align: center;
-
+	width: 31%;
+	box-sizing: border-box;
 	transition: border 0.2s;
 
 	a {
 		text-decoration: none;
 		color: black;
 		transition: color 0.2s;
-		&:hover {
-			color: $mainColor;
-		}
 		h3 {
 			padding-top: 70px;
 		}
@@ -20,11 +18,15 @@
 
 	&:hover {
 		border: 1px solid $mainColor;
+
+		a {
+			color: $mainColor;
+		}
 	}
 
 
 	.store-panel {
-		border: 30px solid white;
+		border: 25px solid white;
 
 		padding: 0;
 
@@ -36,3 +38,7 @@
 	}
 }
 
+.row {
+	width: 100%;
+	margin: 0px;
+}

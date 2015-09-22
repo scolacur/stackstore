@@ -1,19 +1,22 @@
-<div class="search">
-<label>Search All Products: <input ng-model="searchText"></label>
+<div class="top-bar">
+	<div class="filter">
+		<span>Filter by Category: </span>
+		<category-nav selected="selected"></category-nav>
+	</div>
+	<div class="search">
+		<label>Search All Products: <input ng-model="searchText"></label>
+	</div>
 </div>
-<div class="panel panel-default">
-
-  <div class="panel-heading">
-    <span>Category:</span>
-    <category-nav selected="selected"></category-nav>
-  </div>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="product in products | filter:searchText:false | filter:selected">
-        <product-detail product="product"></product-detail>
-    </li>
-    <li class="list-group-item" ng-hide="!isAdmin && !isOwner">
-        <add-product></add-product>
-    </li>
-  </ul>
-
+<br>
+<div class="row">
+	<div class="col-sm-6 store-item"
+	ng-repeat="product in products | filter:searchText:false | filter:selected">
+		<product-detail product="product"></product-detail>
+	</div>
 </div>
+	<!--
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="product in products | filter:searchText:false | filter:selected">
+		    <product-detail product="product"></product-detail>
+		</li>
+	</ul> -->
