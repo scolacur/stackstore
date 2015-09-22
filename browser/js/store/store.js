@@ -2,28 +2,30 @@ app.config(function ($stateProvider) {
 	$stateProvider.state('store', {
 		url: '/stores/:storeName',
 		templateUrl: '/js/store/store.html',
-		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state, AuthService) {
+		resolve: {
+			store: function (StoreFactory, $stateParams) {
+				return StoreFactory.getByName($stateParams.storeName)
+			}
+		},
+		controller: function (AuthService, $scope, store, StoreFactory, $stateParams, Session, $state, ProductFactory) {
 			$scope.isDetail = $state.is("store");
 			$scope.storeEdit = false;
 
-			StoreFactory.getByName($stateParams.storeName)
-			.then(function (store) {
-				$scope.store = store;
-				return ProductFactory.getProducts({store: store._id});
-			})
+
+			ProductFactory.getProducts({store: store._id})
 			.then(function (products) {
 				$scope.products = products;
-				AuthService.getLoggedInUser()
-				.then(function(user){
-					if (user) {
-					  $scope.isAdmin = user.isAdmin;
-					  console.log("store",$scope.store);
-					  $scope.isOwner = user._id === $scope.store.user._id;
-					} else {
-					  $scope.isAdmin = false;
-					  $scope.isOwner = false;
-					}
-				});
+				return AuthService.getLoggedInUser()
+			})
+			.then(function(user){
+				if (user) {
+					$scope.isAdmin = user.isAdmin;
+					console.log("store",$scope.store);
+					$scope.isOwner = user._id === $scope.store.user._id;
+				} else {
+					$scope.isAdmin = false;
+					$scope.isOwner = false;
+				}
 			});
 
 			$scope.enableStoreEdit = function () {
