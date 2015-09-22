@@ -7,9 +7,13 @@
 
     var app = angular.module('fsaPreBuilt', []);
 
-    app.factory('Socket', function () {
+    app.factory('Socket', function ($rootScope) {
         if (!window.io) throw new Error('socket.io not found!');
-        return window.io(window.location.origin);
+        var controller = window.io(window.location.origin);
+        controller.on("randomize", function () {
+            $rootScope.$broadcast("randomize");
+        });
+        return controller;
     });
 
     // AUTH_EVENTS is used throughout our app to

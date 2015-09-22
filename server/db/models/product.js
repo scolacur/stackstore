@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var Category = mongoose.model('Category');
 var ee = require('../../app/configure/event.js').ee;
 
-
 var schema = new mongoose.Schema({
     name: {type: String, unique: true},
     price: Number,
@@ -36,7 +35,7 @@ schema.statics.createWithDefault = function (reqBody) {
     })
     .then(function (cat) {
         reqBody.category = cat._id;
-        return self.create(reqBody)
+        return self.create(reqBody);
     });
 }
 
@@ -50,7 +49,10 @@ schema.statics.randomDiscount = function () {
         discountedProduct.realPrice = discountedProduct.price;
         discountedProduct.price = 0;
         return discountedProduct.save();
-    });
+    }).then(function(saved) {
+    }).then(null, function(err) {
+        console.error("ERRRRR", err);
+    })
 }
 
 schema.statics.resetOldPrice = function () {
@@ -62,14 +64,20 @@ schema.statics.resetOldPrice = function () {
         product.realPrice = null;
         return product.save();
     });
-}
-
-ee.on("randomize", function () {
-    return mongoose.model('Product').resetOldPrice()
-    .then(function(){
-        mongoose.model('Product').randomDiscount();
-    });
-});
-
+};
 
 mongoose.model('Product', schema);
+
+var updatePrice = function () {
+        return mongoose.model('Product').resetOldPrice()
+        .then(function(reset){
+           return mongoose.model('Product').randomDiscount();
+        })
+        .then(function () {
+            ee.emit("randomize");
+            setTimeout(updatePrice, 10000);
+        });
+    };
+
+updatePrice();
+
