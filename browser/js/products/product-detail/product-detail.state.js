@@ -6,6 +6,12 @@ app.config(function ($stateProvider) {
 		controller: function ($scope, findProduct, findReviews, getUser, $stateParams, ProductFactory) {
 			$scope.editMode = false;
 			$scope.product = findProduct;
+			$scope.$on('randomize', function () {
+				ProductFactory.getProduct($stateParams.productId)
+				.then(function (product) {
+					$scope.product = product;
+				});
+			})
 			$scope.reviews = findReviews;
 			$scope.user = getUser;
 			$scope.isLoggedIn = !!$scope.user; //fixed to not use session. still probably don't need this
