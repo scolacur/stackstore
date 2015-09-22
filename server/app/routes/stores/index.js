@@ -8,7 +8,6 @@ var Store = mongoose.model('Store');
 
 
 router.get('/', function (req, res) {
-	console.log("this get routttte is", req.store)
 	Store.find(req.query).populate('user')
 	.then(function (stores) {
 		res.json(stores);
