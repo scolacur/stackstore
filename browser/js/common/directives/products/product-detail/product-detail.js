@@ -1,4 +1,4 @@
-app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state, StoreFactory) {
+app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state) {
 	return {
 		restrict: 'EA',
 		templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
