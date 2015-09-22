@@ -116,21 +116,6 @@ describe('Products Route', function () {
         });
     });
 
-    // it('should apply default category', function (done) {
-    //   agent.post('/api/products/')
-    //     .send({name: 'sand-sniffer', store: storeId})
-    //     .expect(201)
-    //     .end(function (err, response) {
-    //       if (err) return done(err);
-    //       Product.find({name: "sand-sniffer"}).populate('category').exec()
-    //       .then(function (result){
-    //         expect(result).to.have.length(1);
-    //         expect(result[0].category.title).to.equal("Default");
-    //         done();
-    //       });
-    //     });
-    // });
-
   });
 
   describe('GET /api/products/:productId', function () {
