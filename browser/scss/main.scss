@@ -56,11 +56,7 @@ h1 {
 	height: 20px;
 }
 
-.store-item {
-	min-height: 350px;
-	width: 48%;
-	margin: 10px;
-}
+
 
 @import 'directives/main';
 @import 'home/main';
@@ -69,3 +65,4 @@ h1 {
 @import 'panels/main';
 @import 'storefronts/main';
 @import 'buttons/main';
+@import 'products/main';

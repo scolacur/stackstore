@@ -9,9 +9,11 @@
 </div>
 <br>
 <div class="row">
-	<div class="col-sm-6 store-item"
+	<div class="col-sm-6"
 	ng-repeat="product in products | filter:searchText:false | filter:selected">
-		<product-detail product="product"></product-detail>
+		<div class="store-item">
+			<product-detail product="product"></product-detail>
+		</div>
 	</div>
 </div>
 	<!--

@@ -1,4 +1,4 @@
-.store-item {
+.panel.panel-default {
 	border: 1px solid black;
 	border-radius: 0;
 	.panel-heading {
@@ -21,4 +21,5 @@
 			color: $mainColor;
 		}
 	}
+
 }
