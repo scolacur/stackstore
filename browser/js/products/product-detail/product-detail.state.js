@@ -16,7 +16,6 @@ app.config(function($stateProvider) {
 				$scope.isOwner = false;
 			}
 			$scope.enableEdit = function () {
-				console.log('something');
 				$scope.cached = angular.copy($scope.product);
 				$scope.editMode = true;
 			};
