@@ -1,12 +1,13 @@
 app.config(function($stateProvider) {
 
-	$stateProvider.state('productDetail', {
-		url: '/products/:productId',
-		templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function($scope, findProduct, findReviews, $stateParams, ProductFactory, Session) {
-			$scope.product = findProduct;
-			$scope.reviews = findReviews;
-			$scope.editMode = false;
+    $stateProvider.state('productDetail', {
+        url: '/products/:productId',
+        templateUrl: '/js/products/product-detail/product-detail.html',
+        controller: function($scope, findProduct, findReviews, $stateParams, Session, ProductFactory) {
+            $scope.isLoggedIn = !!Session.user; //FIXME use getLoggedInUser()
+            $scope.product = findProduct;
+            $scope.reviews = findReviews;
+            $scope.editMode = false;
 
 			if (Session.user){
 				$scope.isAdmin = Session.user.isAdmin;
@@ -25,26 +26,26 @@ app.config(function($stateProvider) {
 				$scope.editMode = false;
 			};
 
-			$scope.editProduct = function(product) {
-				ProductFactory.editProduct(product._id, product)
-					.then(function() {
-						$scope.editMode = false;
-					});
-			};
-		},
-		resolve: {
-			findProduct: function (ProductFactory, $stateParams) {
-				return ProductFactory.getProduct($stateParams.productId).then(function (product) {
-					return product;
-				});
-			},
-			findReviews: function (ReviewFactory, $stateParams) {
-				return ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
-				.then(function(reviews) {
-					return reviews;
-				});
-			}
-		}
-	});
+            $scope.editProduct = function(product) {
+                ProductFactory.editProduct(product._id, product)
+                    .then(function() {
+                        $scope.editMode = false;
+                    });
+            };
+        },
+        resolve: {
+            findProduct: function (ProductFactory, $stateParams) {
+                return ProductFactory.getProduct($stateParams.productId).then(function (product) {
+                    return product;
+                });
+            },
+            findReviews: function (ReviewFactory, $stateParams) {
+                return ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
+                .then(function(reviews) {
+                    return reviews;
+                });
+            }
+        }
+    });
 
 });

@@ -15,8 +15,10 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', function (req, res) {
+  console.log("GOT HERE", req.body);
   Review.create(req.body)
   .then(function (review) {
+    console.log("MADE A REVIEW");
     res.status(201).json(review);
   });
 });
