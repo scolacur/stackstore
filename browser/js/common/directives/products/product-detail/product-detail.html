@@ -30,10 +30,10 @@
 	<ul>
 	<div>
 	  <button class="btn btn-success" ng-show="!editMode" ng-click="addToCart(product, quantity)">Add to cart</button>
-	  <edit-button></edit-button>
+	  <button class="btn btn-warning" ng-show = "(isAdmin || isOwner) && isDetail && !editMode" ng-click ="enableProductEdit()">Edit</button>
 	</div>
 </div>
 	<div class="col-md-4">
-		<img  class = "pull-right" src = "{{product.photoUrl}}"></img>
+		<img  class = "pull-right" ng-src = "{{product.photoUrl}}"></img>
 	</div>
 </div>
