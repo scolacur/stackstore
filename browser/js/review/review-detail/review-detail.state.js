@@ -3,10 +3,11 @@ app.config(function($stateProvider){
   .state('reviewDetail', {
     url: '/review/:reviewId',
     templateUrl: '/js/review/review-detail/review-detail.html',
-    controller: function ($scope, findReview, getUser, ReviewFactory, $rootScope) {
+    controller: function ($scope, findReview, getUser, ReviewFactory, StoreFactory) {
 		$scope.review = findReview;
 		$scope.isDetail = true;
 		$scope.user = getUser;
+		$scope.styleStore = $scope.review.product.store;
 
 		if ($scope.user) {
 			$scope.isAdmin = $scope.user.isAdmin;
@@ -15,9 +16,9 @@ app.config(function($stateProvider){
 			$scope.isAdmin = false;
 			$scope.isOwner = false;
 		}
-
+		//Are these functions being used??
 		$scope.enableEdit = function () {
-			$scope.cached = angular.copy($scope.product);
+			$scope.cached = angular.copy($scope.product); //scope.product doesn't exist
 			$scope.editMode = true;
 		};
 		$scope.cancelEdit = function(){

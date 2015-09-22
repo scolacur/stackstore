@@ -23,9 +23,8 @@ app.config(function ($stateProvider) {
 					  $scope.isAdmin = false;
 					  $scope.isOwner = false;
 					}
-				});	
-			})
-
+				});
+			});
 
 			$scope.enableStoreEdit = function () {
 				console.log('got to store edit');

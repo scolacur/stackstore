@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var schema = new mongoose.Schema({
     title: String,
@@ -23,6 +24,8 @@ var schema = new mongoose.Schema({
         required: true
     }
 });
+
+schema.plugin(deepPopulate);
 
 schema.path('description').validate(function (value) {
     return value.length > 50;
