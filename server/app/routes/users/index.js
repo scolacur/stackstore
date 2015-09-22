@@ -9,7 +9,6 @@ var Product = require('mongoose').model('Product');
 
 
 router.get('/', function (req, res) {
-	console.log("req.user: ",req.body);
 	User.find()
 	.then(function (users) {
 		users = users.map(function (user) {
@@ -28,8 +27,6 @@ router.post('/', function (req, res) {
 });
 
 router.put('/:userId', function (req, res) {
-	console.log("session user",req.session.passport);
-	console.log(req.foundUser);
 	var admin;
 	User.findById(req.session.passport.user)
 	.then(function(sessionUser){
