@@ -7,22 +7,25 @@ app.config(function ($stateProvider) {
 				return StoreFactory.getByName($stateParams.storeName)
 			}
 		},
-		controller: function ($scope, store, StoreFactory, $stateParams, Session, $state, ProductFactory) {
+		controller: function (AuthService, $scope, store, StoreFactory, $stateParams, Session, $state, ProductFactory) {
 			$scope.isDetail = $state.is("store");
 			$scope.storeEdit = false;
 			$scope.store = store;
 
-			if (Session.user){
-				$scope.isAdmin = Session.user.isAdmin;
-				$scope.isOwner = Session.user._id === store.user._id;
-			} else {
-				$scope.isAdmin = false;
-				$scope.isOwner = false;
-			}
 
 			ProductFactory.getProducts({store: store._id})
 			.then(function (products) {
 				$scope.products = products;
+				return AuthService.getLoggedInUser()
+			})
+			.then(function(user){
+				if (user) {
+					$scope.isAdmin = user.isAdmin;
+					$scope.isOwner = user._id === $scope.store.user._id;
+				} else {
+					$scope.isAdmin = false;
+					$scope.isOwner = false;
+				}
 			});
 
 			$scope.enableStoreEdit = function () {
@@ -41,6 +44,20 @@ app.config(function ($stateProvider) {
 					$scope.storeEdit = false;
 				});
 			};
+
+			$scope.colors = [
+				"White",
+				"Pink",
+				"LightBlue",
+				"LightCoral",
+				"LightGoldenrodYellow",
+				"LightGray",
+				"LightSeaGreen",
+				"Aquamarine",
+				"GhostWhite",
+				"Indian Red",
+				"Lavender",
+			];
 		}
 	});
 });

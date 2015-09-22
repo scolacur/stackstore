@@ -3,21 +3,21 @@ app.config(function ($stateProvider) {
 	$stateProvider.state('productDetail', {
 		url: '/products/:productId',
 		templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function ($scope, findProduct, findReviews, $stateParams, Session, ProductFactory) {
-			$scope.isLoggedIn = !!Session.user; //FIXME use getLoggedInUser()
+		controller: function ($scope, findProduct, findReviews, getUser, $stateParams, ProductFactory, StoreFactory) {
+			$scope.editMode = false;
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
-			$scope.editMode = false;
-
-			if (Session.user) {
-				$scope.isAdmin = Session.user.isAdmin;
-				$scope.isOwner = Session.user._id === $scope.product.store.user;
+			$scope.user = getUser;
+			$scope.isLoggedIn = !!$scope.user; //fixed to not use session. still probably don't need this
+			if ($scope.user) {
+				$scope.isAdmin = $scope.user.isAdmin;
+				$scope.isOwner = $scope.user._id === $scope.product.store.user._id;
 			} else {
 				$scope.isAdmin = false;
 				$scope.isOwner = false;
 			}
+
 			$scope.enableProductEdit = function () {
-				console.log('the scope is product detail state');
 				$scope.cached = angular.copy($scope.product);
 				$scope.editMode = true;
 			};
@@ -35,15 +35,19 @@ app.config(function ($stateProvider) {
 		},
 		resolve: {
 			findProduct: function (ProductFactory, $stateParams) {
-				return ProductFactory.getProduct($stateParams.productId).then(function (product) {
+				return ProductFactory.getProduct($stateParams.productId)
+				.then(function (product) {
 					return product;
 				});
 			},
 			findReviews: function (ReviewFactory, $stateParams) {
 				return ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
-					.then(function (reviews) {
-						return reviews;
-					});
+				.then(function (reviews) {
+					return reviews;
+				});
+			},
+			getUser: function (AuthService){
+				return AuthService.getLoggedInUser();
 			}
 		}
 	});
