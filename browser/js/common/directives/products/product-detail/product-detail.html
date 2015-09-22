@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row product-page">
 <div class="col-md-6">
-	<a ng-show="isDetail" ui-sref="store({storeName: product.store.urlName})">Back to Store</a>
+	<button class="btn" ng-show="isDetail" ui-sref="store({storeName: product.store.urlName})">Back to Store</button>
 	<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
 	<form ng-show="editMode" ng-submit="editProduct(product)">
-		<ul>
+		<ul class = "details">
 			<li>Name:<input ng-model = "product.name"></input></li>
 			<li>Price:<input ng-model = "product.price"></input></li>
 			<li>Description:<input ng-model = "product.description"></input></li>
@@ -28,14 +28,13 @@
 		<br>
 		<li><strong>Sold from:</strong> {{product.store.name}}</li>
 	</ul>
-	<ul>
 	<div>
-	  <button class="btn" ng-show = "(isAdmin || isOwner) && isDetail && !editMode" ng-click ="enableProductEdit()">Edit</button>
+	  <button class="btn btn-left" ng-show = "(isAdmin || isOwner) && isDetail && !editMode" ng-click ="enableProductEdit()">Edit</button>
 	</div>
 </div>
 	<div class="col-md-6 photo-container">
 		<img  class = "pull-right thumb" ng-src = "{{product.photoUrl}}"></img>
-	  	<div ng-show="!home">
+	  	<div ng-show="!home" class="quant-select">
 		    <p>How many u want?</p>
 			<div>
 			    <input class="form-control quantity" ng-model="quantity" type='number'>
