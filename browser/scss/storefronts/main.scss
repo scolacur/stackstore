@@ -1,0 +1,38 @@
+.storefront {
+	border: 1px solid black;
+	padding: 0;
+	margin: 10px;
+	text-align: center;
+
+	transition: border 0.2s;
+
+	a {
+		text-decoration: none;
+		color: black;
+		transition: color 0.2s;
+		&:hover {
+			color: $mainColor;
+		}
+		h3 {
+			padding-top: 70px;
+		}
+	}
+
+	&:hover {
+		border: 1px solid $mainColor;
+	}
+
+
+	.store-panel {
+		border: 30px solid white;
+
+		padding: 0;
+
+		.store-panel-inner {
+			border: 1px solid black;
+			height: 280px;
+		}
+
+	}
+}
+
