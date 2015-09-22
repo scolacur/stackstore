@@ -5,6 +5,7 @@ app.config(function ($stateProvider) {
 		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state) {
 			$scope.isDetail = $state.is("store");
 			$scope.editMode = false;
+
 			StoreFactory.getByName($stateParams.storeName)
 			.then(function (store) {
 				$scope.store = store;

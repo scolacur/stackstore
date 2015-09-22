@@ -6,6 +6,8 @@ app.config(function($stateProvider) {
 		controller: function($scope, ProductFactory, findProduct, findReviews, $stateParams, $rootScope, Session) {
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
+			$scope.editMode = false;
+
 			if (Session.user){
 				$scope.isAdmin = Session.user.isAdmin;
 				$scope.isOwner = Session.user._id === $scope.product.store.user;

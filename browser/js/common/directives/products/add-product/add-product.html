@@ -1,5 +1,5 @@
 <button class="btn btn-info" ng-hide = "adding" ng-click="adding = !adding">Add a product</button>
-<form ng-show="adding" ng-submit="addProduct(product, store)" ng-init="product={categories: []}">
+<form name="addForm" ng-show="adding" ng-submit="addForm.$valid && addProduct(product, store)" ng-init="product={categories: []}">
     <ul>
         <li> Name:
             <input ng-model="product.name"></input>

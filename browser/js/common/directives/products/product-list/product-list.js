@@ -8,12 +8,10 @@ app.directive("productList", function (ProductFactory) {
         scope.products = products;
       });
 
-      scope.selectedCategory;
-
       scope.selectedTitle = function () {
         return JSON.parse('{"title": ""}').title;
       };
-        
+
 
       scope.$on('newProduct', function (e, product) {
         scope.products.push(product);

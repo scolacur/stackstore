@@ -77,10 +77,11 @@ var seedCategoriesAndProducts = function () {
         Category.create({title: 'Fighting Equipment'}),
         Category.create({title: 'Terrorist Tools'}),
         Category.create({title: 'Watersports Gear'}),
+        Category.create({title: 'Default'}),
         Store.findOne({urlName: "NSA"}).exec(),
         Store.findOne({urlName: "gobama"}).exec()
     ])
-    .spread(function (fightCat, terrCat, waterCat, nsa, gobama) {
+    .spread(function (fightCat, terrCat, waterCat, defaultCat, nsa, gobama) {
         var products = [{
             name: "surfbort",
             description: "a surfbort which is obviously coolest",
