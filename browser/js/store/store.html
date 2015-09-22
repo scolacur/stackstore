@@ -64,6 +64,26 @@
 			<option>lavender</option>
 	    	</select>
 		</div>
+
+		<div class="edit-option">
+			<p>Panel Color</p>
+			<select ng-model="store.css.panelcolor">
+			<option>black</option>
+			<option>blue</option>
+			<option>white</option>
+			<option>red</option>
+			<option>pink</option>
+			<option>lightBlue</option>
+			<option>lightCoral</option>
+			<option>lightGoldenRodYellow</option>
+			<option>lightGray</option>
+			<option>lightSeaGreen</option>
+			<option>aquamarine</option>
+			<option>ghostwhite</option>
+			<option>indianred</option>
+			<option>lavender</option>
+			</select>
+		</div>
 	<button class="btn btn-success" ng-click="saveStore(store.urlName, store)">Save</button>
 	<button class="btn btn-danger" ng-click="cancelStoreEdit()">Cancel</button>
   </div>
@@ -82,7 +102,10 @@
 		display: inline-block;
 	}
 
-	h1, h2, h3, h4, h5, h6, p {
+	h1, h2, h3, h4, h5, h6, p, li {
 		font-family: {{store.css.fontFamily}}
+	}
+	.list-group-item {
+		background-color: {{store.css.panelcolor}};
 	}
 </style>
