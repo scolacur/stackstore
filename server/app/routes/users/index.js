@@ -45,6 +45,15 @@ router.put('/:userId', function (req, res, next) {
 	});
 });
 
+// router.put('/:userId/reset', function (req, res, next) {
+// 	console.log(req.body)
+// 	req.foundUser.password = req.body.user.newPass;
+// 	req.foundUser.save()
+// 	.then(function (editedUser) {
+// 		res.status(201).json(_.omit(editedUser.toJSON(), ['salt', 'password']));
+// 	});
+// })
+
 router.get('/:userId', function (req, res) {
 	res.json(_.omit(req.foundUser.toJSON(), ['salt', 'password']));
 });

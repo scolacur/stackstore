@@ -29,6 +29,14 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 				$state.go('home');
 			});
 		};
+
+        scope.resetPass = function(id){
+            UserFactory.edit(id, {'newPass': true})
+            .then(function (user) {
+                // scope.newPass = true;
+                scope.editMode = false;
+            });
+        };
 	},
 	scope: {
 		user: "=",
