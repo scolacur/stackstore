@@ -1,4 +1,5 @@
 <div>
+<a ui-sref="productDetail({productId: review.product._id})">Back to Product</a>
 <h2>{{review.title}}</h2>
 	<h4>A review for: <a ui-sref="productDetail({productId: review.product._id})">{{review.product.name}}</li></a></h4>
     <div ng-show="!editMode">
@@ -19,7 +20,8 @@
   	</form>
 
   	<edit-button></edit-button>
-	<div>Cool review, as written by: 
+	<div>Cool review, as written by:
 		<a ui-sref="user({userId: review.user._id })">{{review.user.email}} </a>
 	</div>
 </div>
+<store-style css="styleStore.css"></store-style>

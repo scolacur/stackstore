@@ -36,7 +36,11 @@ var schema = new mongoose.Schema({
 		name: String,
 		email: String
     },
-	cart: [mongoose.Schema.Types.Mixed]
+	cart: [mongoose.Schema.Types.Mixed],
+    newPass: {
+        type: Boolean,
+        default: false
+    }
 });
 
 schema.path('email').validate(function (value) {

@@ -4,6 +4,7 @@ module.exports = router;
 // var _ = require('lodash');
 
 var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Review = mongoose.model('Review');
 
 
@@ -15,10 +16,8 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', function (req, res) {
-  console.log("GOT HERE", req.body);
   Review.create(req.body)
   .then(function (review) {
-    console.log("MADE A REVIEW");
     res.status(201).json(review);
   });
 });
@@ -39,7 +38,7 @@ router.get('/:reviewId', function (req, res) {
 });
 
 router.param('reviewId', function (req, res, next, reviewId) {
-  Review.findById(reviewId).populate("user").populate("product")
+  Review.findById(reviewId).deepPopulate("user product.store")
   .then(function (review) {
     req.review = review;
     next();

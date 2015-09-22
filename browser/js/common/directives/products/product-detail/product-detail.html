@@ -1,5 +1,6 @@
 <div class="row">
 <div class="col-md-8">
+	<a ng-show="isDetail" ui-sref="store({storeName: product.store.urlName})">Back to Store</a>
 	<h3><a ui-sref="productDetail({productId: product._id })">{{product.name}}</a></h3>
 	<form ng-show="editMode" ng-submit="editProduct(product)">
 		<ul>
@@ -37,3 +38,4 @@
 		<img  class = "pull-right" ng-src = "{{product.photoUrl}}"></img>
 	</div>
 </div>
+<store-style css="product.store.css"></store-style>

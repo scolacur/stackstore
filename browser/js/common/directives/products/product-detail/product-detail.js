@@ -13,14 +13,13 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 				});
 			};
 			scope.range = _.range;
-
 			ProductFactory.getCategories().then(function (categories) {
 				scope.categories = categories;
 			});
 
 			scope.nextCat = function () {
 				scope.numCats = scope.product.categories.length + 1;
-			}
+			};
 		},
 	};
 });
