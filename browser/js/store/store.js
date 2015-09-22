@@ -11,6 +11,9 @@ app.config(function ($stateProvider) {
 			$scope.isDetail = $state.is("store");
 			$scope.storeEdit = false;
 			$scope.store = store;
+			$scope.store.css = {};
+
+			$scope.store.css.urlName = store.urlName;
 
 
 			ProductFactory.getProducts({store: store._id})
@@ -55,7 +58,7 @@ app.config(function ($stateProvider) {
 				"LightSeaGreen",
 				"Aquamarine",
 				"GhostWhite",
-				"Indian Red",
+				"IndianRed",
 				"Lavender",
 			];
 		}
