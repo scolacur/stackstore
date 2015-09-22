@@ -17,9 +17,7 @@ h1 {
 	color: black;
 }
 
-.main-header {
-	text-align: center;
-}
+
 
 @mixin clearfix {
   &:after {
@@ -30,7 +28,7 @@ h1 {
 }
 
 #main {
-  padding-top: 60px;
+  padding-top: 20px;
   width: 1200px;
   margin: 0 auto;
 }
