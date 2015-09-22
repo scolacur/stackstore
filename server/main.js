@@ -14,6 +14,7 @@ var createApplication = function () {
     require('./io')(server);   // Attach socket.io.
 };
 
+
 var startServer = function () {
 
     var PORT = process.env.PORT || 1337;
@@ -28,3 +29,5 @@ startDb.then(createApplication).then(startServer).catch(function (err) {
     console.error(chalk.red(err.stack));
     process.kill(1);
 });
+
+// module.exports = io;
