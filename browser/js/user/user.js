@@ -11,7 +11,6 @@ app.config(function($stateProvider){
       $scope.orders = findOrders;
       $scope.reviews = findReviews;
       $scope.stores = findStores;
-      console.log("scope", $scope.user);
 
     },
     resolve: {
