@@ -3,9 +3,11 @@ app.config(function($stateProvider) {
 	$stateProvider.state('productDetail', {
 		url: '/products/:productId',
 		templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function($scope, findProduct, findReviews, $stateParams, $rootScope, Session) {
+		controller: function($scope, findProduct, findReviews, $stateParams, ProductFactory, Session) {
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
+			$scope.editMode = false;
+
 			if (Session.user){
 				$scope.isAdmin = Session.user.isAdmin;
 				$scope.isOwner = Session.user._id === $scope.product.store.user;
