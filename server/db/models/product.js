@@ -41,7 +41,6 @@ schema.statics.createWithDefault = function (reqBody) {
 }
 
 schema.statics.randomDiscount = function () {
-    console.log('random discount called');
     return mongoose.model('Product').find()
     .exec()
     .then (function (products) {
@@ -50,27 +49,22 @@ schema.statics.randomDiscount = function () {
     .then (function (discountedProduct) {
         discountedProduct.realPrice = discountedProduct.price;
         discountedProduct.price = 0;
-        console.log('the new product is: ', discountedProduct);
         return discountedProduct.save();
     });
 }
 
 schema.statics.resetOldPrice = function () {
-    console.log('reset old price');
-
     return mongoose.model('Product').findOne({ realPrice: {$ne: null} })
     .exec()
     .then (function (product) {
         if (!product) return;
         product.price = product.realPrice;
         product.realPrice = null;
-        console.log('old discount product found ', product);
         return product.save();
     });
 }
 
 ee.on("randomize", function () {
-    console.log('randomize event listened');
     return mongoose.model('Product').resetOldPrice()
     .then(function(){
         mongoose.model('Product').randomDiscount();
