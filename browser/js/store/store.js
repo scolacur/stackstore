@@ -13,11 +13,11 @@ app.config(function ($stateProvider) {
 			})
 			.then(function (products) {
 				$scope.products = products;
-			}).then(function(){
 				AuthService.getLoggedInUser()
 				.then(function(user){
 					if (user) {
 					  $scope.isAdmin = user.isAdmin;
+					  console.log("store",$scope.store);
 					  $scope.isOwner = user._id === $scope.store.user._id;
 					} else {
 					  $scope.isAdmin = false;
