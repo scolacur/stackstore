@@ -2,7 +2,6 @@
 
 	h3 {
 		font-size: 40px;
-		margin-top: 50px;
 	}
 	a {
 		color: black;
@@ -22,13 +21,9 @@
 	}
 
 	.thumb {
-		height: 310px;
-		width: 310px;
-		// display: block;
-	}
-
-	.photo-container {
-		margin-top: 100px;
+		max-height: 310px;
+		max-width: 310px;
+		margin-bottom:10px;
 	}
 
 	.details {
@@ -37,13 +32,14 @@
 
 	.quantity {
 		width: 70px;
-		// display: block;
 		float: left;
 	}
 
 	.quant-select {
-		// margin-top: 245px;
-		// vertical-align: bottom;
-		// display: block;
+		margin-top: 245px;
+	}
+
+	.panel {
+		margin-top: 10px;
 	}
 }
