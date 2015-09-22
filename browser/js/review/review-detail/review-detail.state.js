@@ -3,7 +3,7 @@ app.config(function($stateProvider){
   .state('reviewDetail', {
     url: '/review/:reviewId',
     templateUrl: '/js/review/review-detail/review-detail.html',
-    controller: function ($scope, findReview, getUser, ReviewFactory, StoreFactory) {
+    controller: function ($scope, findReview, getUser, ReviewFactory) {
 		$scope.review = findReview;
 		$scope.isDetail = true;
 		$scope.user = getUser;
@@ -49,7 +49,7 @@ app.config(function($stateProvider){
     		return ReviewFactory.getReview($stateParams.reviewId)
 	    	.then(function(review) {
 	    		return review;
-		    });
+			});
     	},
 		getUser: function (AuthService){
 			return AuthService.getLoggedInUser();

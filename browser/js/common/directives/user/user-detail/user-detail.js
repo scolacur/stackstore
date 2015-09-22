@@ -32,7 +32,7 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 
         scope.resetPass = function(id){
             UserFactory.edit(id, {'newPass': true})
-            .then(function (user) {
+            .then(function () {
                 // scope.newPass = true;
                 scope.editMode = false;
             });

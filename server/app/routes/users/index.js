@@ -34,7 +34,7 @@ router.put('/:userId', function (req, res, next) {
 	}
 	if(req.user._id.toString() !== req.params.userId && !req.user.isAdmin) {
 		console.log('says not same user')
-		var err = new Error('You can\'t edit someone else\'s page')
+		err = new Error('You can\'t edit someone else\'s page')
 		err.status = 403;
 		return next(err);
 	}
