@@ -1,33 +1,34 @@
-app.config(function($stateProvider) {
+app.config(function ($stateProvider) {
 
     $stateProvider.state('productDetail', {
         url: '/products/:productId',
         templateUrl: '/js/products/product-detail/product-detail.html',
-        controller: function($scope, findProduct, findReviews, $stateParams, Session, ProductFactory) {
+        controller: function ($scope, findProduct, findReviews, $stateParams, Session, ProductFactory) {
             $scope.isLoggedIn = !!Session.user; //FIXME use getLoggedInUser()
             $scope.product = findProduct;
             $scope.reviews = findReviews;
             $scope.editMode = false;
 
-            if (Session.user){
+            if (Session.user) {
                 $scope.isAdmin = Session.user.isAdmin;
                 $scope.isOwner = Session.user._id === $scope.product.store.user;
             } else {
                 $scope.isAdmin = false;
                 $scope.isOwner = false;
             }
-            $scope.enableEdit = function () {
+            $scope.enableProductEdit = function () {
+                console.log('the scope is product detail state');
                 $scope.cached = angular.copy($scope.product);
                 $scope.editMode = true;
             };
-            $scope.cancelEdit = function(){
+            $scope.cancelEdit = function () {
                 $scope.product = angular.copy($scope.cached);
                 $scope.editMode = false;
             };
 
-            $scope.editProduct = function(product) {
+            $scope.editProduct = function (product) {
                 ProductFactory.editProduct(product._id, product)
-                    .then(function() {
+                    .then(function () {
                         $scope.editMode = false;
                     });
             };
@@ -40,9 +41,9 @@ app.config(function($stateProvider) {
             },
             findReviews: function (ReviewFactory, $stateParams) {
                 return ReviewFactory.getSpecificReviews($stateParams.productId, 'product')
-                .then(function(reviews) {
-                    return reviews;
-                });
+                    .then(function (reviews) {
+                        return reviews;
+                    });
             }
         }
     });
