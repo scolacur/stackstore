@@ -42,7 +42,7 @@
 		<div class="edit-option">
 			<p>Panel Color</p>
 			<select  ng-model="store.css.panelcolor">
-				<option ng-repeat="color.value in colors">{{color}}</option>
+				<option ng-repeat="color in colors">{{color}}</option>
 			</select>
 		</div>
 	<button class="btn btn-success" ng-click="saveStore(store.urlName, store)">Save</button>
