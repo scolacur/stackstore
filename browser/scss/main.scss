@@ -5,7 +5,7 @@
 $mainColor: #37BEFF;
 
 body {
-  background: #fdfdfd;
+  background: #fffaf0;
   // font-family: 'Roboto Condensed', sans-serif;
   // font-family: 'Poiret One', cursive;
   font-family: 'Lato', sans-serif;
@@ -66,3 +66,4 @@ h1 {
 @import 'storefronts/main';
 @import 'buttons/main';
 @import 'products/main';
+@import 'forms/main';

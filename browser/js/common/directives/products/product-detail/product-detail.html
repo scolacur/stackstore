@@ -18,15 +18,15 @@
 	</form>
 	<button class="btn btn-danger" ng-show = "editMode" ng-click="cancelEdit()">Cancel</button>
 	<ul class="details" ng-hide="editMode">
-		<li>{{product.price | currency}}</li>
+		<li><strong>{{product.price | currency}}</strong></li>
 		<br>
-		<li>We have {{product.inventory}} in stock</li>
+		<li>We have <strong>{{product.inventory}}</strong> in stock</li>
 		<br>
 		<li>{{product.description}}</li>
 		<br>
-		<li>Categories:<br><span ng-repeat="cat in product.categories">{{cat.title}}<br> </span></li>
+		<li><strong>Categories:</strong><br><span ng-repeat="cat in product.categories">{{cat.title}}<br> </span></li>
 		<br>
-		<li>Sold from: {{product.store.name}}</li>
+		<li><strong>Sold from:</strong> {{product.store.name}}</li>
 	</ul>
 	<ul>
 	<div>
