@@ -30,7 +30,6 @@ app.config(function ($stateProvider) {
 				});
 			};
 			$scope.enableEdit = function () {
-				console.log('this should get called');
 				$scope.cached = angular.copy($scope.store);
 				$scope.editMode = true;
 			};
