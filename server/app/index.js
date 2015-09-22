@@ -2,6 +2,7 @@
 var path = require('path');
 var express = require('express');
 var app = express();
+require('./configure/event').newRandom();
 module.exports = app;
 
 // Pass our express application pipeline into the configuration
