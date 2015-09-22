@@ -204,7 +204,7 @@ var seedCategoriesAndProducts = function () {
             price: 50,
             categories: [artCat._id],
             store: gaberama._id,
-            photoUrl: ''
+            photoUrl: 'http://i.dailymail.co.uk/i/pix/2010/01/17/article-1243796-07D2E81A000005DC-154_468x610.jpg'
         }, {
             name: "The Sexiest Drop Pants in the world",
             description: "But still pretty darn ugly, any way you look at them",
