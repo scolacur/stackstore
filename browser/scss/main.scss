@@ -30,7 +30,7 @@ h1 {
 }
 
 #main {
-  padding-top: 60px;
+  padding-top: 20px;
   width: 1200px;
   margin: 0 auto;
 }
@@ -67,3 +67,4 @@ h1 {
 @import 'buttons/main';
 @import 'products/main';
 @import 'forms/main';
+@import 'product-detail/main';
