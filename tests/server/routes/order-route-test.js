@@ -52,7 +52,7 @@ describe('Orders Route', function () {
 		.then(function (){
 			return Product.create({
 				name: 'surfboard',
-				category: categoryId,
+				categories: [categoryId],
 				price: 56,
 				store: storeId
 			})
@@ -181,7 +181,7 @@ describe('Orders Route', function () {
 				.expect(200)
 				.end(function (err, response) {
 					if (err) return done(err);
-					expect(response.body[0].items[0].product.toString()).to.equal(productId.toString());
+					expect(response.body[0].items[0].product._id.toString()).to.equal(productId.toString());
 					done();
 				});
 		});

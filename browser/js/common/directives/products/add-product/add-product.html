@@ -1,5 +1,5 @@
 <button class="btn btn-info" ng-hide = "adding" ng-click="adding = !adding">Add a product</button>
-<form name="addForm" ng-show="adding" ng-submit="addForm.$valid && addProduct(product, store)">
+<form name="addForm" ng-show="adding" ng-submit="addForm.$valid && addProduct(product, store)" ng-init="product={categories: []}">
     <ul>
         <li> Name:
             <input ng-model="product.name"></input>
@@ -16,13 +16,12 @@
         <li>Photo URL:
             <input ng-model="product.photoUrl"></input>
         </li>
-        <li>Category: (required)
-            <category-edit selected="product.category"></category-edit>
-            <span ng-show="addForm.$dirty && addForm.cat.$error.required" >Category is required</span>
+        <li ng-init="numCats = 1">Categories: (required)
+            <select ng-repeat="category in range(numCats)" ng-model="product.categories[$index]" ng-change="nextCat()" ng-options="cat.title for cat in categories"></select>
         </li>
     </ul>
     <div>
-        <button class="btn btn-success" ng-show="addForm.$valid && adding" type="submit" ng-click="adding = false">Add your product</button>
-	</div>
+        <button class="btn btn-success" ng-show="adding" type="submit" ng-click="adding = false">Add your product</button>
+		</div>
 </form>
-<button class="btn btn-danger" ng-show="adding" ng-click="adding = false">Cancel</button>
+		<button class="btn btn-danger" ng-show="adding" ng-click="adding = false; product = {}; numCats = 1">Cancel</button>

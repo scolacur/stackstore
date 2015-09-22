@@ -54,7 +54,7 @@ describe('Products Route', function () {
       .then(function (){
           return Product.create({
               name: 'surfbort',
-              category: categoryId,
+              categories: [categoryId],
               price: 56,
               store: storeId
           })
@@ -102,7 +102,7 @@ describe('Products Route', function () {
 
     it('should make a product', function (done) {
       agent.post('/api/products/')
-        .send({name: 'sand-sniffer', store: storeId})
+        .send({name: 'sand-sniffer', store: storeId, categories: [categoryId]})
         .expect(201)
         .end(function (err, response) {
           if (err) return done(err);
@@ -113,21 +113,6 @@ describe('Products Route', function () {
             done();
         }).then(null, done);
 
-        });
-    });
-
-    it('should apply default category', function (done) {
-      agent.post('/api/products/')
-        .send({name: 'sand-sniffer', store: storeId})
-        .expect(201)
-        .end(function (err, response) {
-          if (err) return done(err);
-          Product.find({name: "sand-sniffer"}).populate('category').exec()
-          .then(function (result){
-            expect(result).to.have.length(1);
-            expect(result[0].category.title).to.equal("Default");
-            done();
-          });
         });
     });
 

@@ -59,7 +59,7 @@ describe('Reviews Route', function () {
       .then(function (){
           return Product.create({
               name: 'surfbort',
-              category: categoryId,
+              categories: [categoryId],
               price: 56,
               store: storeId
           })
@@ -99,7 +99,7 @@ describe('Reviews Route', function () {
     });
 
     beforeEach('Create second product', function(done){
-        Product.create({name: 'extreme toupee', category: categoryId, store: storeId})
+        Product.create({name: 'extreme toupee', categories: [categoryId], store: storeId})
         .then(function(product){
             productId2 = product._id;
             done();
