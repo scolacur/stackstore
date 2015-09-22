@@ -7,7 +7,6 @@ app.directive("productList", function (ProductFactory) {
       .then(function(products){
         scope.products = products;
       });
-	  scope.editMode = false;
 
       scope.selectedTitle = function () {
         return JSON.parse('{"title": ""}').title;
@@ -16,23 +15,7 @@ app.directive("productList", function (ProductFactory) {
       scope.$on('newProduct', function (e, product) {
         scope.products.push(product);
       });
-	  // 
-	//   scope.enableProductEdit = function () {
-	// 	  console.log('the scope is product list');
-	// 	  scope.cached = angular.copy(scope.product);
-	// 	  scope.editMode = true;
-	//   };
-	//   scope.cancelEdit = function(){
-	// 	  scope.product = angular.copy(scope.cached);
-	// 	  scope.editMode = false;
-	//   };
-	  //
-	//   scope.editProduct = function(product) {
-	// 	  ProductFactory.editProduct(product._id, product)
-	// 		  .then(function() {
-	// 			  scope.editMode = false;
-	// 		  });
-	//   };
+
     }
   };
 });

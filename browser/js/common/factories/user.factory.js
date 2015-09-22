@@ -46,5 +46,12 @@ app.factory('UserFactory', function($http){
 		});
 	};
 
+	User.delete = function (id) {
+		return $http.delete('/api/users/' + id)
+		.then(function(response){
+				return response.data;
+		});
+	};
+
 	return User;
 });

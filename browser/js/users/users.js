@@ -5,12 +5,14 @@ app.config(function($stateProvider){
     templateUrl: '/js/users/users.html',
     resolve:{
       users: function(UserFactory){
-        console.log("getting users");
         return UserFactory.getAll();
-      }
+	}
     },
-    controller: function ($scope, users) {
+    controller: function ($scope, users, Session, $state) {
       $scope.users = users;
+	  if (!Session.user || !Session.user.isAdmin){
+		  $state.go('home');
+	  }
     }
-  })
-})
+});
+});

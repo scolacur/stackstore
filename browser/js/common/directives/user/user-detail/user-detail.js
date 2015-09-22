@@ -6,6 +6,7 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 		scope.isDetail = true;
 		scope.isAdmin = Session.user.isAdmin;
 		scope.editMode = false;
+
 		scope.enableEdit = function () {
 			scope.cached = angular.copy(scope.user);
 			scope.editMode = true;
@@ -19,6 +20,13 @@ app.directive('userDetail', function(UserFactory, $stateParams, $state, Session)
 			.then(function (updatedUser) {
 				scope.user = updatedUser;
 				scope.editMode = false;
+			});
+		};
+		scope.deleteUser = function(user){
+			UserFactory.delete(user)
+			.then(function(){
+				scope.editMode = false;
+				$state.go('home');
 			});
 		};
 	},
