@@ -1,13 +1,20 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h1 class="panel-title">Stores</h1>
+
+  <div class="row">
+  	<h1>Stores</h1>
+
+	  <div
+	    class="col-sm-4 storefront"
+	    ng-repeat="store in stores"
+	    id="{{store.urlName}}">
+	      <div class="store-panel">
+	      	<div class="store-panel-inner">
+	      		<a ui-sref="store({storeName: store.urlName })"><h3>{{store.name}}</h3></a>
+	      		<p>{{store.description}}</p>
+	      	</div>
+	      </div>
+  		<store-front-style
+  			ng-if="store.css"
+  			css="store.css"></store-front-style>
+	  </div>
   </div>
-  <ul class="list-group">
-    <li 
-      class="list-group-item"
-      ng-repeat="store in stores">
-        <a ui-sref="store({storeName: store.urlName })"><h3>{{store.name}}</h3></a>
-        <p>{{store.description}}</p>
-      </li>
-  </ul>
-</div>
+

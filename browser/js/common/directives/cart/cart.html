@@ -15,24 +15,24 @@
           Edit this item
         </button><button
           ng-show="editIndex !== $index"
-          class="btn btn-warning"
+          class="btn btn-danger"
           ng-click="delete(item)">
           Delete Item
         </button>
         <div
           ng-show="editIndex === $index">
-          <input 
-            class="form-control" 
+          <input
+            class="form-control"
             type="text"
             ng-model="item.quantity" />
-          <button 
-            class="btn btn-success"
+          <button
+            class="btn"
             ng-click="saveQuantity(item)">Save quantity</button>
         </div>
         <!-- <p ng-show="saved">Savid!</p> -->
       </li>
     </ul>
-    <button 
+    <button
       ng-click="deleteCart()"
       class="btn btn-danger">Delete Cart</button>
   </div>

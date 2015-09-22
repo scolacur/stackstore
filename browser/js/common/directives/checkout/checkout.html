@@ -3,13 +3,13 @@
     <h1 class="panel-title">Checkout</h1>
   </div>
   <div class="panel-body">
-    <form 
+    <form
       name="orderForm"
       ng-submit="submitOrder(order)">
 
       <div class="form-group">
         <label for="name">Full name</label>
-        <input 
+        <input
           id="name"
           class="form-control"
           type="text"
@@ -17,7 +17,7 @@
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input 
+        <input
           id="email"
           class="form-control"
           type="text"
@@ -25,12 +25,12 @@
       </div>
       <div class="form-group">
         <label for="address">Address</label>
-        <input 
+        <input
           id="address"
           class="form-control"
           type="text"
           ng-model="order.address.address1">
-        <input 
+        <input
           id="address2"
           class="form-control"
           type="text"
@@ -38,7 +38,7 @@
       </div>
       <div class="form-group">
         <label for="city">City</label>
-        <input 
+        <input
           id="city"
           class="form-control"
           type="text"
@@ -46,7 +46,7 @@
       </div>
       <div class="form-group">
         <label for="state">State</label>
-        <input 
+        <input
           id="state"
           class="form-control"
           type="text"
@@ -54,15 +54,15 @@
       </div>
       <div class="form-group">
         <label for="zip">Zip</label>
-        <input 
+        <input
           id="zip"
           class="form-control"
           type="text"
           ng-model="order.address.zip">
       </div>
-      <button 
+      <button
         type="submit"
-        class="btn btn-success">Submit order!</button>
+        class="btn">Submit order!</button>
     </form>
   </div>
 </div>

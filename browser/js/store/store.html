@@ -1,8 +1,15 @@
-<a ui-sref="stores">Back to Store List</a>
-<h3>Welcome to {{store.name}}!</a></h3>
-<div>
-	<button class="btn btn-warning" ng-show = "(isAdmin || isOwner) && isDetail && !storeEdit" ng-click ="enableStoreEdit()">Edit</button>
+<div class="option" ng-hide="!isAdmin && !isOwner">
+	<add-product></add-product>
 </div>
+<div class="button-edit option">
+	<button class="btn" ng-show = "(isAdmin || isOwner) && isDetail && !storeEdit" ng-click ="enableStoreEdit()">Edit</button>
+</div>
+<div >
+	<button class="btn btn-back" ui-sref="stores">Back to Store List</a>
+</div>
+<h1 class="main-header">{{store.name}}</h1>
+<h5 class="main-header">{{store.description}}</h5>
+
 <div ng-show="storeEdit" class="panel panel-default">
 	<div class="panel-heading">
 		<h1 class="panel-title">Edit your store!</h1>
@@ -13,7 +20,7 @@
 			<input type="text" ng-model="store.name">
 		</div>
 		<div class="edit-option">
-			<p>Store Navbar Roundness (1-100)</p>
+			<p>Store Navbar Roundness (1-50)</p>
 			<input type="text" ng-model="store.css.round">
 		</div>
 		<div class="edit-option">
@@ -41,12 +48,12 @@
 		</div>
 
 		<div class="edit-option">
-			<p>Panel Color</p>
+			<p>Item Color</p>
 			<select  ng-model="store.css.panelcolor">
 				<option ng-repeat="color in colors">{{color}}</option>
 			</select>
 		</div>
-	<button class="btn btn-success" ng-click="saveStore(store.urlName, store)">Save</button>
+	<button class="btn" ng-click="saveStore(store.urlName, store)">Save</button>
 	<button class="btn btn-danger" ng-click="cancelStoreEdit()">Cancel</button>
   </div>
 </div>
