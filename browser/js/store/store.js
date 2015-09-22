@@ -10,6 +10,7 @@ app.config(function ($stateProvider) {
 		controller: function (AuthService, $scope, store, StoreFactory, $stateParams, Session, $state, ProductFactory) {
 			$scope.isDetail = $state.is("store");
 			$scope.storeEdit = false;
+			$scope.store = store;
 
 
 			ProductFactory.getProducts({store: store._id})
@@ -20,7 +21,6 @@ app.config(function ($stateProvider) {
 			.then(function(user){
 				if (user) {
 					$scope.isAdmin = user.isAdmin;
-					console.log("store",$scope.store);
 					$scope.isOwner = user._id === $scope.store.user._id;
 				} else {
 					$scope.isAdmin = false;
