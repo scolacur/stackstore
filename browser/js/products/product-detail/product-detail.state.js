@@ -3,12 +3,11 @@ app.config(function ($stateProvider) {
 	$stateProvider.state('productDetail', {
 		url: '/products/:productId',
 		templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function ($scope, findProduct, findReviews, $stateParams, Session, ProductFactory) {
-			$scope.isLoggedIn = !!Session.user; //FIXME use getLoggedInUser()
+		controller: function ($scope, findProduct, findReviews, $stateParams, Session, ProductFactory, StoreFactory) {
+			$scope.isLoggedIn = !!Session.user; //FIX ME use getLoggedInUser()
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
 			$scope.editMode = false;
-
 			if (Session.user) {
 				$scope.isAdmin = Session.user.isAdmin;
 				$scope.isOwner = Session.user._id === $scope.product.store.user;
@@ -17,7 +16,6 @@ app.config(function ($stateProvider) {
 				$scope.isOwner = false;
 			}
 			$scope.enableProductEdit = function () {
-				console.log('the scope is product detail state');
 				$scope.cached = angular.copy($scope.product);
 				$scope.editMode = true;
 			};

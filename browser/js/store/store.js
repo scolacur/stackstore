@@ -40,20 +40,17 @@ app.config(function ($stateProvider) {
 			};
 
 			$scope.colors = [
-				"black",
-				"blue",
-				"white",
-				"red",
-				"pink",
-				"lightBlue",
-				"lightCoral",
-				"lightGoldenRodYellow",
-				"lightGray",
-				"lightSeaGreen",
-				"aquamarine",
-				"ghostwhite",
-				"indianred",
-				"lavender"
+				"White",
+				"Pink",
+				"LightBlue",
+				"LightCoral",
+				"LightGoldenrodYellow",
+				"LightGray",
+				"LightSeaGreen",
+				"Aquamarine",
+				"GhostWhite",
+				"Indian Red",
+				"Lavender",
 			];
 		}
 	});

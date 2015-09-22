@@ -42,7 +42,7 @@
 		<div class="edit-option">
 			<p>Panel Color</p>
 			<select  ng-model="store.css.panelcolor">
-				<option ng-repeat="color in colors">{{color}}</option>
+				<option ng-repeat="color.value in colors">{{color}}</option>
 			</select>
 		</div>
 	<button class="btn btn-success" ng-click="saveStore(store.urlName, store)">Save</button>
@@ -50,23 +50,4 @@
   </div>
 </div>
 <product-list></product-list>
-
-<style>
-	body {
-		background-color: {{store.css.color}};
-	}
-	navbar {
-		background-color: {{store.css.navcolor}};
-		border-radius: {{store.css.round}}px;
-	}
-	.edit-option {
-		display: inline-block;
-	}
-
-	h1, h2, h3, h4, h5, h6, p, li {
-		font-family: {{store.css.fontFamily}}
-	}
-	.list-group-item {
-		background-color: {{store.css.panelcolor}};
-	}
-</style>
+<store-style css="store.css"></store-style>

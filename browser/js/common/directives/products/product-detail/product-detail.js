@@ -1,4 +1,4 @@
-app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state) {
+app.directive("productDetail", function (ProductFactory, CartFactory, $stateParams, $state, StoreFactory) {
 	return {
 		restrict: 'EA',
 		templateUrl: 'js/common/directives/products/product-detail/product-detail.html',
@@ -13,14 +13,13 @@ app.directive("productDetail", function (ProductFactory, CartFactory, $statePara
 				});
 			};
 			scope.range = _.range;
-
 			ProductFactory.getCategories().then(function (categories) {
 				scope.categories = categories;
 			});
 
 			scope.nextCat = function () {
 				scope.numCats = scope.product.categories.length + 1;
-			}
+			};
 		},
 	};
 });
