@@ -2,22 +2,25 @@ app.config(function ($stateProvider) {
 	$stateProvider.state('store', {
 		url: '/stores/:storeName',
 		templateUrl: '/js/store/store.html',
-		controller: function ($scope, StoreFactory, $stateParams, ProductFactory, Session, $state) {
+		resolve: {
+			store: function (StoreFactory, $stateParams) {
+				return StoreFactory.getByName($stateParams.storeName)
+			}
+		},
+		controller: function ($scope, store, StoreFactory, $stateParams, Session, $state, ProductFactory) {
 			$scope.isDetail = $state.is("store");
 			$scope.storeEdit = false;
-			StoreFactory.getByName($stateParams.storeName)
-			.then(function (store) {
-				$scope.store = store;
+			$scope.store = store;
 
-				if (Session.user){
-					$scope.isAdmin = Session.user.isAdmin;
-					$scope.isOwner = Session.user._id === store.user._id;
-				} else {
-					$scope.isAdmin = false;
-					$scope.isOwner = false;
-				}
-			return ProductFactory.getProducts({store: store._id});
-			})
+			if (Session.user){
+				$scope.isAdmin = Session.user.isAdmin;
+				$scope.isOwner = Session.user._id === store.user._id;
+			} else {
+				$scope.isAdmin = false;
+				$scope.isOwner = false;
+			}
+
+			ProductFactory.getProducts({store: store._id})
 			.then(function (products) {
 				$scope.products = products;
 			});

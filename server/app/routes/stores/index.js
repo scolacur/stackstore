@@ -8,37 +8,42 @@ var Store = mongoose.model('Store');
 
 
 router.get('/', function (req, res) {
-  Store.find(req.query).populate('user')
-  .then(function (stores) {
-    res.json(stores);
-  });
+	console.log("this get routttte is", req.store)
+	Store.find(req.query).populate('user')
+	.then(function (stores) {
+		res.json(stores);
+	});
 });
 
 router.post('/', function (req, res) {
-  Store.create(req.body)
-  .then(function (store) {
-    res.status(201).json(store);
-  });
+	Store.create(req.body)
+	.then(function (store) {
+		res.status(201).json(store);
+	});
 });
 
 router.put('/:storeName', function (req, res) {
 
-    req.store = _.assign(req.store, req.body)
-    req.store.save()
-    .then(function (editedStore) {
-        res.status(201).json(editedStore);
-    });
+	req.store = _.assign(req.store, req.body)
+	req.store.save()
+	.then(function (editedStore) {
+		res.status(201).json(editedStore);
+	});
 });
 
 router.get('/:storeName', function (req, res) {
-  res.json(req.store);
+	console.log("store is", req.store)
+	if (!req.store) return next(new Error("no store found!"));
+	res.json(req.store);
 });
 
 router.param('storeName', function (req, res, next, storeName) {
   Store.findOne({urlName: storeName}).populate("user")
   .then(function (store) {
-    req.store = store;
-    next();
+	console.log("store is", store)
+	if (!store) return next(new Error("no store found!"));
+	req.store = store;
+	next();
   })
   .then(null, next);
 });
