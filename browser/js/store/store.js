@@ -38,6 +38,23 @@ app.config(function ($stateProvider) {
 					$scope.storeEdit = false;
 				});
 			};
+
+			$scope.colors = [
+				"black",
+				"blue",
+				"white",
+				"red",
+				"pink",
+				"lightBlue",
+				"lightCoral",
+				"lightGoldenRodYellow",
+				"lightGray",
+				"lightSeaGreen",
+				"aquamarine",
+				"ghostwhite",
+				"indianred",
+				"lavender"
+			];
 		}
 	});
 });

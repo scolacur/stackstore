@@ -28,60 +28,21 @@
 		<div class="edit-option">
 			<p>Store Color</p>
 			<select ng-model="store.css.color">
-			<option>black</option>
-			<option>blue</option>
-			<option>white</option>
-			<option>red</option>
-			<option>pink</option>
-			<option>lightBlue</option>
-			<option>lightCoral</option>
-			<option>lightGoldenRodYellow</option>
-			<option>lightGray</option>
-			<option>lightSeaGreen</option>
-			<option>aquamarine</option>
-			<option>ghostwhite</option>
-			<option>indianred</option>
-			<option>lavender</option>
+			<option ng-repeat="color in colors">{{color}}</option>
 			</select>
 		</div>
 
 		<div class="edit-option">
 			<p>Navbar Color</p>
 			<select ng-model="store.css.navcolor">
-			<option>black</option>
-			<option>blue</option>
-			<option>white</option>
-			<option>red</option>
-			<option>pink</option>
-			<option>lightBlue</option>
-			<option>lightCoral</option>
-			<option>lightGoldenRodYellow</option>
-			<option>lightGray</option>
-			<option>lightSeaGreen</option>
-			<option>aquamarine</option>
-			<option>ghostwhite</option>
-			<option>indianred</option>
-			<option>lavender</option>
+				<option ng-repeat="color in colors">{{color}}</option>
 	    	</select>
 		</div>
 
 		<div class="edit-option">
 			<p>Panel Color</p>
-			<select ng-model="store.css.panelcolor">
-			<option>black</option>
-			<option>blue</option>
-			<option>white</option>
-			<option>red</option>
-			<option>pink</option>
-			<option>lightBlue</option>
-			<option>lightCoral</option>
-			<option>lightGoldenRodYellow</option>
-			<option>lightGray</option>
-			<option>lightSeaGreen</option>
-			<option>aquamarine</option>
-			<option>ghostwhite</option>
-			<option>indianred</option>
-			<option>lavender</option>
+			<select  ng-model="store.css.panelcolor">
+				<option ng-repeat="color in colors">{{color}}</option>
 			</select>
 		</div>
 	<button class="btn btn-success" ng-click="saveStore(store.urlName, store)">Save</button>
