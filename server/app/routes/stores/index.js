@@ -30,7 +30,7 @@ router.put('/:storeName', function (req, res) {
 	});
 });
 
-router.get('/:storeName', function (req, res) {
+router.get('/:storeName', function (req, res, next) {
 	if (!req.store) return next(new Error("no store found!"));
 	res.json(req.store);
 });
