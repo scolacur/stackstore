@@ -14,7 +14,12 @@ app.factory('ReviewFactory', function ($http) {
 
   function updateReview(id, item) {
     return $http.put('/api/reviews/' + id, item).then(function(result){
-      console.log("factory", result.data);
+      return result.data;
+    });
+  }
+
+  function addReview(review) {
+    return $http.post("api/reviews", review).then(function (result) {
       return result.data;
     });
   }
@@ -22,6 +27,7 @@ app.factory('ReviewFactory', function ($http) {
   return {
     getReview: getReview,
     getSpecificReviews: getSpecificReviews,
-    updateReview: updateReview
+    updateReview: updateReview,
+    addReview: addReview
   };
 });

@@ -1,0 +1,20 @@
+<div>
+<h2>Review Title: <input type="text" ng-model="review.title"></input></h2>
+	<h4>A review for: <a ui-sref="productDetail({productId: product._id})">{{product.name}}</li></a></h4>
+  	<form ng-submit="createReview(review)">
+      <div>
+        <select ng-model="review.rating">
+          <option ng-repeat="star in ['☆', '☆☆', '☆☆☆', '☆☆☆☆', '☆☆☆☆☆']">{{star}}</option>
+        </select>
+      </div>
+  		<textarea ng-model="review.description" class="text-area">{{review.description}}</textarea>
+      <div>
+  		  <button class="btn btn-primary" type="submit">Save Changes</button>
+      </div>
+  	</form>
+
+  	<edit-button></edit-button>
+	<div>Cool review, as written by: 
+		<a ui-sref="user({userId: user._id })">{{user.email}} </a>
+	</div>
+</div>

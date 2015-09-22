@@ -3,7 +3,8 @@ app.config(function($stateProvider) {
 	$stateProvider.state('productDetail', {
 		url: '/products/:productId',
 		templateUrl: '/js/products/product-detail/product-detail.html',
-		controller: function($scope, findProduct, findReviews, $stateParams, $rootScope, Session) {
+		controller: function($scope, findProduct, findReviews, $stateParams, Session) {
+			$scope.isLoggedIn = !!Session.user;
 			$scope.product = findProduct;
 			$scope.reviews = findReviews;
 			if (Session.user){

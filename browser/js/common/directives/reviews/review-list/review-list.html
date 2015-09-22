@@ -1,6 +1,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h1 class="panel-title">Reviews</h1>
+    <a ui-sref="reviewAdd({productId: product._id})"><button ng-show="isLoggedIn" class="btn btn-success">
+      Add Review
+    </button></a>
   </div>
   <ul class="list-group">
     <li 
