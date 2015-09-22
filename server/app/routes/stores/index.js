@@ -31,7 +31,6 @@ router.put('/:storeName', function (req, res) {
 });
 
 router.get('/:storeName', function (req, res) {
-	console.log("store is", req.store)
 	if (!req.store) return next(new Error("no store found!"));
 	res.json(req.store);
 });
@@ -39,7 +38,6 @@ router.get('/:storeName', function (req, res) {
 router.param('storeName', function (req, res, next, storeName) {
   Store.findOne({urlName: storeName}).populate("user")
   .then(function (store) {
-	console.log("store is", store)
 	if (!store) return next(new Error("no store found!"));
 	req.store = store;
 	next();
