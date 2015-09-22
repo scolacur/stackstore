@@ -16,6 +16,19 @@
 	<li>Date: {{order.date}}</li>
 	<li>Address: {{order.address}}</li>
 	<li>Email: <a ui-sref="user({userId: '{{order.user}}' })">{{order.email}}</a></li>
+</ul>
+<ul ng-show="!isAdmin">
 	<li>Status: {{order.status}}</li>
 </ul>
- <button>Save Changes?</button>
+<form ng-submit="editStatus(status)" ng-show="isAdmin">
+	<ul>
+		<li>Status: 
+			<select ng-model="status">
+				<option ng-repeat="choice in choices">{{choice}}</option>
+			</select>
+		</li>
+	</ul>
+	<button type="submit">Save Changes</button>
+</form>
+
+ 

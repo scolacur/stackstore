@@ -30,5 +30,12 @@ app.factory('OrderFactory', function($http){
     });
   };
 
+  Order.editOrder = function (orderId, status) {
+    return $http.put("/api/orders/" + orderId, {status: status})
+    .then(function (response) {
+      return response.data
+    });
+  }
+
   return Order;
 });
