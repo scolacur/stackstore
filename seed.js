@@ -84,25 +84,30 @@ var seedStores = function () {
             urlName: "gobama",
             user: users[1]._id
         }, {
-            name: "Get Wet",
-            description: "Been makin' you wet since 1990",
-            urlName: "watertime",
-            user: users[2]._id
+            name: "If You Have To Ask, You Can't Afford It",
+            description: "The finest luxury items you can't afford",
+            urlName: "expensive",
+            user: users[4]._id
+        }, {
+            name: "Startup Ideas",
+            description: "Startup ideas are, like, totally worth, like, at least, like, $10",
+            urlName: "startupideas",
+            user: users[4]._id
         }, {
             name: "Omri's Well-Worn Clothes Store",
             description: "Dress your best with things I wore",
             urlName: "freshclothes",
             user: users[3]._id
         }, {
-            name: "You Wish You Could Afford This",
-            description: "The finest luxury items you can't afford",
-            urlName: "expensive",
-            user: users[4]._id
-        }, {
             name: "Gabe Things",
             description: "All things Gabe-esque",
             urlName: "gaberama",
             user: users[5]._id
+        }, {
+            name: "Get Wet",
+            description: "Been makin' you wet since 1987",
+            urlName: "watertime",
+            user: users[2]._id
         }];
         return Promise.resolve(Store.create(stores));
     });
@@ -121,18 +126,19 @@ var seedCategoriesAndProducts = function () {
         Category.create({title: 'Mesh Tanks'}),
         Category.create({title: 'Drop Pants'}),
         Category.create({title: 'Hipster Hats'}),
-        Category.create({title: 'Supersoakers'}),
+        Category.create({title: 'Super Soakers'}),
         Category.create({title: 'Giant Watches'}),
         Category.create({title: 'Diamonds'}),
         Category.create({title: 'Disgusting Delicacies'}),
         Store.findOne({urlName: "NSA"}).exec(),
         Store.findOne({urlName: "gobama"}).exec(),
+        Store.findOne({urlName: "expensive"}).exec(),
         Store.findOne({urlName: "watertime"}).exec(),
         Store.findOne({urlName: "freshclothes"}).exec(),
-        Store.findOne({urlName: "expensive"}).exec(),
-        Store.findOne({urlName: "gaberama"}).exec()
+        Store.findOne({urlName: "gaberama"}).exec(),
+        Store.findOne({urlName: "startupideas"}).exec()
     ])
-    .spread(function (fightCat, terrCat, waterCat, defaultCat, samuraiCat, karaokeCat, artCat, meshCat, dropCat, hatCat, soakCat, watchCat, diamondCat, disgCat, nsa, gobama, watertime, freshclothes, expensive, gaberama) {
+    .spread(function (fightCat, terrCat, waterCat, defaultCat, samuraiCat, karaokeCat, artCat, meshCat, dropCat, hatCat, soakCat, watchCat, diamondCat, disgCat, nsa, gobama, expensive, watertime, freshclothes, gaberama, startupideas) {
         var products = [{
             name: "Surfbort",
             description: "a surfbort which is obviously coolest",
@@ -206,7 +212,7 @@ var seedCategoriesAndProducts = function () {
             store: gaberama._id,
             photoUrl: 'http://i.dailymail.co.uk/i/pix/2010/01/17/article-1243796-07D2E81A000005DC-154_468x610.jpg'
         }, {
-            name: "The Sexiest Drop Pants in the world",
+            name: "The Sexiest Drop Pants in the World",
             description: "But still pretty darn ugly, any way you look at them",
             inventory: 1000,
             price: 20,
@@ -230,13 +236,21 @@ var seedCategoriesAndProducts = function () {
             store: freshclothes._id,
             photoUrl: 'https://s-media-cache-ak0.pinimg.com/236x/21/4a/14/214a141ee1afb0aac5a03458ddf581c4.jpg'
         }, {
-            name: "An Unnecessarily Aggresive Supersoaker",
+            name: "An Unnecessarily Aggressive Super Soaker",
             description: "With this supersoaker, you can destroy your competition and reign supreme at your next children's pool party",
             inventory: 80,
             price: 100,
             categories: [soakCat._id],
             store: watertime._id,
             photoUrl: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/109000/620x/121109.jpg'
+        }, {
+            name: "So it's basically Uber for ________",
+            description: "It's totally legit. Just do all the work and execute flawlessly and it'll make you totally rich",
+            inventory: 1000,
+            price: 10,
+            categories: [defaultCat._id],
+            store: startupideas._id,
+            photoUrl: 'http://images.clipartpanda.com/idea-clipart-idea.png'
         }, {
             name: "A Big Watch",
             description: "Encrusted with so many precious jewels for no reason, this watch will give you shoulder problems.",

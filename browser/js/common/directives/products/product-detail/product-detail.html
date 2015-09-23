@@ -21,7 +21,7 @@
 		<li
 			ng-class="{discountedDetail: product._id === discountId}"><span class="price"><strong>{{product.price | currency}}</strong></span></li>
 		<br>
-		<li>We have <strong>{{product.inventory}}</strong> in stock</li>
+		<li>We have <strong>{{product.inventory | number}}</strong> in stock</li>
 		<br>
 		<li>{{product.description}}</li>
 		<br>

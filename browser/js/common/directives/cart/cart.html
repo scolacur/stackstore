@@ -7,7 +7,7 @@
       <li ng-repeat="item in cart">
         <a><h4>{{item.product.name}}</h4></a>
         <p>{{item.product.description}}</p>
-        <p>You're buying {{item.quantity}} of these.</p>
+        <p>You're buying {{item.quantity | number}} of these.</p>
         <button
           ng-show="editIndex !== $index"
           class="btn btn-info"
