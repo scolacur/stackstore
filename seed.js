@@ -84,25 +84,30 @@ var seedStores = function () {
             urlName: "gobama",
             user: users[1]._id
         }, {
-            name: "Get Wet",
-            description: "Been makin' you wet since 1990",
-            urlName: "watertime",
-            user: users[2]._id
+            name: "If You Have To Ask, You Can't Afford It",
+            description: "The finest luxury items you can't afford",
+            urlName: "expensive",
+            user: users[4]._id
+        }, {
+            name: "Startup Ideas",
+            description: "Startup ideas are, like, totally worth, like, at least, like, $10",
+            urlName: "startupideas",
+            user: users[4]._id
         }, {
             name: "Omri's Well-Worn Clothes Store",
             description: "Dress your best with things I wore",
             urlName: "freshclothes",
             user: users[3]._id
         }, {
-            name: "You Wish You Could Afford This",
-            description: "The finest luxury items you can't afford",
-            urlName: "expensive",
-            user: users[4]._id
-        }, {
             name: "Gabe Things",
             description: "All things Gabe-esque",
             urlName: "gaberama",
             user: users[5]._id
+        }, {
+            name: "Get Wet",
+            description: "Been makin' you wet since 1987",
+            urlName: "watertime",
+            user: users[2]._id
         }];
         return Promise.resolve(Store.create(stores));
     });
@@ -130,9 +135,10 @@ var seedCategoriesAndProducts = function () {
         Store.findOne({urlName: "expensive"}).exec(),
         Store.findOne({urlName: "watertime"}).exec(),
         Store.findOne({urlName: "freshclothes"}).exec(),
-        Store.findOne({urlName: "gaberama"}).exec()
+        Store.findOne({urlName: "gaberama"}).exec(),
+        Store.findOne({urlName: "startupideas"}).exec()
     ])
-    .spread(function (fightCat, terrCat, waterCat, defaultCat, samuraiCat, karaokeCat, artCat, meshCat, dropCat, hatCat, soakCat, watchCat, diamondCat, disgCat, nsa, gobama, expensive, watertime, freshclothes, gaberama) {
+    .spread(function (fightCat, terrCat, waterCat, defaultCat, samuraiCat, karaokeCat, artCat, meshCat, dropCat, hatCat, soakCat, watchCat, diamondCat, disgCat, nsa, gobama, expensive, watertime, freshclothes, gaberama, startupideas) {
         var products = [{
             name: "Surfbort",
             description: "a surfbort which is obviously coolest",
@@ -237,6 +243,14 @@ var seedCategoriesAndProducts = function () {
             categories: [soakCat._id],
             store: watertime._id,
             photoUrl: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/109000/620x/121109.jpg'
+        }, {
+            name: "So it's basically Uber for ________",
+            description: "It's totally legit. Just do all the work and execute flawlessly and it'll make you totally rich",
+            inventory: 1000,
+            price: 10,
+            categories: [defaultCat._id],
+            store: startupideas._id,
+            photoUrl: 'http://images.clipartpanda.com/idea-clipart-idea.png'
         }, {
             name: "A Big Watch",
             description: "Encrusted with so many precious jewels for no reason, this watch will give you shoulder problems.",
