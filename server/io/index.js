@@ -10,8 +10,8 @@ module.exports = function (server) {
 
     io = socketio(server);
 
-	ee.on("randomize", function () {
-		io.sockets.emit("randomize");
+	ee.on("randomize", function (newInfo, oldinfo) {
+		io.sockets.emit("randomize", newInfo, oldinfo);
 	});
 
     return io;

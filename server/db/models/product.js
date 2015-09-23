@@ -50,7 +50,6 @@ schema.statics.randomDiscount = function () {
         discountedProduct.price = 0;
         console.log("DISCOUNT: ", discountedProduct.name);
         return discountedProduct.save();
-    }).then(function(saved) {
     }).then(null, function(err) {
         console.error("ERRRRR", err);
     })
@@ -69,13 +68,20 @@ schema.statics.resetOldPrice = function () {
 
 mongoose.model('Product', schema);
 
+var newInfo, oldInfo;
+
 var updatePrice = function () {
         return mongoose.model('Product').resetOldPrice()
         .then(function(reset){
            return mongoose.model('Product').randomDiscount();
         })
-        .then(function () {
-            ee.emit("randomize");
+        .then(function (product) {
+        	oldInfo = newInfo;
+        	newInfo = {
+        		id: product._id.toString(),
+        		store: product.store.toString(),
+        	}
+            ee.emit("randomize", newInfo, oldInfo);
             setTimeout(updatePrice, 10000);
         });
     };
