@@ -31,6 +31,10 @@ app.use(function (req, res, next) {
 
 });
 
+app.get('/github', function (req, res) {
+	res.redirect('https://github.com/scolacur/stackstore');
+})
+
 app.get('/*', function (req, res) {
     res.sendFile(app.get('indexHTMLPath'));
 });
