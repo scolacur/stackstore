@@ -48,6 +48,7 @@ schema.statics.randomDiscount = function () {
     .then (function (discountedProduct) {
         discountedProduct.realPrice = discountedProduct.price;
         discountedProduct.price = 0;
+        console.log("DISCOUNT: ", discountedProduct.name);
         return discountedProduct.save();
     }).then(function(saved) {
     }).then(null, function(err) {
