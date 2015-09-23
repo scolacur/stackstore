@@ -10,8 +10,10 @@
     app.factory('Socket', function ($rootScope) {
         if (!window.io) throw new Error('socket.io not found!');
         var controller = window.io(window.location.origin);
-        controller.on("randomize", function () {
-            $rootScope.$broadcast("randomize");
+        controller.on("randomize", function (newInfo, oldinfo) {
+        	$rootScope.discountId = newInfo.id;
+        	$rootScope.$digest();
+            $rootScope.$broadcast("randomize", newInfo, oldinfo);
         });
         return controller;
     });

@@ -15,7 +15,9 @@ app.config(function ($stateProvider) {
 
 			$scope.store.css.urlName = store.urlName;
 
-			$scope.$on('randomize', function () {
+			$scope.$on('randomize', function (e, newInfo, oldInfo) {
+				if (store._id.toString() !== newInfo.store &&
+					store._id.toString() !== oldInfo.store) return;
 				ProductFactory.getProducts({store: store._id})
 				.then(function (products) {
 					$scope.products = products;

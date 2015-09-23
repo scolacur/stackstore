@@ -6,7 +6,9 @@ app.config(function ($stateProvider) {
 		controller: function ($scope, findProduct, findReviews, getUser, $stateParams, ProductFactory) {
 			$scope.editMode = false;
 			$scope.product = findProduct;
-			$scope.$on('randomize', function () {
+			$scope.$on('randomize', function (e, newInfo, oldInfo) {
+				if (newInfo.id !== $stateParams.productId &&
+					oldInfo.id !== $stateParams.productId) return;
 				ProductFactory.getProduct($stateParams.productId)
 				.then(function (product) {
 					$scope.product = product;
