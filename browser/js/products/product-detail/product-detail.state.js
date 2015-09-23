@@ -17,7 +17,7 @@ app.config(function ($stateProvider) {
 			$scope.isLoggedIn = !!$scope.user; //fixed to not use session. still probably don't need this
 			if ($scope.user) {
 				$scope.isAdmin = $scope.user.isAdmin;
-				$scope.isOwner = $scope.user._id === $scope.product.store.user._id;
+				$scope.isOwner = $scope.user._id === $scope.product.store.user;
 			} else {
 				$scope.isAdmin = false;
 				$scope.isOwner = false;
