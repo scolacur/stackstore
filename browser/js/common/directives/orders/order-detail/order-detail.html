@@ -9,7 +9,7 @@
 				<li>Product Price: {{item.product.price}}</li>
 				<li>Product Store: <a ui-sref='store({storeName: "{{item.product.store.urlName}}"})'>{{item.product.store.name}}</a></li>
 				<li>Product Category: {{item.product.category.title}}</li>
-				<li>Quantity: {{item.quantity}}</li>
+				<li>Quantity: {{item.quantity | number}}</li>
 			</li></ul>
 		</ul>
 	</li>
@@ -22,7 +22,7 @@
 </ul>
 <form ng-submit="editStatus(status)" ng-show="isAdmin">
 	<ul>
-		<li>Status: 
+		<li>Status:
 			<select ng-model="status">
 				<option ng-repeat="choice in choices">{{choice}}</option>
 			</select>
@@ -30,5 +30,3 @@
 	</ul>
 	<button type="submit">Save Changes</button>
 </form>
-
- 

@@ -121,18 +121,18 @@ var seedCategoriesAndProducts = function () {
         Category.create({title: 'Mesh Tanks'}),
         Category.create({title: 'Drop Pants'}),
         Category.create({title: 'Hipster Hats'}),
-        Category.create({title: 'Supersoakers'}),
+        Category.create({title: 'Super Soakers'}),
         Category.create({title: 'Giant Watches'}),
         Category.create({title: 'Diamonds'}),
         Category.create({title: 'Disgusting Delicacies'}),
         Store.findOne({urlName: "NSA"}).exec(),
         Store.findOne({urlName: "gobama"}).exec(),
+        Store.findOne({urlName: "expensive"}).exec(),
         Store.findOne({urlName: "watertime"}).exec(),
         Store.findOne({urlName: "freshclothes"}).exec(),
-        Store.findOne({urlName: "expensive"}).exec(),
         Store.findOne({urlName: "gaberama"}).exec()
     ])
-    .spread(function (fightCat, terrCat, waterCat, defaultCat, samuraiCat, karaokeCat, artCat, meshCat, dropCat, hatCat, soakCat, watchCat, diamondCat, disgCat, nsa, gobama, watertime, freshclothes, expensive, gaberama) {
+    .spread(function (fightCat, terrCat, waterCat, defaultCat, samuraiCat, karaokeCat, artCat, meshCat, dropCat, hatCat, soakCat, watchCat, diamondCat, disgCat, nsa, gobama, expensive, watertime, freshclothes, gaberama) {
         var products = [{
             name: "Surfbort",
             description: "a surfbort which is obviously coolest",
@@ -206,7 +206,7 @@ var seedCategoriesAndProducts = function () {
             store: gaberama._id,
             photoUrl: 'http://i.dailymail.co.uk/i/pix/2010/01/17/article-1243796-07D2E81A000005DC-154_468x610.jpg'
         }, {
-            name: "The Sexiest Drop Pants in the world",
+            name: "The Sexiest Drop Pants in the World",
             description: "But still pretty darn ugly, any way you look at them",
             inventory: 1000,
             price: 20,
@@ -230,7 +230,7 @@ var seedCategoriesAndProducts = function () {
             store: freshclothes._id,
             photoUrl: 'https://s-media-cache-ak0.pinimg.com/236x/21/4a/14/214a141ee1afb0aac5a03458ddf581c4.jpg'
         }, {
-            name: "An Unnecessarily Aggresive Supersoaker",
+            name: "An Unnecessarily Aggressive Super Soaker",
             description: "With this supersoaker, you can destroy your competition and reign supreme at your next children's pool party",
             inventory: 80,
             price: 100,
