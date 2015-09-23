@@ -9,7 +9,6 @@ app.config(function ($stateProvider) {
 			findStores: function (StoreFactory) {
 				return StoreFactory.getAll()
 				.then(function (stores) {
-					console.log(stores);
 					return stores;
 				});
 			}

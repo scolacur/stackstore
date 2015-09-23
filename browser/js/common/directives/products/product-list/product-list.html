@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="col-sm-6"
 	ng-repeat="product in products | filter:searchText:false | filter:selected">
-		<div class="store-item">
+		<div class="store-item" ng-class="{discounted: product._id === discountId}">
 			<product-detail product="product"></product-detail>
 		</div>
 	</div>

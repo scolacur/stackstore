@@ -1,6 +1,6 @@
 .store-item {
 	border: 1px solid black;
-	min-height: 350px;
+	min-height: 500px;
 	margin-bottom: 30px;
 	padding: 20px;
 	border-radius: 0;
@@ -9,6 +9,13 @@
 		border-bottom: 1px solid black;
 		h1 {
 			font-size: 20px
+		}
+	}
+
+	&.discounted {
+		border: 1px solid red;
+		.price {
+			color: red;
 		}
 	}
 

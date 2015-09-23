@@ -18,7 +18,8 @@
 	</form>
 	<button class="btn btn-danger" ng-show = "editMode" ng-click="cancelEdit()">Cancel</button>
 	<ul class="details" ng-hide="editMode">
-		<li><strong>{{product.price | currency}}</strong></li>
+		<li
+			ng-class="{discountedDetail: product._id === discountId}"><span class="price"><strong>{{product.price | currency}}</strong></span></li>
 		<br>
 		<li>We have <strong>{{product.inventory}}</strong> in stock</li>
 		<br>

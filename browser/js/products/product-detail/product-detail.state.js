@@ -6,12 +6,20 @@ app.config(function ($stateProvider) {
 		controller: function ($scope, findProduct, findReviews, getUser, $stateParams, ProductFactory) {
 			$scope.editMode = false;
 			$scope.product = findProduct;
+			$scope.$on('randomize', function (e, newInfo, oldInfo) {
+				if (newInfo.id !== $stateParams.productId &&
+					oldInfo.id !== $stateParams.productId) return;
+				ProductFactory.getProduct($stateParams.productId)
+				.then(function (product) {
+					$scope.product = product;
+				});
+			})
 			$scope.reviews = findReviews;
 			$scope.user = getUser;
 			$scope.isLoggedIn = !!$scope.user; //fixed to not use session. still probably don't need this
 			if ($scope.user) {
 				$scope.isAdmin = $scope.user.isAdmin;
-				$scope.isOwner = $scope.user._id === $scope.product.store.user._id;
+				$scope.isOwner = $scope.user._id === $scope.product.store.user;
 			} else {
 				$scope.isAdmin = false;
 				$scope.isOwner = false;

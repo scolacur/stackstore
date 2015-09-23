@@ -1,6 +1,8 @@
 'use strict';
 var socketio = require('socket.io');
 var io = null;
+var mongoose = require("mongoose");
+var ee = require('../app/configure/event.js').ee;
 
 module.exports = function (server) {
 
@@ -8,10 +10,10 @@ module.exports = function (server) {
 
     io = socketio(server);
 
-    io.on('connection', function () {
-        // Now have access to socket, wowzers!
-    });
-    
+	ee.on("randomize", function (newInfo, oldinfo) {
+		io.sockets.emit("randomize", newInfo, oldinfo);
+	});
+
     return io;
 
 };

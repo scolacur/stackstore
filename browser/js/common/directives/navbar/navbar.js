@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, $interval) {
 
     return {
         restrict: 'E',
@@ -32,6 +32,15 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             var removeUser = function () {
                 scope.user = null;
             };
+
+            $interval(function () {
+                scope.countdown--;
+            }, 1000);
+
+            scope.countdown = 10;
+            scope.$on("randomize", function () {
+                scope.countdown = 10;
+            });
 
             setUser();
 
