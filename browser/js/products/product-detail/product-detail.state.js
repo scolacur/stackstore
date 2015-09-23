@@ -10,17 +10,12 @@ app.config(function ($stateProvider) {
 			$scope.user = getUser;
 			$scope.isLoggedIn = !!$scope.user; //fixed to not use session. still probably don't need this
 			if ($scope.user) {
-			console.log("$scope.user: ",$scope.user._id);
-			console.log("store owner: ",$scope.product.store.user);
-
 				$scope.isAdmin = $scope.user.isAdmin;
 				$scope.isOwner = $scope.user._id === $scope.product.store.user;
 			} else {
 				$scope.isAdmin = false;
 				$scope.isOwner = false;
 			}
-			console.log("product admin: ",$scope.isAdmin);
-			console.log("product owner: ",$scope.isOwner);
 
 			$scope.enableProductEdit = function () {
 				$scope.cached = angular.copy($scope.product);
