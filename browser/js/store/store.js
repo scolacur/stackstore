@@ -15,6 +15,12 @@ app.config(function ($stateProvider) {
 
 			$scope.store.css.urlName = store.urlName;
 
+			$scope.$on('randomize', function () {
+				ProductFactory.getProducts({store: store._id})
+				.then(function (products) {
+					$scope.products = products;
+				})
+			});
 
 			ProductFactory.getProducts({store: store._id})
 			.then(function (products) {
