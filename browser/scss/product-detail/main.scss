@@ -31,7 +31,11 @@
 	}
 
 	.details {
+		width: 300px;
 		padding: 0px;
+		li {
+			margin-bottom: 10px;
+		}
 	}
 
 	.quantity {
