@@ -1,27 +1,28 @@
 <button class="btn btn-info" ng-hide = "adding" ng-click="adding = !adding">Add a product</button>
 <form name="addForm" ng-show="adding" ng-submit="addForm.$valid && addProduct(product, store)" ng-init="product={categories: []}">
-    <ul>
-        <li> Name:
-            <input ng-model="product.name"></input>
-        </li>
-        <li>Price:
-            <input ng-model="product.price"></input>
-        </li>
-        <li>Description:
-            <input ng-model="product.description"></input>
-        </li>
-        <li>Inventory:
-            <input ng-model="product.inventory"></input>
-        </li>
-        <li>Photo URL:
-            <input ng-model="product.photoUrl"></input>
-        </li>
-        <li ng-init="numCats = 1">Categories: (required)
-            <select ng-repeat="category in range(numCats)" ng-model="product.categories[$index]" ng-change="nextCat()" ng-options="cat.title for cat in categories"></select>
-        </li>
-    </ul>
+    <div class= "add-form">
+        <div> Name:
+            <input class="pull-right" ng-model="product.name"></input>
+        </div>
+        <div>Price:
+            <input class="pull-right" ng-model="product.price"></input>
+        </div>
+        <div>Description:
+            <input class="pull-right" ng-model="product.description"></input>
+        </div>
+        <div>Inventory:
+            <input class="pull-right" ng-model="product.inventory"></input>
+        </div>
+        <div>Photo URL:
+            <input class="pull-right" ng-model="product.photoUrl"></input>
+        </div>
+        <div ng-init="numCats = 1">Categories:<br>
+            <select class="pull-right" ng-repeat="category in range(numCats)" ng-model="product.categories[$index]" ng-change="nextCat()" ng-options="cat.title for cat in categories"></select>
+        </div>
+    </div>
+	<div class="clearfix"></div>
     <div>
-        <button class="btn" ng-show="adding" type="submit" ng-click="adding = false">Add your product</button>
-		</div>
+        <button class="btn btn-add" ng-show="adding" type="submit" ng-click="adding = false">Add your product</button>
+	</div>
 </form>
-		<button class="btn btn-danger" ng-show="adding" ng-click="adding = false; product = {}; numCats = 1">Cancel</button>
+		<button class="btn btn-add btn-danger" ng-show="adding" ng-click="adding = false; product = product={categories: []}; numCats = 1">Cancel</button>

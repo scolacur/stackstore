@@ -13,9 +13,8 @@ app.directive('addProduct', function (ProductFactory) {
 				product.store = store._id;
 				ProductFactory.addProduct(product)
 					.then(function (prod) {
-						console.log(prod);
 						scope.$emit('newProduct', prod);
-						scope.product = {};
+						scope.product = {categories: []};
 					});
 			};
 			scope.range = _.range;
